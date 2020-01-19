@@ -1,0 +1,20 @@
+{
+  "global": {
+    "globalAutoLayerMarkEnable": false,
+    "globalRulerEnable": true,
+    "globalAdsorbEnable": true
+  },
+  "16e44da4af7": {
+    "guideLines": [
+      {
+        "type": "v",
+        "pos": 96
+      }
+    ]
+  },
+  "16e59aaa134": {
+    "path": "..\\resource\\eui_skins\\btn\\Btntab7skin.ts",
+    "class": "Btntab7skin",
+    "parentPath": ""
+  }
+}

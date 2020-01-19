@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="paySkin" width="580" height="930" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
+	<w:Config id="16ea0914746" ></w:Config>
+	<e:Rect id="bgClose" left="0" right="0" top="0" bottom="0" fillAlpha="0.8"/>
+	<e:Group horizontalCenter="-0.5" verticalCenter="0.5">
+		<e:Image source="new_pay_bg_png" x="0" y="0"/>
+		<e:Label text="商品名称" textColor="0x000040" size="22" bold="true" textAlign="center" x="127" y="34"/>
+		<e:Label text="商品名称" textColor="0x000040" size="19" bold="true" x="37" y="90"/>
+		<e:Label text="元宝" textColor="0x000040" size="19" bold="true" x="270" y="90"/>
+		<e:Label id="moneyNum" text="100元" y="131" textColor="0x000040" size="19" textAlign="left" x="258"/>
+		<e:Label text="需支付" x="38" y="131" textColor="0x000040" size="19" bold="true"/>
+		<e:Label text="选择支付方式" x="38" y="171" size="15" textColor="0x595959" bold="true"/>
+		<e:Image source="new_pay_json.new_pay_xiantiao" x="30" y="111" scale9Grid="1,0,10,2" width="290"/>
+		<e:Image source="new_pay_json.new_pay_xiantiao" x="30" y="153" scale9Grid="1,0,10,2" width="290"/>
+		<e:Image id="Paybtn" source="new_pay_json.new_pay_btn" y="279" x="31"/>
+		<e:Group id="chooseGroup" x="69" y="193">
+			<e:Button id="WXbtn" label="" x="4" y="3" visible="false">
+				<e:skinName>
+				<e:Skin states="up,down,disabled">
+					<e:Image width="100%" height="100%" source="new_pay_json.new_pay_wxbtn"/>
+					<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+				</e:Skin>
+				</e:skinName>
+			</e:Button>
+			<e:Button id="ZFBbtn" label="" x="71" y="3">
+				<e:skinName>
+					<e:Skin states="up,down,disabled">
+					<e:Image width="100%" height="100%" source="new_pay_json.new_pay_zfbbtn" source.down="new_pay_json.new_pay_zfbbtn"/>
+					<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+					</e:Skin>
+				</e:skinName>
+			</e:Button>
+			<e:Image id="wxChoose" source="new_pay_json.new_pay_choose" x="0" y="0" visible="false"/>
+			<e:Image id="zfbChoose" source="new_pay_json.new_pay_choose" x="67" y="0"/>
+		</e:Group>
+	</e:Group>
+</e:Skin>
