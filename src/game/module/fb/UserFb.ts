@@ -912,6 +912,10 @@ class UserFb extends BaseSystem {
 	 * @param bytes
 	 */
 	private doWaveData(bytes: GameByteArray): void {
+		// console.log('处理关卡！')
+		// console.log(bytes)
+		// console.log(bytes._position)
+		// console.log(bytes.write_position)
 		this.exp = bytes.readInt();
 		let count: number = bytes.readInt();
 		let awards = [];

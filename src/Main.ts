@@ -77,9 +77,6 @@ class Main extends egret.DisplayObjectContainer {
 
 		this.stage.addChild(this.loadingView);
 
-		console.log(StageUtils.ins().getStage().$children[2])
-		console.log(this.loadingView)
-
 
 		LocationProperty.init();
 
@@ -113,13 +110,14 @@ class Main extends egret.DisplayObjectContainer {
 	 * 主题文件加载完成
 	 */
 	private onThemeLoadComplete(): void {
-		// var payWin:login = new login();
+		var loginWinUi:login = new login();
 		// console.log(payWin)
-		// this.stage.addChild(payWin)
-		// console.log(this.stage)
-		// ViewManager.ins().open(payWin, {money:50,yuanbao:1000})
+		loginWinUi.width = this.stage.stageWidth;
+		loginWinUi.height = this.stage.stageHeight;
+		loginWinUi.initLoginInfo(this.loadingView)
+		this.stage.addChild(loginWinUi)
 		
-		this.loadingView.loginBtn()
+		this.loadingView.hideLoadingTrp()
 
 	}
 

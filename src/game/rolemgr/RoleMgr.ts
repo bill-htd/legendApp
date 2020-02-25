@@ -112,6 +112,10 @@ class RoleMgr extends BaseSystem {
 		let code: number = bytes.readByte();
 		switch (code) {
 			case 0:
+				//  资源加载完成，删除加载界面
+				if (StageUtils.ins().getStage().$children[2]) {
+					StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
+				}
 				SceneManager.ins().runScene(CreateRoleScene);
 				window['showGame']();
 				break;
@@ -172,12 +176,12 @@ class RoleMgr extends BaseSystem {
 			case 1:
 
 
-			
+
 				//  资源加载完成，删除加载界面
-				if(StageUtils.ins().getStage().$children[2]){
+				if (StageUtils.ins().getStage().$children[2]) {
 					StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
 				}
-				
+
 				//验证成功，正在登录游戏
 				//成功进入游戏后，将正在连接的跨服状态关掉
 				KFServerSys.ins().linkingKFState(false);

@@ -109,9 +109,18 @@ class KfArenaSys extends BaseSystem {
 	 * 77-1
 	 */
 	public postPlayerInfo(bytes: GameByteArray): void {
+		// console.log('玩家个人信息')
+		// console.log(bytes)
+
 		this.times = bytes.readInt();
+		// console.log(this.times)
+		// console.log(bytes)
 		this.duanLevel = bytes.readInt();
+		// console.log(this.duanLevel)
+		// console.log(bytes)
 		this.score = bytes.readInt();
+		// console.log(this.score)
+		// console.log(bytes)
 		if (!this.curMouth)
 			this.curMouth = new kfArenaMark();
 		this.curMouth.parse(bytes);

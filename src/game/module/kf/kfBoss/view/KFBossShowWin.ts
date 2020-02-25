@@ -76,7 +76,7 @@ class KFBossShowWin extends BaseEuiView {
 					UserTips.ins().showTips(`|C:0xf3311e&T:需要转生等级到达${this.dp.levelLimit[0] / 1000 >> 0}转！`);
 					return;
 				}
-
+				
 				KFBossSys.ins().sendEnter(this.fbId);
 				break;
 		}

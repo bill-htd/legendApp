@@ -48,6 +48,7 @@ class KFServerSys extends BaseSystem {
 	 * @param bytes
 	 */
 	private doSwitchServer(bytes: GameByteArray): void {
+		
 		//登陆服务器ID
 		this.kfSrvid = bytes.readInt();
 		//服务器IP

@@ -61,7 +61,7 @@ class Pay extends BaseClass {
                     url = decodeURIComponent(url)
                 }
 
-                
+                console.log(url)
                 // if (window['isSafari']()) {
                 //     window.open(url)
                 //     WarnWin.show("请允许浏览器打开支付弹窗\n  设置->浏览器->阻止弹出窗口(关闭)", function () { }, this);

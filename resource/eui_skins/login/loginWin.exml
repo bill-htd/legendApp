@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="loginWin" width="580" height="930" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="loginpb" horizontalCenter="0" verticalCenter="-134">
+		<e:Image source="loginPic_json.login_block_top" y="0" x="0"/>
+		<e:Image source="loginPic_json.login_block_center" y="146" x="16" anchorOffsetY="0" height="209"/>
+		<e:Image source="loginPic_json.login_block_bottom" y="352" x="24"/>
+		<e:Image source="loginPic_json.login_account" y="110" horizontalCenter="-29.5"/>
+		<e:Image source="loginPic_json.login_password" y="178" horizontalCenter="-29.5"/>
+		<e:Group id="dengluInfo" y="22" horizontalCenter="0">
+			<e:Image source="loginPic_json.login_account_login" y="0" horizontalCenter="0"/>
+			<e:Group id="loginBtn" y="293" horizontalCenter="0">
+			<e:Image source="loginPic_json.login_start" y="0" x="0"/>
+			<e:Image source="loginPic_json.login_login" y="5" x="44"/>
+			</e:Group>
+			<e:Label id="zhuceLabel" text="注册" x="377" y="335" size="21" verticalAlign="middle" textColor="0xdbaa5b" bold="true"/>
+		</e:Group>
+		<e:Group id="zhuceInfo" horizontalCenter="0" y="27" visible="false">
+			<e:Group id="zhuceBtn" y="289" horizontalCenter="0">
+			<e:Image source="loginPic_json.login_start" y="0" x="0"/>
+			<e:Image source="loginPic_json.login_register" y="8" horizontalCenter="0"/>
+			</e:Group>
+			<e:Image source="loginPic_json.login_quick_register" y="-10" horizontalCenter="0"/>
+			<e:Image id="closeZhuce" source="loginPic_json.login_close" x="477" y="-33"/>
+		</e:Group>
+		<e:Group id="roomChoose" x="154" y="249">
+			<e:Image source="loginPic_json.login_select" y="0" x="0"/>
+			<e:Label id="roomName" text="" x="82" y="10" size="20" textColor="0xdbaa5b"/>
+		</e:Group>
+		<e:EditableText id="account" width="213" height="31" text="" x="169" y="113" anchorOffsetY="0" anchorOffsetX="0" size="20" verticalAlign="middle"/>
+		<e:EditableText id="password" width="213" height="31" text="" x="168" y="180" anchorOffsetY="0" anchorOffsetX="0" size="20" verticalAlign="middle"/>
+		<e:Label id="accountTrp" text="*账号必须为6-10位字母、数字、下划线" x="163" y="154" size="13" verticalAlign="middle" visible="false"/>
+		<e:Label id="passwordTrp" text="*密码必须为8-10位字母、数字、下划线" x="162" y="222" size="13" verticalAlign="middle" visible="false"/>
+	</e:Group>
+	<e:Group id="roompb" horizontalCenter="0" verticalCenter="0" visible="false">
+		<e:Image source="login_room_list_png" x="0" y="0"/>
+		<e:Image id="roomClose" source="loginPic_json.login_close" x="474" y="0"/>
+		<e:Image source="loginPic_json.login_group_light" x="11" y="90"/>
+		<e:Image source="loginPic_json.login_history" x="56" y="110"/>
+		<e:Label text="选择区服" y="46" size="20" textColor="0xdbaa5b" x="220"/>
+		<e:Group id="serverList" x="205" y="176">
+			<e:Label text="服务器列表" y="11" size="18" textColor="0xDBAA5B" x="112"/>
+			<e:Scroller width="292" height="546" x="0" y="37" anchorOffsetX="0" anchorOffsetY="0">
+				<e:Group id="scrollerGroup" anchorOffsetX="0" width="291" anchorOffsetY="0" height="548">
+				</e:Group>
+			</e:Scroller>
+		</e:Group>
+		<e:Group id="lastServerName" x="207" y="106">
+			<e:Label text="上一次登录服务器" y="0" size="18" textColor="0xDBAA5B" x="82"/>
+			<e:Button id="lastServerBtn" label="Button" x="0" y="26" skinName="loginList"/>
+		</e:Group>
+	</e:Group>
+	<e:Group id="blackBg" left="0" right="0" top="0" bottom="0" verticalCenter="0" horizontalCenter="0" visible="false">
+		<e:Rect fillAlpha="0.89" left="0" bottom="0" top="0" right="0" horizontalCenter="0" verticalCenter="0"/>
+		<e:Label id="trpInfo" text="获取服务器列表..." horizontalCenter="0" verticalCenter="-74" textColor="0xdbaa5b" size="23"/>
+	</e:Group>
+</e:Skin>

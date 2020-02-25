@@ -72,29 +72,40 @@ class LoadingUI extends egret.DisplayObjectContainer {
 
 		}
 	}
-	public loginBtn() {
-		var button = new eui.Button();
-		button.width = 200;
-		button.height = 80;
-		// button.x = this.width/2
-		// button.y = this.height/2
-		// button.bottom = 200
-		button.y = this.height* 0.8
-		button.x = this.width/2 - button.width/2
 
-		button.label = "登录";
-		button.skinName = "resource/eui_skins/btn/Btn11Skin.exml";
-		this.addChild(button);
-		button.addEventListener(egret.TouchEvent.TOUCH_TAP, this.btnTouchHandler, this);
+	public login(): void {
+		GameApp.ins().load(this);
+		this.textField.visible = true
+	}
+	public hideLoadingTrp() {
+
 		this.textField.visible = false
 
 	}
-	private btnTouchHandler(event: egret.TouchEvent): void {
-		console.log("button touched");
-		GameApp.ins().load(this);
-		this.textField.visible = true
-		event.target.visible = false
-	}
+
+	// public loginBtn() {
+	// 	var button = new eui.Button();
+	// 	button.width = 200;
+	// 	button.height = 80;
+	// 	// button.x = this.width/2
+	// 	// button.y = this.height/2
+	// 	// button.bottom = 200
+	// 	button.y = this.height* 0.8
+	// 	button.x = this.width/2 - button.width/2
+
+	// 	button.label = "登录";
+	// 	button.skinName = "resource/eui_skins/btn/Btn11Skin.exml";
+	// 	this.addChild(button);
+	// 	button.addEventListener(egret.TouchEvent.TOUCH_TAP, this.btnTouchHandler, this);
+	// 	this.textField.visible = false
+
+	// }
+	// private btnTouchHandler(event: egret.TouchEvent): void {
+	// 	console.log("button touched");
+	// 	GameApp.ins().load(this);
+	// 	this.textField.visible = true
+	// 	event.target.visible = false
+	// }
 	public setProgress(progress: number, txt: string): void {
 		// this.textField.text = txt + "进度" + progress + "%";
 		this.textField.text = txt + '...';
