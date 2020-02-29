@@ -1,0 +1,1 @@
+{"version":3,"file":"CharModel.js","sourceRoot":"","sources":["../../../src/game/entity/CharModel.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;IAAwB,6BAAW;IAAnC;;IAOA,CAAC;IAJA,kCAAc,GAAd,UAAe,KAAoB;QAClC,IAAI,CAAC,QAAQ,GAAG,IAAI,UAAU,EAAE,CAAC;QACjC,IAAI,CAAC,QAAQ,CAAC,MAAM,CAAC,KAAK,CAAC,CAAC;IAC7B,CAAC;IACF,gBAAC;AAAD,CAAC,AAPD,CAAwB,WAAW,GAOlC;AAPK,UAAA,SAAS,wBAOd,CAAA"}

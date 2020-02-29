@@ -1,0 +1,15 @@
+var RES_RESOURCE = "resource";
+var RES_DIR = "res";
+var MAP_DIR = "map";
+var RES_DIR_BLOOD = RES_DIR + "/blood/";
+var RES_DIR_BODY = RES_DIR + "/body/";
+var RES_DIR_EFF = RES_DIR + "/eff/";
+var RES_DIR_ITEM = RES_DIR + "/item/";
+var RES_DIR_MONSTER = RES_DIR + "/monster/";
+var RES_DIR_SKILL = RES_DIR + "/skill/";
+var RES_DIR_SKILLEFF = RES_DIR + "/skilleff/";
+var RES_DIR_WARSPIRIT = RES_DIR + "/warspirit/";
+var RES_DIR_WEAPON = RES_DIR + "/weapon/";
+var RES_DIR_WING = RES_DIR + "/wing/";
+var RES_DIR_CITY = RES_DIR + "/city/";
+//# sourceMappingURL=ResDirEnum.js.map

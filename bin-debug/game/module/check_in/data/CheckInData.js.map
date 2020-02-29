@@ -1,0 +1,1 @@
+{"version":3,"file":"CheckInData.js","sourceRoot":"","sources":["../../../../../src/game/module/check_in/data/CheckInData.ts"],"names":[],"mappings":";;;AAAA;IAAA;IAWA,CAAC;IALO,2BAAK,GAAZ,UAAa,KAAoB;QAEhC,IAAI,CAAC,KAAK,GAAG,KAAK,CAAC,SAAS,EAAE,CAAC;QAC/B,IAAI,CAAC,WAAW,GAAG,KAAK,CAAC,SAAS,EAAE,CAAC;IACtC,CAAC;IACF,kBAAC;AAAD,CAAC,AAXD,IAWC;AAXK,UAAA,WAAW,0BAWhB,CAAA"}

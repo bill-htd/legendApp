@@ -80,8 +80,8 @@ class KffieldPanel extends BaseView {
 
 		//跨服竞技场
 		egret.callLater(() => {
-			this.island1[`title`].source = `kf_function_invasion`;
-			this.island1[`island`].source = `kf_field_invasion`;
+			this.island1[`title`].source = `kf_function_ladder`;
+			this.island1[`island`].source = `kf_field_ladder`;
 		}, this);
 		// this.island1[`island`].source = `kf_field_ladder`;
 		// this.island1[`title`].source = `kf_function_none`;

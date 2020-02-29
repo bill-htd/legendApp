@@ -147,8 +147,6 @@ class UserBag extends BaseSystem {
 	 * @param bytes
 	 */
 	public doBagData(bytes: GameByteArray): void {
-		console.log('处理背包数据初始化')
-		console.log(bytes)
 		let code: number = bytes.readByte();
 		//背包类型 0是其他物品 1是装备
 		let type: number = bytes.readByte();
@@ -158,8 +156,6 @@ class UserBag extends BaseSystem {
 
 			this.itemCount[type] = {};
 		}
-		console.log('处理背包数据初始化')
-		console.log(bytes)
 		let len: number = bytes.readInt();
 		let itemModel: ItemData;
 		for (let i = 0; i < len; i++) {

@@ -12,7 +12,7 @@
 			<e:Image source="loginPic_json.login_start" y="0" x="0"/>
 			<e:Image source="loginPic_json.login_login" y="5" x="44"/>
 			</e:Group>
-			<e:Label id="zhuceLabel" text="注册" x="377" y="335" size="21" verticalAlign="middle" textColor="0xdbaa5b" bold="true"/>
+			<e:Label id="zhuceLabel" text="注册" x="377" y="335" size="21" verticalAlign="middle" textColor="0xdbaa5b" bold="true" visible="false"/>
 		</e:Group>
 		<e:Group id="zhuceInfo" horizontalCenter="0" y="27" visible="false">
 			<e:Group id="zhuceBtn" y="289" horizontalCenter="0">

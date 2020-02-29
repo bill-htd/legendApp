@@ -1,0 +1,1 @@
+{"version":3,"file":"AStarNode.js","sourceRoot":"","sources":["../../../src/core/astar/AStarNode.ts"],"names":[],"mappings":";;;AAMA;IAKC,mBAAY,CAAS,EAAC,CAAS,EAAC,GAAW;QAC1C,IAAI,CAAC,EAAE,GAAG,CAAC,CAAC;QACZ,IAAI,CAAC,EAAE,GAAG,CAAC,CAAC;QACZ,IAAI,CAAC,IAAI,GAAG,GAAG,CAAC;IACjB,CAAC;IACF,gBAAC;AAAD,CAAC,AAVD,IAUC;AAVK,UAAA,SAAS,wBAUd,CAAA"}

@@ -54,6 +54,7 @@ class GameServer extends BaseSystem {
 	 * @param bytes
 	 */
 	private doServerTime(bytes: GameByteArray): void {
+
 		GameServer.setServerTime(bytes.readUnsignedInt());
 	}
 }

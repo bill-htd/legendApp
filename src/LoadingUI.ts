@@ -52,7 +52,6 @@ class LoadingUI extends egret.DisplayObjectContainer {
 		this.addChildAt(this.loadingBg, 0);
 
 		this.textField = new egret.TextField();
-		console.log(this.textField)
 		this.addChild(this.textField);
 		this.textField.y = this.height - 50;
 		this.textField.width = 480;

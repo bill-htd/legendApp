@@ -55,8 +55,17 @@ class login extends eui.Component {
         this.blackBg.visible = true
         this.trpInfo.text = '获取服务器列表中...'
 
+        
+        this.zhuceLabel.visible = false
         this.dengluInfo.visible = true
         this.zhuceInfo.visible = false
+        let self = this
+        egret.ExternalInterface.call("getChannel", '');
+        egret.ExternalInterface.addCallback("backChannel", function (msg) {
+            if(msg == 'zhousi'){
+                self.zhuceLabel.visible = true
+            }
+        })
     }
 
 	/*
@@ -232,9 +241,9 @@ class login extends eui.Component {
             alert('请选择服务器')
             return
         }
-        // egret.ExternalInterface.call("getChannel", '');
-        // egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            let msg = 'lx'
+        egret.ExternalInterface.call("getChannel", '');
+        egret.ExternalInterface.addCallback("backChannel", function (msg) {
+            // let msg = 'lx'
             let channel = msg;
             let url = ''
             if (number == 1) {
@@ -287,7 +296,7 @@ class login extends eui.Component {
             }
 
 
-        // });
+        });
 
 
 

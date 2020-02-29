@@ -146,9 +146,6 @@ class ResourceUtils extends BaseClass {
 			let loadProgress: Function = this._groups[groupName][1];
 			let loadProgressTarget: any = this._groups[groupName][2];
 			if (loadProgress != null) {
-				console.log( '资源加载进度')
-				console.log( event.itemsLoaded)
-				console.log(event.itemsTotal)
 				loadProgress.call(loadProgressTarget, event.itemsLoaded, event.itemsTotal);
 			}
 		}

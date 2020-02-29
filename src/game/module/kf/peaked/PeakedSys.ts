@@ -131,7 +131,7 @@ class PeakedSys extends BaseSystem {
 			// this.kfStatus = 1
 			// this.kfStatusIsEnd = 1;
 		}
-
+		PeakedHelp.calcTimerNode();
 		//超过了跨服的需要显示的时间点，则本服阶段结束，开始进入跨服阶段
 		//特别注意：这里通过时间节点来计算当本服的状态，是为了表现出本服状态已结束，开始进入跨服阶段的一个表现
 		if (this.bfStatus == BF_PeakStatus.Finals && this.bfStatusIsEnd) {
@@ -149,7 +149,7 @@ class PeakedSys extends BaseSystem {
 			}
 		}
 		//重新计算时间节点
-		PeakedHelp.calcTimerNode();
+		
 
 		//跨服需要请求
 		if (PeakedSys.ins().isKf()) PeakedSys.ins().sendKFBetInfo();
