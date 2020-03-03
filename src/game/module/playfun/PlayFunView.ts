@@ -355,7 +355,9 @@ class PlayFunView extends BaseEuiView {
 	}
 
 	private updateRules(): void {
-		if (!TimerManager.ins().isExists(this.startUpdateRule, this)) TimerManager.ins().doTimer(60, 1, this.startUpdateRule, this);
+		TimerManager.ins().doTimer(1000, 1, function () {
+			if (!TimerManager.ins().isExists(this.startUpdateRule, this)) TimerManager.ins().doTimer(60, 1, this.startUpdateRule, this);
+		}, this);
 	}
 
 	private startUpdateRule(): void {

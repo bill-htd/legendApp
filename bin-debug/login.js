@@ -35,7 +35,7 @@ var login = (function (_super) {
     }
     login.prototype.getRoomList = function () {
         var self = this;
-        var url = 'http://winyso.com/gm/index.php?m=ServerInfo&a=server_list';
+        var url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=server_list';
         Http.ins().send(url, true, true, function (event) {
             var request = event.currentTarget;
             var data = JSON.parse(request.response);
@@ -174,7 +174,7 @@ var login = (function (_super) {
         var channel = msg;
         var url = '';
         if (number == 1) {
-            url = 'http://winyso.com/gm/index.php?m=Regi&a=channel_reg';
+            url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=channel_reg';
             url += '&name=' + name;
             url += '&password=' + password;
             url += '&serverid=' + serverid;
@@ -183,7 +183,7 @@ var login = (function (_super) {
             self.trpInfo.text = '登录中...';
         }
         else {
-            url = 'http://winyso.com/gm/index.php?m=Regi&a=index';
+            url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=index';
             url += '&name=' + name;
             url += '&password=' + password;
             url += '&serverid=' + serverid;

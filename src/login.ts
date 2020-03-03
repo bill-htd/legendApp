@@ -77,7 +77,7 @@ class login extends eui.Component {
 	 */
     private getRoomList() {
         let self = this;
-        let url = 'http://winyso.com/gm/index.php?m=ServerInfo&a=server_list'
+        let url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=server_list'
         Http.ins().send(url, true, true, function (event: egret.Event) {
             var request = <egret.HttpRequest>event.currentTarget;
             let data = JSON.parse(request.response)
@@ -247,7 +247,7 @@ class login extends eui.Component {
             let channel = msg;
             let url = ''
             if (number == 1) {
-                url = 'http://winyso.com/gm/index.php?m=Regi&a=channel_reg'
+                url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=channel_reg'
                 url += '&name=' + name;
                 url += '&password=' + password;
                 url += '&serverid=' + serverid;
@@ -256,7 +256,7 @@ class login extends eui.Component {
                 self.blackBg.visible = true
                 self.trpInfo.text = '登录中...'
             } else {
-                url = 'http://winyso.com/gm/index.php?m=Regi&a=index'
+                url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=index'
                 url += '&name=' + name;
                 url += '&password=' + password;
                 url += '&serverid=' + serverid;
