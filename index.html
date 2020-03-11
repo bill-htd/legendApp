@@ -47,7 +47,7 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 	var loadSingleScript = function (src, callback) {
 		var s = document.createElement('script');
 		s.async = false;
-		s.src = src + '?v=2.0.3';
+		s.src = src + '?v=2.0.4';
 		s.addEventListener('load', function () {
 			s.parentNode.removeChild(s);
 			s.removeEventListener('load', arguments.callee, false);
@@ -121,14 +121,22 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 		};
 	}
 
+	function setChannel(channel){
+		this.channel = channel
+	}
+	function getChannel(){
+		return this.channel || 'CQ'
+	}
+
 	function getChargeUrl() {
-		return 'http://cq.58hufen.com/gm/index.php?m=Payment&a=Placeorder&platform=lx';
+		var channel = this.channel || 'CQ'
+		return 'http://cq.58hufen.com/gm/index.php?m=Payment&a=Placeorder&platform='+channel;
 	}
 	function getChatControlUrl() {
 		return 'http://cq.58hufen.com/gm/index.php?m=Chat&a=chat_controls&';
 	}
 	function getkefuUrl() {
-		return 'https://chat-new.mqimg.com/widget/standalone.html?eid=184645';
+		return 'https://temp-chat.mstatik.com/widget/standalone.html?eid=184645';
 	}
 
 

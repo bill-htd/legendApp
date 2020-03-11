@@ -118,6 +118,7 @@ class Actor extends BaseSystem {
 	public postNameChange(value: string) {
 		if (this._myName != value) {
 			this._myName = value;
+			LocationProperty.userName = value;
 		}
 	}
 

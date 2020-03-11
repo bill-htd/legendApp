@@ -62,7 +62,11 @@ class login extends eui.Component {
         let self = this
         egret.ExternalInterface.call("getChannel", '');
         egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            if(msg == 'zhousi'){
+            if(msg){
+                window['setChannel'](msg) 
+            }
+            
+            if(msg == 'zhousi' || msg == 'CQ'){
                 self.zhuceLabel.visible = true
             }
         })
@@ -244,7 +248,11 @@ class login extends eui.Component {
         egret.ExternalInterface.call("getChannel", '');
         egret.ExternalInterface.addCallback("backChannel", function (msg) {
             // let msg = 'lx'
+
             let channel = msg;
+            if(channel == 'lx'){
+                password = this.password.text
+            }
             let url = ''
             if (number == 1) {
                 url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=channel_reg'

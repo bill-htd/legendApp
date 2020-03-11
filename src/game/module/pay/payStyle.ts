@@ -39,6 +39,7 @@ class Pay extends BaseClass {
             WarnWin.show("请求地址出错，请重新点击购买按钮", function () { }, this);
             return
         }
+        
         url += '&user_id=' + LocationProperty.userID;
         url += '&role_name=' + LocationProperty.userName;
         url += '&role_id=' + LocationProperty.roleID;

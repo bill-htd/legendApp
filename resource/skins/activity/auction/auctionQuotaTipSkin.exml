@@ -20,7 +20,7 @@
 		<e:Image y="201" source="gantanhao" left="37"/>
 		<e:Label text="每充值1元宝，获得1元宝可购买额度" size="18" id="tipText2" textAlign="left" y="204" textColor="0xD1C28F" verticalAlign="justify" left="65"/>
 		<e:Image source="gantanhao" y="227" left="37"/>
-		<e:Label text="每1点活跃度，可转化为10元宝购买额度" size="18" id="tipText3" textAlign="left" y="230" textColor="0xD1C28F" verticalAlign="justify" left="64"/>
+		<e:Label text="每1点活跃度，可转化为3元宝购买额度" size="18" id="tipText3" textAlign="left" y="230" textColor="0xD1C28F" verticalAlign="justify" left="64"/>
 		<e:Image source="gantanhao" y="254" left="37"/>
 		<e:Label text="活跃累计额度上限50000，消耗后可继续累计" size="18" id="tipText4" textAlign="left" y="256" textColor="0xD1C28F" verticalAlign="justify" left="62"/>
 		<e:Label id="text" text="（竞拍时优先使用活跃额度）" size="20" horizontalCenter="0" bottom="187" x="20" y="20" textColor="0x9F946D"/>
