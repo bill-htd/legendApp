@@ -73,6 +73,7 @@ var Actor = (function (_super) {
     Actor.prototype.postNameChange = function (value) {
         if (this._myName != value) {
             this._myName = value;
+            LocationProperty.userName = value;
         }
     };
     Actor.prototype.postGoldChange = function (value) {

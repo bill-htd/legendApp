@@ -11,7 +11,6 @@ var PeakedHelp = (function () {
         this.bfStatusTimer = [];
         this.kfStatusTimer = [];
         var curTime = Math.floor(DateUtils.formatMiniDateTime(sysDt.curStateTime) / DateUtils.MS_PER_SECOND);
-        console.log(PeakedSys.ins().bfStatus, PeakedSys.ins().bfStatusIsEnd);
         if (PeakedSys.ins().bfStatus >= BF_PeakStatus.Finals && PeakedSys.ins().bfStatusIsEnd) {
             if (!GlobalConfig.PeakRaceBase.interval)
                 GlobalConfig.PeakRaceBase.interval = 14;
@@ -19,7 +18,6 @@ var PeakedHelp = (function () {
         }
         this.bfStatusTimer[BF_PeakStatus.None] = curTime;
         this.bfStatusTimer[BF_PeakStatus.Over] = curTime + baseDP.crossRelTime;
-        console.log('本服结束时间 :  ' + this.bfStatusTimer[BF_PeakStatus.Over]);
         for (var status_1 = 1; status_1 <= BF_PeakStatus.Finals; status_1++) {
             this.bfStatusTimer[status_1] = curTime + timeDps[status_1].relTime;
         }

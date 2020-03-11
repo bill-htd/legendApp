@@ -69,9 +69,6 @@ var PeakedSys = (function (_super) {
         PeakedHelp.calcTimerNode();
         if (this.bfStatus == BF_PeakStatus.Finals && this.bfStatusIsEnd) {
             var t = PeakedHelp.bfStatusTimer[BF_PeakStatus.Over] * 1000 - GameServer.serverTime;
-            console.log('--------------');
-            console.log(PeakedHelp.bfStatusTimer[BF_PeakStatus.Over] * 1000);
-            console.log(GameServer.serverTime);
             if (this.kfStatus > KF_PeakStatus.None)
                 t = 0;
             if (t <= 0)
@@ -322,7 +319,6 @@ var PeakedSys = (function (_super) {
         return false;
     };
     PeakedSys.prototype.isKf = function () {
-        console.log('是否在跨服中 :', this.bfStatus, this.bfStatus == BF_PeakStatus.Over, this.bfStatusIsEnd != 0);
         return this.bfStatus == BF_PeakStatus.Over && this.bfStatusIsEnd != 0;
     };
     PeakedSys.prototype.canSignUp = function () {

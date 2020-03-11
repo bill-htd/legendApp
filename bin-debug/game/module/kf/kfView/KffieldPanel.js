@@ -63,8 +63,8 @@ var KffieldPanel = (function (_super) {
         var showBody = GlobalConfig.CrossBossBase.showBoss ? GlobalConfig.CrossBossBase.showBoss : "monster10041_3s";
         this.kfBossMc.playFile(RES_DIR_MONSTER + showBody, -1);
         egret.callLater(function () {
-            _this.island1["title"].source = "kf_function_invasion";
-            _this.island1["island"].source = "kf_field_invasion";
+            _this.island1["title"].source = "kf_function_ladder";
+            _this.island1["island"].source = "kf_field_ladder";
         }, this);
         this.island1.currentState = "unlock";
         this.island2.currentState = "lock";

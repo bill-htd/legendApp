@@ -31,7 +31,6 @@ var GameServer = (function (_super) {
         configurable: true
     });
     GameServer.setServerTime = function (t) {
-        console.log('服务器当前时间 ： ' + t);
         GameServer._serverTime = DateUtils.formatMiniDateTime(t) - egret.getTimer();
     };
     GameServer.prototype.postServerOpenDay = function (bytes) {

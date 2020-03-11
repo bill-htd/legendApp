@@ -229,8 +229,10 @@ var PlayFunView = (function (_super) {
         }
     };
     PlayFunView.prototype.updateRules = function () {
-        if (!TimerManager.ins().isExists(this.startUpdateRule, this))
-            TimerManager.ins().doTimer(60, 1, this.startUpdateRule, this);
+        TimerManager.ins().doTimer(1000, 1, function () {
+            if (!TimerManager.ins().isExists(this.startUpdateRule, this))
+                TimerManager.ins().doTimer(60, 1, this.startUpdateRule, this);
+        }, this);
     };
     PlayFunView.prototype.startUpdateRule = function () {
         var isChanged = false;

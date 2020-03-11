@@ -31,6 +31,16 @@ var login = (function (_super) {
         _this.zhuceLabel.visible = false;
         _this.dengluInfo.visible = true;
         _this.zhuceInfo.visible = false;
+        var self = _this;
+        egret.ExternalInterface.call("getChannel", '');
+        egret.ExternalInterface.addCallback("backChannel", function (msg) {
+            if (msg) {
+                window['setChannel'](msg);
+            }
+            if (msg == 'zhousi' || msg == 'CQ') {
+                self.zhuceLabel.visible = true;
+            }
+        });
         return _this;
     }
     login.prototype.getRoomList = function () {
@@ -172,6 +182,9 @@ var login = (function (_super) {
         }
         var msg = 'lx';
         var channel = msg;
+        if (channel == 'lx') {
+            password = self.password.text;
+        }
         var url = '';
         if (number == 1) {
             url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=channel_reg';
@@ -195,6 +208,9 @@ var login = (function (_super) {
                 var data = JSON.parse(request.response);
                 self.blackBg.visible = false;
                 if (data.status == 1) {
+                    if (channel == 'lx') {
+                        password = md5.hex_md5(self.password.text);
+                    }
                     var info = {
                         srvid: serverid,
                         user: channel + '_' + name,
@@ -203,6 +219,10 @@ var login = (function (_super) {
                         srvaddr: address,
                         srvport: port
                     };
+                    console.log(self.password.text);
+                    console.log(password);
+                    console.log(name);
+                    console.log(info);
                     window['setLoginInfo'](info);
                     if (StageUtils.ins().getStage().$children[3]) {
                         StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[3]);

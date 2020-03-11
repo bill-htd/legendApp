@@ -55,18 +55,18 @@ class login extends eui.Component {
         this.blackBg.visible = true
         this.trpInfo.text = '获取服务器列表中...'
 
-        
+
         this.zhuceLabel.visible = false
         this.dengluInfo.visible = true
         this.zhuceInfo.visible = false
         let self = this
         egret.ExternalInterface.call("getChannel", '');
         egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            if(msg){
-                window['setChannel'](msg) 
+            if (msg) {
+                window['setChannel'](msg)
             }
-            
-            if(msg == 'zhousi' || msg == 'CQ'){
+
+            if (msg == 'zhousi' || msg == 'CQ') {
                 self.zhuceLabel.visible = true
             }
         })
@@ -250,8 +250,8 @@ class login extends eui.Component {
             // let msg = 'lx'
 
             let channel = msg;
-            if(channel == 'lx'){
-                password = this.password.text
+            if (channel == 'lx') {
+                password = self.password.text
             }
             let url = ''
             if (number == 1) {
@@ -280,6 +280,9 @@ class login extends eui.Component {
                     self.blackBg.visible = false
                     if (data.status == 1) {
                         // 保存信息
+                        if (channel == 'lx') {
+                            password =  md5.hex_md5(self.password.text)
+                        }
                         let info = {
                             srvid: serverid,
                             user: channel + '_' + name,
