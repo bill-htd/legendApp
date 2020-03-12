@@ -77,12 +77,23 @@ var login = (function (_super) {
     login.prototype.updateRoomName = function () {
         var roomList = window['getRoomList']();
         var data = JSON.parse(egret.localStorage.getItem('serverid'));
+        var _account = egret.localStorage.getItem('account');
+        var _password = egret.localStorage.getItem('password');
+        if (_account) {
+            this.account.text = _account;
+        }
+        if (_password) {
+            this.password.text = _password;
+        }
         if (data) {
             for (var i = 0; i < roomList.length; i++) {
                 if (roomList[i].id == data) {
                     this.roomName.text = roomList[i].name;
                 }
             }
+        }
+        else {
+            this.roomName.text = roomList[roomList.length - 1].name;
         }
     };
     login.prototype.onAccountChange = function (e) {
@@ -180,61 +191,61 @@ var login = (function (_super) {
             alert('请选择服务器');
             return;
         }
-        var msg = 'lx';
-        var channel = msg;
-        if (channel == 'lx') {
-            password = self.password.text;
-        }
-        var url = '';
-        if (number == 1) {
-            url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=channel_reg';
-            url += '&name=' + name;
-            url += '&password=' + password;
-            url += '&serverid=' + serverid;
-            url += '&channel=' + channel;
-            self.blackBg.visible = true;
-            self.trpInfo.text = '登录中...';
-        }
-        else {
-            url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=index';
-            url += '&name=' + name;
-            url += '&password=' + password;
-            url += '&serverid=' + serverid;
-            url += '&channel=' + channel;
-        }
-        if (url) {
-            Http.ins().send(url, true, true, function (event) {
-                var request = event.currentTarget;
-                var data = JSON.parse(request.response);
-                self.blackBg.visible = false;
-                if (data.status == 1) {
-                    if (channel == 'lx') {
-                        password = md5.hex_md5(self.password.text);
+        egret.ExternalInterface.call("getChannel", '');
+        egret.ExternalInterface.addCallback("backChannel", function (msg) {
+            var channel = msg;
+            if (channel == 'lx') {
+                password = self.password.text;
+            }
+            var url = '';
+            if (number == 1) {
+                url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=channel_reg';
+                url += '&name=' + name;
+                url += '&password=' + password;
+                url += '&serverid=' + serverid;
+                url += '&channel=' + channel;
+                self.blackBg.visible = true;
+                self.trpInfo.text = '登录中...';
+            }
+            else {
+                url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=index';
+                url += '&name=' + name;
+                url += '&password=' + password;
+                url += '&serverid=' + serverid;
+                url += '&channel=' + channel;
+            }
+            if (url) {
+                Http.ins().send(url, true, true, function (event) {
+                    var request = event.currentTarget;
+                    var data = JSON.parse(request.response);
+                    self.blackBg.visible = false;
+                    if (data.status == 1) {
+                        egret.localStorage.setItem("account", self.account.text);
+                        egret.localStorage.setItem("password", self.password.text);
+                        if (channel == 'lx') {
+                            password = md5.hex_md5(self.password.text);
+                        }
+                        var info = {
+                            srvid: serverid,
+                            user: channel + '_' + name,
+                            serverid: serverid,
+                            spverify: password,
+                            srvaddr: address,
+                            srvport: port
+                        };
+                        window['setLoginInfo'](info);
+                        if (StageUtils.ins().getStage().$children[3]) {
+                            StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[3]);
+                        }
+                        self.loginView.login();
+                        LocationProperty.init();
                     }
-                    var info = {
-                        srvid: serverid,
-                        user: channel + '_' + name,
-                        serverid: serverid,
-                        spverify: password,
-                        srvaddr: address,
-                        srvport: port
-                    };
-                    console.log(self.password.text);
-                    console.log(password);
-                    console.log(name);
-                    console.log(info);
-                    window['setLoginInfo'](info);
-                    if (StageUtils.ins().getStage().$children[3]) {
-                        StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[3]);
+                    else {
+                        alert(data.info);
                     }
-                    self.loginView.login();
-                    LocationProperty.init();
-                }
-                else {
-                    alert(data.info);
-                }
-            });
-        }
+                });
+            }
+        });
     };
     login.prototype.updateRoomList = function () {
         var roomList = window['getRoomList']();

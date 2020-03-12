@@ -119,13 +119,27 @@ class login extends eui.Component {
     private updateRoomName() {
         let roomList = window['getRoomList']()
         var data = JSON.parse(<string>egret.localStorage.getItem('serverid'));
+        var _account = egret.localStorage.getItem('account');
+        var _password = egret.localStorage.getItem('password');
+
+        if (_account) {
+            this.account.text = _account
+        }
+        if (_password) {
+            this.password.text = _password
+        }
+
+
         if (data) {
             for (let i = 0; i < roomList.length; i++) {
                 if (roomList[i].id == data) {
                     this.roomName.text = roomList[i].name
                 }
             }
+        } else {
+            this.roomName.text = roomList[roomList.length - 1].name
         }
+
     }
 
     private onAccountChange(e: egret.Event) {
@@ -280,8 +294,14 @@ class login extends eui.Component {
                     self.blackBg.visible = false
                     if (data.status == 1) {
                         // 保存信息
+
+                        egret.localStorage.setItem("account", self.account.text)
+                        egret.localStorage.setItem("password", self.password.text)
+
+
+
                         if (channel == 'lx') {
-                            password =  md5.hex_md5(self.password.text)
+                            password = md5.hex_md5(self.password.text)
                         }
                         let info = {
                             srvid: serverid,
