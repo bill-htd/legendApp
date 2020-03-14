@@ -33,6 +33,17 @@ class login extends eui.Component {
     private closeZhuce: eui.Image;
     private zhuceLabel: eui.Label;
 
+    private warnGroup: eui.Group;
+    private sureBtn0: eui.Button;
+    private notBtn0: eui.Button;
+    private resUrl: null;
+
+    private notice: eui.Button;
+    private gonggaoClose: eui.Button;
+    private gonggao: eui.Group;
+    private gonggaoLabel:eui.Label;
+    // private content:String = '欢迎来到优优传奇世界！';
+
 
     public constructor() {
         super();
@@ -50,20 +61,48 @@ class login extends eui.Component {
         this.closeZhuce.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
         this.zhuceBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
 
+        this.notBtn0.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+        this.sureBtn0.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
 
-        this.getRoomList();
+        this.notice.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+        this.gonggaoClose.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+
+
+
+        this.initGonggao()
+
+
+
         this.blackBg.visible = true
-        this.trpInfo.text = '获取服务器列表中...'
-
-
         this.zhuceLabel.visible = false
         this.dengluInfo.visible = true
         this.zhuceInfo.visible = false
         let self = this
         egret.ExternalInterface.call("getChannel", '');
         egret.ExternalInterface.addCallback("backChannel", function (msg) {
+            // var msg = 'lx';
             if (msg) {
                 window['setChannel'](msg)
+                window['statistics']() // 统计
+                let url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=app_edition';
+                url += '&channel=' + msg;
+                Http.ins().send(url, true, true, function (event: egret.Event) {
+                    var request = <egret.HttpRequest>event.currentTarget;
+                    let data = JSON.parse(request.response)
+                    if (data.code == 0) {
+                        var info = data.data;
+                        if (info.appVer != Version.AppVersion) {
+                            self.resUrl = info.resUrl;
+                            self.warnGroup.visible = true
+                        } else {
+                            self.getRoomList();
+                            self.trpInfo.text = '获取服务器列表中...'
+                        }
+                    } else {
+                        alert('获取版本号失败，请重启游戏')
+                    }
+
+                })
             }
 
             if (msg == 'zhousi' || msg == 'CQ') {
@@ -79,6 +118,17 @@ class login extends eui.Component {
 		 清空所有:egret.localStorage.clear();
 
 	 */
+    private initGonggao() {
+        let self = this
+        let url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=game_notice';
+         Http.ins().send(url, true, true, function (event: egret.Event) {
+            var request = <egret.HttpRequest>event.currentTarget;
+            let data = JSON.parse(request.response)
+            if(data.code == 0){
+                self.gonggaoLabel.text = data.data.content
+            }
+        })
+    }
     private getRoomList() {
         let self = this;
         let url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=server_list'
@@ -177,6 +227,12 @@ class login extends eui.Component {
         this.zhuceBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
         this.closeZhuce.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
 
+        this.notBtn0.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+        this.sureBtn0.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+
+        this.notice.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+        this.gonggaoClose.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+
     }
 
     private onTap(e: egret.TouchEvent): void {
@@ -185,6 +241,18 @@ class login extends eui.Component {
                 this.loginpb.visible = false
                 this.roompb.visible = true
                 this.updateRoomList()
+                break;
+            case this.notBtn0:
+                console.log('danji quxiao ')
+                break;
+            case this.gonggaoClose:
+                this.gonggao.visible = false
+                break;
+            case this.notice:
+                this.gonggao.visible = true
+                break;
+            case this.sureBtn0:
+                egret.ExternalInterface.call("openURL", this.resUrl);
                 break;
             case this.loginBtn:
                 this.loginHandle(1)

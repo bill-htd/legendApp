@@ -22,8 +22,9 @@
 		}
 	</style>
 </head>
+
 <body>
-<div style="margin: auto;width: 100%;height: 100%;" class="egret-player" data-entry-class="Main" data-orientation="auto" data-scale-mode="showAll" data-frame-rate="30" data-content-width="600"
+	<div style="margin: auto;width: 100%;height: 100%;" class="egret-player" data-entry-class="Main" data-orientation="auto" data-scale-mode="showAll" data-frame-rate="30" data-content-width="600"
 data-content-height="1204" data-show-paint-rect="false" data-multi-fingered="2" data-show-fps="false" data-show-log="false"
 data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 </div>
@@ -121,22 +122,38 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 		};
 	}
 
-	function setChannel(channel){
+	function setChannel(channel) {
 		this.channel = channel
 	}
-	function getChannel(){
+	function getChannel() {
 		return this.channel || 'CQ'
 	}
 
 	function getChargeUrl() {
 		var channel = this.channel || 'CQ'
-		return 'http://cq.58hufen.com/gm/index.php?m=Payment&a=Placeorder&platform='+channel;
+		return 'http://cq.58hufen.com/gm/index.php?m=Payment&a=Placeorder&platform=' + channel;
 	}
 	function getChatControlUrl() {
 		return 'http://cq.58hufen.com/gm/index.php?m=Chat&a=chat_controls&';
 	}
 	function getkefuUrl() {
 		return 'https://temp-chat.mstatik.com/widget/standalone.html?eid=184645';
+	}
+
+	function statistics() {
+		if (this.channel == 'lx') {
+			var _hmt = _hmt || [];
+			var hm = document.createElement('script');
+			hm.src = 'https://hm.baidu.com/hm.js?3b899991c3fa1f777ead47bf4bc45c9b';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(hm, s);
+		} else {
+			var _hmt = _hmt || [];
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?2f4d0caff62d3affc9d7ce51c369ca09";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		}
 	}
 
 
@@ -237,7 +254,7 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 		// 	// srvaddr: '47.106.10.149',
 		// 	// srvport: 9004
 
-		
+
 
 		// 	srvid: "5",
 		// 	// user: "lx_smjlrbqs",

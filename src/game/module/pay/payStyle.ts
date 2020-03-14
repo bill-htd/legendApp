@@ -48,7 +48,6 @@ class Pay extends BaseClass {
         url += '&gold=' + yuanbao;
         url += '&serverid=' + LocationProperty.serverID;
         
-        console.log(LocationProperty.userName)
         Http.ins().send(url, true, false, function (event: egret.Event) {
             self.sendNum++
             var request = <egret.HttpRequest>event.currentTarget;
@@ -61,16 +60,6 @@ class Pay extends BaseClass {
                 } else {
                     url = decodeURIComponent(url)
                 }
-
-                console.log(url)
-                // if (window['isSafari']()) {
-                //     window.open(url)
-                //     WarnWin.show("请允许浏览器打开支付弹窗\n  设置->浏览器->阻止弹出窗口(关闭)", function () { }, this);
-                // } else {
-                //     ViewManager.ins().close(ChargeFirstWin)
-                //     window['createIframe'](url)
-                    
-                // }
                 egret.ExternalInterface.call("openURL", url);
 
             }

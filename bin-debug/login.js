@@ -25,9 +25,12 @@ var login = (function (_super) {
         _this.zhuceLabel.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
         _this.closeZhuce.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
         _this.zhuceBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
-        _this.getRoomList();
+        _this.notBtn0.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
+        _this.sureBtn0.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
+        _this.notice.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
+        _this.gonggaoClose.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
+        _this.initGonggao();
         _this.blackBg.visible = true;
-        _this.trpInfo.text = '获取服务器列表中...';
         _this.zhuceLabel.visible = false;
         _this.dengluInfo.visible = true;
         _this.zhuceInfo.visible = false;
@@ -36,6 +39,26 @@ var login = (function (_super) {
         egret.ExternalInterface.addCallback("backChannel", function (msg) {
             if (msg) {
                 window['setChannel'](msg);
+                var url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=app_edition';
+                url += '&channel=' + msg;
+                Http.ins().send(url, true, true, function (event) {
+                    var request = event.currentTarget;
+                    var data = JSON.parse(request.response);
+                    if (data.code == 0) {
+                        var info = data.data;
+                        if (info.appVer != Version.AppVersion) {
+                            self.resUrl = info.resUrl;
+                            self.warnGroup.visible = true;
+                        }
+                        else {
+                            self.getRoomList();
+                            self.trpInfo.text = '获取服务器列表中...';
+                        }
+                    }
+                    else {
+                        alert('获取版本号失败，请重启游戏');
+                    }
+                });
             }
             if (msg == 'zhousi' || msg == 'CQ') {
                 self.zhuceLabel.visible = true;
@@ -43,6 +66,17 @@ var login = (function (_super) {
         });
         return _this;
     }
+    login.prototype.initGonggao = function () {
+        var self = this;
+        var url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=game_notice';
+        Http.ins().send(url, true, true, function (event) {
+            var request = event.currentTarget;
+            var data = JSON.parse(request.response);
+            if (data.code == 0) {
+                self.gonggaoLabel.text = data.data.content;
+            }
+        });
+    };
     login.prototype.getRoomList = function () {
         var self = this;
         var url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=server_list';
@@ -128,6 +162,10 @@ var login = (function (_super) {
         this.zhuceLabel.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
         this.zhuceBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
         this.closeZhuce.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+        this.notBtn0.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+        this.sureBtn0.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+        this.notice.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+        this.gonggaoClose.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
     };
     login.prototype.onTap = function (e) {
         switch (e.currentTarget) {
@@ -135,6 +173,18 @@ var login = (function (_super) {
                 this.loginpb.visible = false;
                 this.roompb.visible = true;
                 this.updateRoomList();
+                break;
+            case this.notBtn0:
+                console.log('danji quxiao ');
+                break;
+            case this.gonggaoClose:
+                this.gonggao.visible = false;
+                break;
+            case this.notice:
+                this.gonggao.visible = true;
+                break;
+            case this.sureBtn0:
+                egret.ExternalInterface.call("openURL", this.resUrl);
                 break;
             case this.loginBtn:
                 this.loginHandle(1);

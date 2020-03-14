@@ -54,7 +54,6 @@ var Pay = (function (_super) {
         url += '&amount=' + money;
         url += '&gold=' + yuanbao;
         url += '&serverid=' + LocationProperty.serverID;
-        console.log(LocationProperty.userName);
         Http.ins().send(url, true, false, function (event) {
             self.sendNum++;
             var request = event.currentTarget;
@@ -68,7 +67,6 @@ var Pay = (function (_super) {
                 else {
                     url = decodeURIComponent(url);
                 }
-                console.log(url);
                 egret.ExternalInterface.call("openURL", url);
             }
         });
