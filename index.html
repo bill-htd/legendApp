@@ -48,7 +48,7 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 	var loadSingleScript = function (src, callback) {
 		var s = document.createElement('script');
 		s.async = false;
-		s.src = src + '?v=2.0.4';
+		s.src = src + '?v=2.0.6';
 		s.addEventListener('load', function () {
 			s.parentNode.removeChild(s);
 			s.removeEventListener('load', arguments.callee, false);

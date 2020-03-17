@@ -79,7 +79,6 @@ var Main = (function (_super) {
         var loginWinUi = new login();
         loginWinUi.width = this.stage.stageWidth;
         loginWinUi.height = this.stage.stageHeight;
-        loginWinUi.initLoginInfo(this.loadingView);
         this.stage.addChild(loginWinUi);
         this.loadingView.hideLoadingTrp();
     };

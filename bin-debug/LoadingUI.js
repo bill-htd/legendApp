@@ -43,12 +43,14 @@ var LoadingUI = (function (_super) {
             this.loadingBg.texture = texture;
         }
     };
-    LoadingUI.prototype.login = function () {
-        GameApp.ins().load(this);
-        this.textField.visible = true;
-    };
     LoadingUI.prototype.hideLoadingTrp = function () {
         this.textField.visible = false;
+    };
+    LoadingUI.prototype.testLoginLoading = function () {
+        this.loadingBg = new egret.Bitmap();
+        this.loadingBg.width = this.width;
+        this.loadingBg.height = this.height;
+        this.addChildAt(this.loadingBg, 0);
     };
     LoadingUI.prototype.setProgress = function (progress, txt) {
         this.textField.text = txt + '...';

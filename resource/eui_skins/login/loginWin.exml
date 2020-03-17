@@ -81,4 +81,10 @@
 		</e:Scroller>
 		<e:Label text="公告" textColor="0xbd600d" size="30" horizontalCenter="0" top="6" bold="true"/>
 	</e:Group>
+
+	<e:Group id="loadingpb" left="0" right="0" top="0" bottom="0" horizontalCenter="0" verticalCenter="0" visible="false">
+		<e:Image source="loadingbg_png" horizontalCenter="0" verticalCenter="0" left="0" right="0" top="0" bottom="0"/>
+		<e:ProgressBar id="loadingbar" width="500" height="30" skinName="bar12skin" horizontalCenter="2" verticalCenter="270"/>
+		<e:Label id="loadingLabel" text="加载资源中。。。" textColor="0xf7b20c" size="18" horizontalCenter="0" verticalCenter="231"/>
+	</e:Group>
 </e:Skin>

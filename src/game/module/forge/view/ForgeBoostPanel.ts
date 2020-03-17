@@ -51,6 +51,15 @@ class ForgeBoostPanel extends BaseEuiView {
 		this.eff.x = this.upGradeBtn.width/2;
 		this.eff.y = this.upGradeBtn.height/2;
 		this.eff.touchEnabled = false;
+		if( Recharge.ins().franchise ){
+			this.upGradeBtn0.visible = true
+			this.upGradeBtn.visible = false
+		}
+		else{
+			this.upGradeBtn.visible = true
+			this.upGradeBtn0.visible = false
+		}
+			
 	}
 
 	public getGuildButton(): any {

@@ -79,6 +79,7 @@ var RoleMgr = (function (_super) {
         switch (code) {
             case 0:
                 if (StageUtils.ins().getStage().$children[2]) {
+                    StageUtils.ins().getStage().$children[2].setProgress(100, '加载完成，进入游戏');
                     StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2]);
                 }
                 SceneManager.ins().runScene(CreateRoleScene);
@@ -124,6 +125,7 @@ var RoleMgr = (function (_super) {
                 break;
             case 1:
                 if (StageUtils.ins().getStage().$children[2]) {
+                    StageUtils.ins().getStage().$children[2].setProgress(100, '加载完成，进入游戏');
                     StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2]);
                 }
                 KFServerSys.ins().linkingKFState(false);

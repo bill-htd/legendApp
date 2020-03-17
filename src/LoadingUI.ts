@@ -37,6 +37,7 @@ class LoadingUI extends egret.DisplayObjectContainer {
 	private textField: egret.TextField;
 	private loadingBg: egret.Bitmap;
 	private bgUrl = "resource/image/bg/bg.png";
+	// private loadingurl = "resource/image/bg/loadingbg.png";
 
 	public createView(): void {
 		/**加载页背景 */
@@ -72,14 +73,12 @@ class LoadingUI extends egret.DisplayObjectContainer {
 		}
 	}
 
-	public login(): void {
-		GameApp.ins().load(this);
-		this.textField.visible = true
-	}
+	// public login(): void {
+	// 	GameApp.ins().load(this);
+	// 	this.textField.visible = true
+	// }
 	public hideLoadingTrp() {
-
 		this.textField.visible = false
-
 	}
 
 	// public loginBtn() {
@@ -105,6 +104,18 @@ class LoadingUI extends egret.DisplayObjectContainer {
 	// 	this.textField.visible = true
 	// 	event.target.visible = false
 	// }
+	public testLoginLoading(){
+		this.loadingBg = new egret.Bitmap();
+		// this.loadingBg.fillMode = egret.BitmapFillMode.REPEAT;
+
+		this.loadingBg.width = this.width
+		this.loadingBg.height = this.height
+		this.addChildAt(this.loadingBg, 0);
+	}
+
+
+
+
 	public setProgress(progress: number, txt: string): void {
 		// this.textField.text = txt + "进度" + progress + "%";
 		this.textField.text = txt + '...';

@@ -39,6 +39,7 @@ var login = (function (_super) {
         egret.ExternalInterface.addCallback("backChannel", function (msg) {
             if (msg) {
                 window['setChannel'](msg);
+                window['statistics']();
                 var url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=app_edition';
                 url += '&channel=' + msg;
                 Http.ins().send(url, true, true, function (event) {
@@ -73,7 +74,10 @@ var login = (function (_super) {
             var request = event.currentTarget;
             var data = JSON.parse(request.response);
             if (data.code == 0) {
-                self.gonggaoLabel.text = data.data.content;
+                if (data.data.content) {
+                    self.gonggao.visible = true;
+                    self.gonggaoLabel.text = data.data.content;
+                }
             }
         });
     };
@@ -103,10 +107,24 @@ var login = (function (_super) {
                     roomListData.push(listData);
                 }
             }
+            egret.localStorage.setItem('serverid', JSON.stringify(roomListData[roomListData.length - 1].id));
+            egret.localStorage.setItem('serverPort', JSON.stringify(roomListData[roomListData.length - 1].port));
+            egret.localStorage.setItem('serverAddress', JSON.stringify(roomListData[roomListData.length - 1].address));
             window['setRoomList'](roomListData);
             self.updateRoomName();
             self.blackBg.visible = false;
         });
+    };
+    login.prototype.setProgress = function (number, txt) {
+        this.loadingLabel.text = txt;
+        if (number > this.loadingbar.value) {
+            while (number > this.loadingbar.value) {
+                this.loadingbar.value += 1;
+            }
+        }
+        else {
+            this.loadingbar.value = number;
+        }
     };
     login.prototype.updateRoomName = function () {
         var roomList = window['getRoomList']();
@@ -219,9 +237,6 @@ var login = (function (_super) {
                 break;
         }
     };
-    login.prototype.initLoginInfo = function (loginView) {
-        this.loginView = loginView;
-    };
     login.prototype.loginHandle = function (number) {
         if (this.account.text.length == 0) {
             alert('账号不能为空');
@@ -284,11 +299,13 @@ var login = (function (_super) {
                             srvport: port
                         };
                         window['setLoginInfo'](info);
-                        if (StageUtils.ins().getStage().$children[3]) {
-                            StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[3]);
+                        if (StageUtils.ins().getStage().$children[2]) {
+                            StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2]);
                         }
-                        self.loginView.login();
+                        self.loadingpb.visible = true;
+                        self.setProgress(0, '资源加载中...');
                         LocationProperty.init();
+                        GameApp.ins().load(self);
                     }
                     else {
                         alert(data.info);

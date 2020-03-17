@@ -5,7 +5,7 @@ class GameApp extends BaseClass {
 
 	public preload_load_count:number = 0;
 	public map_load_count:number = 0;
-	public loadingView:LoadingUI;
+	public loadingView:login;
 
 	public constructor() {
 		super();
@@ -15,7 +15,7 @@ class GameApp extends BaseClass {
 		return super.ins() as GameApp;
 	}
 
-	public load(loadingView:LoadingUI) {
+	public load(loadingView:login) {
 		/**
 		 * 	这里可以添加登录后在加载
 		 * 

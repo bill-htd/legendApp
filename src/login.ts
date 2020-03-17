@@ -41,8 +41,12 @@ class login extends eui.Component {
     private notice: eui.Button;
     private gonggaoClose: eui.Button;
     private gonggao: eui.Group;
-    private gonggaoLabel:eui.Label;
+    private gonggaoLabel: eui.Label;
     // private content:String = '欢迎来到优优传奇世界！';
+
+    private loadingbar: eui.ProgressBar;
+    private loadingLabel: eui.Label;
+    private loadingpb: eui.Group;
 
 
     public constructor() {
@@ -67,7 +71,7 @@ class login extends eui.Component {
         this.notice.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
         this.gonggaoClose.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
 
-
+        // this.setProgress()
 
         this.initGonggao()
 
@@ -121,11 +125,14 @@ class login extends eui.Component {
     private initGonggao() {
         let self = this
         let url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=game_notice';
-         Http.ins().send(url, true, true, function (event: egret.Event) {
+        Http.ins().send(url, true, true, function (event: egret.Event) {
             var request = <egret.HttpRequest>event.currentTarget;
             let data = JSON.parse(request.response)
-            if(data.code == 0){
-                self.gonggaoLabel.text = data.data.content
+            if (data.code == 0) {
+                if (data.data.content) {
+                    self.gonggao.visible = true
+                    self.gonggaoLabel.text = data.data.content
+                }
             }
         })
     }
@@ -157,13 +164,25 @@ class login extends eui.Component {
                 }
             }
 
-            // console.log('保存的列表 : ')
-            // console.log(roomListData)
-
+            egret.localStorage.setItem('serverid', JSON.stringify(roomListData[roomListData.length - 1].id));
+            egret.localStorage.setItem('serverPort', JSON.stringify(roomListData[roomListData.length - 1].port));
+            egret.localStorage.setItem('serverAddress', JSON.stringify(roomListData[roomListData.length - 1].address));
             window['setRoomList'](roomListData)
             self.updateRoomName()
             self.blackBg.visible = false
         })
+    }
+
+
+    public setProgress(number, txt): void {
+        this.loadingLabel.text = txt;
+        if (number > this.loadingbar.value) {
+            while (number > this.loadingbar.value) {
+                this.loadingbar.value += 1
+            }
+        } else {
+            this.loadingbar.value = number
+        }
     }
 
     private updateRoomName() {
@@ -292,9 +311,9 @@ class login extends eui.Component {
         }
     }
 
-    public initLoginInfo(loginView) {
-        this.loginView = loginView
-    }
+    // public initLoginInfo(loginView) {
+    //     this.loginView = loginView
+    // }
     private loginHandle(number) {
 
         // if (StageUtils.ins().getStage().$children[3]) {
@@ -367,7 +386,6 @@ class login extends eui.Component {
                         egret.localStorage.setItem("password", self.password.text)
 
 
-
                         if (channel == 'lx') {
                             password = md5.hex_md5(self.password.text)
                         }
@@ -382,11 +400,15 @@ class login extends eui.Component {
                         window['setLoginInfo'](info)
 
                         //  资源加载完成，删除加载界面
-                        if (StageUtils.ins().getStage().$children[3]) {
-                            StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[3])
+                        if (StageUtils.ins().getStage().$children[2]) {
+                            StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
                         }
-                        self.loginView.login()
+                        // self.loginView.login()
+                        self.loadingpb.visible = true
+                        self.setProgress(0, '资源加载中...')
                         LocationProperty.init()
+                        GameApp.ins().load(self);
+
                     } else {
                         alert(data.info)
                     }

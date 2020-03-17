@@ -114,6 +114,7 @@ class RoleMgr extends BaseSystem {
 			case 0:
 				//  资源加载完成，删除加载界面
 				if (StageUtils.ins().getStage().$children[2]) {
+					StageUtils.ins().getStage().$children[2].setProgress(100,'加载完成，进入游戏')
 					StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
 				}
 				SceneManager.ins().runScene(CreateRoleScene);
@@ -176,9 +177,9 @@ class RoleMgr extends BaseSystem {
 			case 1:
 
 
-
 				//  资源加载完成，删除加载界面
 				if (StageUtils.ins().getStage().$children[2]) {
+					StageUtils.ins().getStage().$children[2].setProgress(100,'加载完成，进入游戏')
 					StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
 				}
 

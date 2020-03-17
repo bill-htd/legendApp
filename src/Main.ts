@@ -114,9 +114,9 @@ class Main extends egret.DisplayObjectContainer {
 		// console.log(payWin)
 		loginWinUi.width = this.stage.stageWidth;
 		loginWinUi.height = this.stage.stageHeight;
-		loginWinUi.initLoginInfo(this.loadingView)
+		// loginWinUi.initLoginInfo(this.loadingView)
 		this.stage.addChild(loginWinUi)
-		
+		// this.stage.removeChild(this.loadingView)
 		this.loadingView.hideLoadingTrp()
 
 	}

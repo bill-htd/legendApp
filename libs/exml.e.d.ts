@@ -178,6 +178,8 @@ declare class bar10Skin extends eui.Skin{
 }
 declare class bar11Skin extends eui.Skin{
 }
+declare class bar12skin extends eui.Skin{
+}
 declare class bar1Skin extends eui.Skin{
 }
 declare class bar2Skin extends eui.Skin{
