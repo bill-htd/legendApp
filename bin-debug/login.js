@@ -40,7 +40,7 @@ var login = (function (_super) {
             if (msg) {
                 window['setChannel'](msg);
                 window['statistics']();
-                var url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=app_edition';
+                var url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=app_edition';
                 url += '&channel=' + msg;
                 Http.ins().send(url, true, true, function (event) {
                     var request = event.currentTarget;
@@ -69,21 +69,41 @@ var login = (function (_super) {
     }
     login.prototype.initGonggao = function () {
         var self = this;
-        var url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=game_notice';
+        var url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=game_notice';
+        var gonggaoVer = JSON.parse(egret.localStorage.getItem('gonggaoVer'));
         Http.ins().send(url, true, true, function (event) {
             var request = event.currentTarget;
             var data = JSON.parse(request.response);
             if (data.code == 0) {
                 if (data.data.content) {
+                    var txt = '';
+                    if (data.data.content) {
+                        txt = data.data.content;
+                    }
+                    var tx = new egret.TextField;
+                    tx.width = this.scrollerGroup0.width - 20;
+                    tx.textFlow = (new egret.HtmlTextParser).parser(txt);
+                    tx.x = 10;
+                    tx.y = 10;
+                    this.testLabel.height = tx.height;
+                    this.scrollerGroup0.addChild(tx);
+                }
+                if (gonggaoVer) {
+                    if (gonggaoVer != data.data.appVer) {
+                        egret.localStorage.setItem('gonggaoVer', JSON.stringify(data.data.appVer));
+                        self.gonggao.visible = true;
+                    }
+                }
+                else {
+                    egret.localStorage.setItem('gonggaoVer', JSON.stringify(data.data.appVer));
                     self.gonggao.visible = true;
-                    self.gonggaoLabel.text = data.data.content;
                 }
             }
         });
     };
     login.prototype.getRoomList = function () {
         var self = this;
-        var url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=server_list';
+        var url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=server_list';
         Http.ins().send(url, true, true, function (event) {
             var request = event.currentTarget;
             var data = JSON.parse(request.response);
@@ -264,7 +284,7 @@ var login = (function (_super) {
             }
             var url = '';
             if (number == 1) {
-                url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=channel_reg';
+                url = 'http://cq.wfrunquan.com/gm/index.php?m=Regi&a=channel_reg';
                 url += '&name=' + name;
                 url += '&password=' + password;
                 url += '&serverid=' + serverid;
@@ -273,7 +293,7 @@ var login = (function (_super) {
                 self.trpInfo.text = '登录中...';
             }
             else {
-                url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=index';
+                url = 'http://cq.wfrunquan.com/gm/index.php?m=Regi&a=index';
                 url += '&name=' + name;
                 url += '&password=' + password;
                 url += '&serverid=' + serverid;
@@ -287,6 +307,20 @@ var login = (function (_super) {
                     if (data.status == 1) {
                         egret.localStorage.setItem("account", self.account.text);
                         egret.localStorage.setItem("password", self.password.text);
+                        if (number == 1) {
+                            var _info = {
+                                aa: 1,
+                                bb: 2
+                            };
+                            egret.ExternalInterface.call("loginStatistics", JSON.stringify(_info));
+                        }
+                        else {
+                            var _info = {
+                                aa: 1,
+                                bb: 2
+                            };
+                            egret.ExternalInterface.call("registerStatistics", JSON.stringify(_info));
+                        }
                         if (channel == 'lx') {
                             password = md5.hex_md5(self.password.text);
                         }

@@ -47,8 +47,8 @@ class LoadingUI extends egret.DisplayObjectContainer {
 		urlLoader.load(new egret.URLRequest(this.bgUrl));
 		this.loadingBg = new egret.Bitmap();
 		// this.loadingBg.fillMode = egret.BitmapFillMode.REPEAT;
-
-		this.loadingBg.width = this.width
+		// 580*930
+		this.loadingBg.width =580 * (this.height/930) 
 		this.loadingBg.height = this.height
 		this.addChildAt(this.loadingBg, 0);
 

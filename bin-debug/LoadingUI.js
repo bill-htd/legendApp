@@ -24,7 +24,7 @@ var LoadingUI = (function (_super) {
         urlLoader.dataFormat = egret.URLLoaderDataFormat.TEXTURE;
         urlLoader.load(new egret.URLRequest(this.bgUrl));
         this.loadingBg = new egret.Bitmap();
-        this.loadingBg.width = this.width;
+        this.loadingBg.width = 580 * (this.height / 930);
         this.loadingBg.height = this.height;
         this.addChildAt(this.loadingBg, 0);
         this.textField = new egret.TextField();

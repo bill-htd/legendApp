@@ -41,11 +41,12 @@ class login extends eui.Component {
     private notice: eui.Button;
     private gonggaoClose: eui.Button;
     private gonggao: eui.Group;
-    private gonggaoLabel: eui.Label;
+    private scrollerGroup0: eui.Group;
     // private content:String = '欢迎来到优优传奇世界！';
 
     private loadingbar: eui.ProgressBar;
     private loadingLabel: eui.Label;
+    private testLabel: eui.Label;
     private loadingpb: eui.Group;
 
 
@@ -75,8 +76,6 @@ class login extends eui.Component {
 
         this.initGonggao()
 
-
-
         this.blackBg.visible = true
         this.zhuceLabel.visible = false
         this.dengluInfo.visible = true
@@ -88,7 +87,7 @@ class login extends eui.Component {
             if (msg) {
                 window['setChannel'](msg)
                 window['statistics']() // 统计
-                let url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=app_edition';
+                let url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=app_edition';
                 url += '&channel=' + msg;
                 Http.ins().send(url, true, true, function (event: egret.Event) {
                     var request = <egret.HttpRequest>event.currentTarget;
@@ -124,21 +123,50 @@ class login extends eui.Component {
 	 */
     private initGonggao() {
         let self = this
-        let url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=game_notice';
+        let url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=game_notice';
+        // egret.localStorage.getItem('serverid', JSON.stringify(roomList[i].id));
+        var gonggaoVer = JSON.parse(<string>egret.localStorage.getItem('gonggaoVer'));
         Http.ins().send(url, true, true, function (event: egret.Event) {
             var request = <egret.HttpRequest>event.currentTarget;
             let data = JSON.parse(request.response)
             if (data.code == 0) {
                 if (data.data.content) {
-                    self.gonggao.visible = true
-                    self.gonggaoLabel.text = data.data.content
+                    var txt = '';
+                    if (data.data.content) {
+                        txt = data.data.content
+                    }
+                    var tx: egret.TextField = new egret.TextField;
+                    // 注意_container是事先建立好的一个显示容器，即 egret.DisplayObjectContainer，并且已经添加到显示列表中
+                    tx.width = this.scrollerGroup0.width - 20;
+                    tx.textFlow = (new egret.HtmlTextParser).parser(
+                        txt
+                    );
+                    tx.x = 10;
+                    tx.y = 10;
+                    this.testLabel.height = tx.height;
+                    this.scrollerGroup0.addChild(tx);
                 }
+
+                if (gonggaoVer) {
+                    if (gonggaoVer != data.data.appVer) {
+                        egret.localStorage.setItem('gonggaoVer', JSON.stringify(data.data.appVer));
+                        self.gonggao.visible = true
+                    }
+                } else {
+                    egret.localStorage.setItem('gonggaoVer', JSON.stringify(data.data.appVer));
+                    self.gonggao.visible = true
+                }
+
             }
         })
+
+
+
+
     }
     private getRoomList() {
         let self = this;
-        let url = 'http://cq.58hufen.com/gm/index.php?m=ServerInfo&a=server_list'
+        let url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=server_list'
         Http.ins().send(url, true, true, function (event: egret.Event) {
             var request = <egret.HttpRequest>event.currentTarget;
             let data = JSON.parse(request.response)
@@ -346,6 +374,7 @@ class login extends eui.Component {
             alert('请选择服务器')
             return
         }
+
         egret.ExternalInterface.call("getChannel", '');
         egret.ExternalInterface.addCallback("backChannel", function (msg) {
             // let msg = 'lx'
@@ -356,7 +385,7 @@ class login extends eui.Component {
             }
             let url = ''
             if (number == 1) {
-                url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=channel_reg'
+                url = 'http://cq.wfrunquan.com/gm/index.php?m=Regi&a=channel_reg'
                 url += '&name=' + name;
                 url += '&password=' + password;
                 url += '&serverid=' + serverid;
@@ -365,7 +394,7 @@ class login extends eui.Component {
                 self.blackBg.visible = true
                 self.trpInfo.text = '登录中...'
             } else {
-                url = 'http://cq.58hufen.com/gm/index.php?m=Regi&a=index'
+                url = 'http://cq.wfrunquan.com/gm/index.php?m=Regi&a=index'
                 url += '&name=' + name;
                 url += '&password=' + password;
                 url += '&serverid=' + serverid;
@@ -385,6 +414,21 @@ class login extends eui.Component {
                         egret.localStorage.setItem("account", self.account.text)
                         egret.localStorage.setItem("password", self.password.text)
 
+                        if (number == 1) {
+                            //登录
+                            var _info = {
+                                aa: 1,
+                                bb: 2
+                            }
+                            egret.ExternalInterface.call("loginStatistics", JSON.stringify(_info));
+                        } else {
+                            //注册
+                            var _info = {
+                                aa: 1,
+                                bb: 2
+                            }
+                            egret.ExternalInterface.call("registerStatistics", JSON.stringify(_info));
+                        }
 
                         if (channel == 'lx') {
                             password = md5.hex_md5(self.password.text)
