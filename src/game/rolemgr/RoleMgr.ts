@@ -110,13 +110,14 @@ class RoleMgr extends BaseSystem {
 		LocationProperty.userID = id
 
 		let code: number = bytes.readByte();
+		//  资源加载完成，删除加载界面
+		if (StageUtils.ins().getStage().$children[2]) {
+			StageUtils.ins().getStage().$children[2].setProgress(100,'加载完成，进入游戏')
+			StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
+		}
 		switch (code) {
 			case 0:
-				//  资源加载完成，删除加载界面
-				if (StageUtils.ins().getStage().$children[2]) {
-					StageUtils.ins().getStage().$children[2].setProgress(100,'加载完成，进入游戏')
-					StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
-				}
+				
 				SceneManager.ins().runScene(CreateRoleScene);
 				window['showGame']();
 				break;
