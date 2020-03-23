@@ -39875,7 +39875,7 @@
 			"name": "new_icon_btn2_json",
 			"type": "sheet",
 			"url": "skins/openserveract/new_icon_btn2.json",
-			"subkeys": "notice_png,new_icon_haifantian_png,new_icon_hefuboss_png,new_icon_yuanbaozhuanpan_png"
+			"subkeys": "new_icon_yuanbaozhuanpan_png,notice_png,new_icon_haifantian_png,new_icon_hefuboss_png,new_icon_xianshixunbao_png"
 		}
 	]
 }

@@ -30,6 +30,10 @@ var login = (function (_super) {
         _this.notice.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
         _this.gonggaoClose.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
         _this.initGonggao();
+        _this.trp1.strokeColor = 0x000000;
+        _this.trp1.stroke = 2;
+        _this.trp2.strokeColor = 0x000000;
+        _this.trp2.stroke = 2;
         _this.blackBg.visible = true;
         _this.zhuceLabel.visible = false;
         _this.dengluInfo.visible = true;

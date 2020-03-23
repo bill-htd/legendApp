@@ -5,5 +5,5 @@
 	<e:Image id="thumb" height="25" left="35" right="30" source="loading_json.tiao_png" scale9Grid="54,3,327,23" anchorOffsetY="0" y="4" anchorOffsetX="0"/>
 	<e:Label id="labelDisplay" textAlign="center" verticalAlign="middle"
 			 size="17" fontFamily="Tahoma"
-			 horizontalCenter="0" verticalCenter="-0.5" text="1111" textColor="0xd5ef0e"/>
+			 horizontalCenter="0" verticalCenter="-0.5" text="1111" textColor="0xf7c43d"/>
 </e:Skin>

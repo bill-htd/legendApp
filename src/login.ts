@@ -49,6 +49,9 @@ class login extends eui.Component {
     private testLabel: eui.Label;
     private loadingpb: eui.Group;
 
+    private trp1: eui.Label;
+    private trp2: eui.Label;
+
 
     public constructor() {
         super();
@@ -76,6 +79,12 @@ class login extends eui.Component {
 
         this.initGonggao()
 
+
+        this.trp1.strokeColor = 0x000000;
+        this.trp1.stroke = 2;
+
+        this.trp2.strokeColor = 0x000000;
+        this.trp2.stroke = 2;
         this.blackBg.visible = true
         this.zhuceLabel.visible = false
         this.dengluInfo.visible = true

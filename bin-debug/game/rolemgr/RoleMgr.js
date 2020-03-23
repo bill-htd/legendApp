@@ -76,12 +76,12 @@ var RoleMgr = (function (_super) {
         var id = bytes.readInt();
         LocationProperty.userID = id;
         var code = bytes.readByte();
+        if (StageUtils.ins().getStage().$children[2]) {
+            StageUtils.ins().getStage().$children[2].setProgress(100, '加载完成，进入游戏');
+            StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2]);
+        }
         switch (code) {
             case 0:
-                if (StageUtils.ins().getStage().$children[2]) {
-                    StageUtils.ins().getStage().$children[2].setProgress(100, '加载完成，进入游戏');
-                    StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2]);
-                }
                 SceneManager.ins().runScene(CreateRoleScene);
                 window['showGame']();
                 break;

@@ -86,6 +86,8 @@
 	<e:Group id="loadingpb" left="0" right="0" top="0" bottom="0" horizontalCenter="0" verticalCenter="0" visible="false">
 		<e:Image source="loadingbg_png" horizontalCenter="0" verticalCenter="0" left="0" right="0" top="0" bottom="0"/>
 		<e:ProgressBar id="loadingbar" width="500" height="30" skinName="bar12skin" horizontalCenter="2" verticalCenter="270"/>
-		<e:Label id="loadingLabel" text="加载资源中。。。" textColor="0xf7b20c" size="18" horizontalCenter="0" verticalCenter="231"/>
+		<e:Label id="loadingLabel" text="加载资源中。。。" size="15" textColor="0xbfb92a" horizontalCenter="-140" verticalCenter="240.5"/>
+		<e:Label id="trp1" text="如果您是第一次打开游戏，加载游戏可能会比较大，请耐心等待" size="12" horizontalCenter="0" textColor="0xd3d1d1" verticalCenter="298"/>
+		<e:Label id="trp2" text="抵制不良游戏 拒绝盗版游戏 \n 请注意自我保护 谨防上当受骗 适度游戏益脑 合理安排时间 享受健康生活" size="13" horizontalCenter="0.5" textColor="0xffffff" bottom="48" textAlign="center" verticalAlign="middle" anchorOffsetY="0" height="35"/>
 	</e:Group>
 </e:Skin>

@@ -39,7 +39,7 @@ class KffieldPanel extends BaseView {
 				ViewManager.ins().open(KFBossWin);
 				break;
 			case this.island1://跨服竞技场
-				ViewManager.ins().open(KfArenaWin);
+				// ViewManager.ins().open(KfArenaWin);
 				break;
 			case this.island2:
 				break;
@@ -79,13 +79,13 @@ class KffieldPanel extends BaseView {
 		this.kfBossMc.playFile(RES_DIR_MONSTER + showBody, -1);
 
 		//跨服竞技场
-		egret.callLater(() => {
-			this.island1[`title`].source = `kf_function_ladder`;
-			this.island1[`island`].source = `kf_field_ladder`;
-		}, this);
+		// egret.callLater(() => {
+		// 	this.island1[`title`].source = `kf_function_ladder`;
+		// 	this.island1[`island`].source = `kf_field_ladder`;
+		// }, this);
 		// this.island1[`island`].source = `kf_field_ladder`;
 		// this.island1[`title`].source = `kf_function_none`;
-		this.island1.currentState = `unlock`;
+		this.island1.currentState = `lock`;
 
 
 		//未开

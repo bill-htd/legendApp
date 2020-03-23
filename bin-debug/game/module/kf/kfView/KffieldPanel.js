@@ -34,7 +34,6 @@ var KffieldPanel = (function (_super) {
                 ViewManager.ins().open(KFBossWin);
                 break;
             case this.island1:
-                ViewManager.ins().open(KfArenaWin);
                 break;
             case this.island2:
                 break;
@@ -62,11 +61,7 @@ var KffieldPanel = (function (_super) {
         this.island0["boossGroup"].addChild(this.kfBossMc);
         var showBody = GlobalConfig.CrossBossBase.showBoss ? GlobalConfig.CrossBossBase.showBoss : "monster10041_3s";
         this.kfBossMc.playFile(RES_DIR_MONSTER + showBody, -1);
-        egret.callLater(function () {
-            _this.island1["title"].source = "kf_function_ladder";
-            _this.island1["island"].source = "kf_field_ladder";
-        }, this);
-        this.island1.currentState = "unlock";
+        this.island1.currentState = "lock";
         this.island2.currentState = "lock";
     };
     KffieldPanel.prototype.refRedPoint = function () {
