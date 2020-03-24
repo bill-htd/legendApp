@@ -29,6 +29,7 @@ var login = (function (_super) {
         _this.sureBtn0.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
         _this.notice.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
         _this.gonggaoClose.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
+        _this.setProgress(0, '测试');
         _this.initGonggao();
         _this.trp1.strokeColor = 0x000000;
         _this.trp1.stroke = 2;
@@ -39,41 +40,39 @@ var login = (function (_super) {
         _this.dengluInfo.visible = true;
         _this.zhuceInfo.visible = false;
         var self = _this;
-        egret.ExternalInterface.call("getChannel", '');
-        egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            if (msg) {
-                window['setChannel'](msg);
-                window['statistics']();
-                var url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=app_edition';
-                url += '&channel=' + msg;
-                Http.ins().send(url, true, true, function (event) {
-                    var request = event.currentTarget;
-                    var data = JSON.parse(request.response);
-                    if (data.code == 0) {
-                        var info = data.data;
-                        if (info.appVer != Version.AppVersion) {
-                            self.resUrl = info.resUrl;
-                            self.warnGroup.visible = true;
-                        }
-                        else {
-                            self.getRoomList();
-                            self.trpInfo.text = '获取服务器列表中...';
-                        }
+        var msg = 'lx';
+        if (msg) {
+            window['setChannel'](msg);
+            window['statistics']();
+            var url = 'http://47.112.63.204/gm/index.php?m=ServerInfo&a=app_edition';
+            url += '&channel=' + msg;
+            Http.ins().send(url, true, true, function (event) {
+                var request = event.currentTarget;
+                var data = JSON.parse(request.response);
+                if (data.code == 0) {
+                    var info = data.data;
+                    if (info.appVer != Version.AppVersion) {
+                        self.resUrl = info.resUrl;
+                        self.warnGroup.visible = true;
                     }
                     else {
-                        alert('获取版本号失败，请重启游戏');
+                        self.getRoomList();
+                        self.trpInfo.text = '获取服务器列表中...';
                     }
-                });
-            }
-            if (msg == 'zhousi' || msg == 'CQ') {
-                self.zhuceLabel.visible = true;
-            }
-        });
+                }
+                else {
+                    alert('获取版本号失败，请重启游戏');
+                }
+            });
+        }
+        if (msg == 'zhousi' || msg == 'CQ') {
+            self.zhuceLabel.visible = true;
+        }
         return _this;
     }
     login.prototype.initGonggao = function () {
         var self = this;
-        var url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=game_notice';
+        var url = 'http://47.112.63.204/gm/index.php?m=ServerInfo&a=game_notice';
         var gonggaoVer = JSON.parse(egret.localStorage.getItem('gonggaoVer'));
         Http.ins().send(url, true, true, function (event) {
             var request = event.currentTarget;
@@ -107,7 +106,7 @@ var login = (function (_super) {
     };
     login.prototype.getRoomList = function () {
         var self = this;
-        var url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=server_list';
+        var url = 'http://47.112.63.204/gm/index.php?m=ServerInfo&a=server_list';
         Http.ins().send(url, true, true, function (event) {
             var request = event.currentTarget;
             var data = JSON.parse(request.response);
@@ -141,14 +140,22 @@ var login = (function (_super) {
     };
     login.prototype.setProgress = function (number, txt) {
         this.loadingLabel.text = txt;
-        if (number > this.loadingbar.value) {
-            while (number > this.loadingbar.value) {
-                this.loadingbar.value += 1;
+        var self = this;
+        TimerManager.ins().doTimer(1000, 0, function () {
+            if (self.loadingbar.value >= number) {
+                if (self.loadingbar.value >= 99) {
+                    return;
+                }
+                self.loadingbar.value += 1;
+                self.loadingbar.guang.x += 4.3;
             }
-        }
-        else {
-            this.loadingbar.value = number;
-        }
+            else {
+                self.loadingbar.value = number;
+                self.loadingbar.guang.x = number * 4.3;
+            }
+        }, this);
+        this.loadingbar.value = number;
+        this.loadingbar.guang.x = number * 4.3;
     };
     login.prototype.updateRoomName = function () {
         var roomList = window['getRoomList']();
@@ -280,77 +287,75 @@ var login = (function (_super) {
             alert('请选择服务器');
             return;
         }
-        egret.ExternalInterface.call("getChannel", '');
-        egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            var channel = msg;
-            if (channel == 'lx') {
-                password = self.password.text;
-            }
-            var url = '';
-            if (number == 1) {
-                url = 'http://cq.wfrunquan.com/gm/index.php?m=Regi&a=channel_reg';
-                url += '&name=' + name;
-                url += '&password=' + password;
-                url += '&serverid=' + serverid;
-                url += '&channel=' + channel;
-                self.blackBg.visible = true;
-                self.trpInfo.text = '登录中...';
-            }
-            else {
-                url = 'http://cq.wfrunquan.com/gm/index.php?m=Regi&a=index';
-                url += '&name=' + name;
-                url += '&password=' + password;
-                url += '&serverid=' + serverid;
-                url += '&channel=' + channel;
-            }
-            if (url) {
-                Http.ins().send(url, true, true, function (event) {
-                    var request = event.currentTarget;
-                    var data = JSON.parse(request.response);
-                    self.blackBg.visible = false;
-                    if (data.status == 1) {
-                        egret.localStorage.setItem("account", self.account.text);
-                        egret.localStorage.setItem("password", self.password.text);
-                        if (number == 1) {
-                            var _info = {
-                                aa: 1,
-                                bb: 2
-                            };
-                            egret.ExternalInterface.call("loginStatistics", JSON.stringify(_info));
-                        }
-                        else {
-                            var _info = {
-                                aa: 1,
-                                bb: 2
-                            };
-                            egret.ExternalInterface.call("registerStatistics", JSON.stringify(_info));
-                        }
-                        if (channel == 'lx') {
-                            password = md5.hex_md5(self.password.text);
-                        }
-                        var info = {
-                            srvid: serverid,
-                            user: channel + '_' + name,
-                            serverid: serverid,
-                            spverify: password,
-                            srvaddr: address,
-                            srvport: port
+        var msg = 'lx';
+        var channel = msg;
+        if (channel == 'lx') {
+            password = self.password.text;
+        }
+        var url = '';
+        if (number == 1) {
+            url = 'http://47.112.63.204/gm/index.php?m=Regi&a=channel_reg';
+            url += '&name=' + name;
+            url += '&password=' + password;
+            url += '&serverid=' + serverid;
+            url += '&channel=' + channel;
+            self.blackBg.visible = true;
+            self.trpInfo.text = '登录中...';
+        }
+        else {
+            url = 'http://47.112.63.204/gm/index.php?m=Regi&a=index';
+            url += '&name=' + name;
+            url += '&password=' + password;
+            url += '&serverid=' + serverid;
+            url += '&channel=' + channel;
+        }
+        if (url) {
+            Http.ins().send(url, true, true, function (event) {
+                var request = event.currentTarget;
+                var data = JSON.parse(request.response);
+                self.blackBg.visible = false;
+                if (data.status == 1) {
+                    egret.localStorage.setItem("account", self.account.text);
+                    egret.localStorage.setItem("password", self.password.text);
+                    if (number == 1) {
+                        var _info = {
+                            aa: 1,
+                            bb: 2
                         };
-                        window['setLoginInfo'](info);
-                        if (StageUtils.ins().getStage().$children[2]) {
-                            StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2]);
-                        }
-                        self.loadingpb.visible = true;
-                        self.setProgress(0, '资源加载中...');
-                        LocationProperty.init();
-                        GameApp.ins().load(self);
+                        egret.ExternalInterface.call("loginStatistics", JSON.stringify(_info));
                     }
                     else {
-                        alert(data.info);
+                        var _info = {
+                            aa: 1,
+                            bb: 2
+                        };
+                        egret.ExternalInterface.call("registerStatistics", JSON.stringify(_info));
                     }
-                });
-            }
-        });
+                    if (channel == 'lx') {
+                        password = md5.hex_md5(self.password.text);
+                    }
+                    var info = {
+                        srvid: serverid,
+                        user: channel + '_' + name,
+                        serverid: serverid,
+                        spverify: password,
+                        srvaddr: address,
+                        srvport: port
+                    };
+                    window['setLoginInfo'](info);
+                    if (StageUtils.ins().getStage().$children[2]) {
+                        StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2]);
+                    }
+                    self.loadingpb.visible = true;
+                    self.setProgress(0, '资源加载中...');
+                    LocationProperty.init();
+                    GameApp.ins().load(self);
+                }
+                else {
+                    alert(data.info);
+                }
+            });
+        }
     };
     login.prototype.updateRoomList = function () {
         var roomList = window['getRoomList']();

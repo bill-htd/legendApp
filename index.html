@@ -49,7 +49,7 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 	var loadSingleScript = function (src, callback) {
 		var s = document.createElement('script');
 		s.async = false;
-		s.src = src + '?v=2.1.0';
+		s.src = src + '?v=2.1.1';
 		s.addEventListener('load', function () {
 			s.parentNode.removeChild(s);
 			s.removeEventListener('load', arguments.callee, false);
@@ -132,10 +132,10 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 
 	function getChargeUrl() {
 		var channel = this.channel || 'CQ'
-		return 'http://cq.wfrunquan.com/gm/index.php?m=Payment&a=Placeorder&platform=' + channel;
+		return 'http://47.112.63.204/gm/index.php?m=Payment&a=Placeorder&platform=' + channel;
 	}
 	function getChatControlUrl() {
-		return 'http://cq.wfrunquan.com/gm/index.php?m=Chat&a=chat_controls&';
+		return 'http://47.112.63.204/gm/index.php?m=Chat&a=chat_controls&';
 	}
 	function getkefuUrl() {
 		return 'https://temp-chat.mstatik.com/widget/standalone.html?eid=184645';

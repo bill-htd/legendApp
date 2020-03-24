@@ -75,8 +75,7 @@ class login extends eui.Component {
         this.notice.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
         this.gonggaoClose.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
 
-        // this.setProgress()
-
+        // console.log(this.loadingbar)
         this.initGonggao()
 
 
@@ -96,7 +95,7 @@ class login extends eui.Component {
             if (msg) {
                 window['setChannel'](msg)
                 window['statistics']() // 统计
-                let url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=app_edition';
+                let url = 'http://47.112.63.204/gm/index.php?m=ServerInfo&a=app_edition';
                 url += '&channel=' + msg;
                 Http.ins().send(url, true, true, function (event: egret.Event) {
                     var request = <egret.HttpRequest>event.currentTarget;
@@ -132,7 +131,7 @@ class login extends eui.Component {
 	 */
     private initGonggao() {
         let self = this
-        let url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=game_notice';
+        let url = 'http://47.112.63.204/gm/index.php?m=ServerInfo&a=game_notice';
         // egret.localStorage.getItem('serverid', JSON.stringify(roomList[i].id));
         var gonggaoVer = JSON.parse(<string>egret.localStorage.getItem('gonggaoVer'));
         Http.ins().send(url, true, true, function (event: egret.Event) {
@@ -175,7 +174,7 @@ class login extends eui.Component {
     }
     private getRoomList() {
         let self = this;
-        let url = 'http://cq.wfrunquan.com/gm/index.php?m=ServerInfo&a=server_list'
+        let url = 'http://47.112.63.204/gm/index.php?m=ServerInfo&a=server_list'
         Http.ins().send(url, true, true, function (event: egret.Event) {
             var request = <egret.HttpRequest>event.currentTarget;
             let data = JSON.parse(request.response)
@@ -213,13 +212,21 @@ class login extends eui.Component {
 
     public setProgress(number, txt): void {
         this.loadingLabel.text = txt;
-        if (number > this.loadingbar.value) {
-            while (number > this.loadingbar.value) {
-                this.loadingbar.value += 1
+        let self = this;
+        TimerManager.ins().doTimer(1000, 0, function () {
+            if (self.loadingbar.value >= number) {
+                if (self.loadingbar.value >= 99) {
+                    return
+                }
+                self.loadingbar.value += 1
+                self.loadingbar.guang.x += 4.3;
+            } else {
+                self.loadingbar.value = number
+                self.loadingbar.guang.x = number * 4.3;
             }
-        } else {
-            this.loadingbar.value = number
-        }
+        }, this);
+        this.loadingbar.value = number
+        this.loadingbar.guang.x = number * 4.3;
     }
 
     private updateRoomName() {
@@ -394,7 +401,7 @@ class login extends eui.Component {
             }
             let url = ''
             if (number == 1) {
-                url = 'http://cq.wfrunquan.com/gm/index.php?m=Regi&a=channel_reg'
+                url = 'http://47.112.63.204/gm/index.php?m=Regi&a=channel_reg'
                 url += '&name=' + name;
                 url += '&password=' + password;
                 url += '&serverid=' + serverid;
@@ -403,7 +410,7 @@ class login extends eui.Component {
                 self.blackBg.visible = true
                 self.trpInfo.text = '登录中...'
             } else {
-                url = 'http://cq.wfrunquan.com/gm/index.php?m=Regi&a=index'
+                url = 'http://47.112.63.204/gm/index.php?m=Regi&a=index'
                 url += '&name=' + name;
                 url += '&password=' + password;
                 url += '&serverid=' + serverid;

@@ -35,11 +35,11 @@ class Pay extends BaseClass {
         }
         // let url = 'http://ezz25.com/gm/index.php?m=Payment&a=Placeorder'
         let url = window['getChargeUrl']()
-        if(!url){
+        if (!url) {
             WarnWin.show("请求地址出错，请重新点击购买按钮", function () { }, this);
             return
         }
-        
+
         url += '&user_id=' + LocationProperty.userID;
         url += '&role_name=' + LocationProperty.userName;
         url += '&role_id=' + LocationProperty.roleID;
@@ -47,23 +47,26 @@ class Pay extends BaseClass {
         url += '&amount=' + money;
         url += '&gold=' + yuanbao;
         url += '&serverid=' + LocationProperty.serverID;
-        
+
         Http.ins().send(url, true, false, function (event: egret.Event) {
             self.sendNum++
             var request = <egret.HttpRequest>event.currentTarget;
             let data = JSON.parse(request.response)
             let url = data.data.url;
-            if (url) {
-                ViewManager.ins().close(WarnWin);
-                if (type == 1) {
-                    url = url.replace(/&amp;/g, "&")
-                } else {
-                    url = decodeURIComponent(url)
+            if (data.status == 1) {
+                if (url) {
+                    ViewManager.ins().close(WarnWin);
+                    if (type == 1) {
+                        url = url.replace(/&amp;/g, "&")
+                    } else {
+                        url = decodeURIComponent(url)
+                    }
+                    egret.ExternalInterface.call("openURL", url);
+
                 }
-                egret.ExternalInterface.call("openURL", url);
-
+            }else{
+                alert(data.info)
             }
-
             // {"status":1,"info":"\u6dfb\u52a0\u6210\u529f","data":{"order_no":"YYCQ-2019112005-346635","user_id":"111","Payment_return":"{\"code\":98157,\"msg\":\"\\u52a0\\u5bc6\\u9519\\u8bef\"}"},"api_version":1}
         })
 

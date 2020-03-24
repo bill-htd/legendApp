@@ -59,15 +59,20 @@ var Pay = (function (_super) {
             var request = event.currentTarget;
             var data = JSON.parse(request.response);
             var url = data.data.url;
-            if (url) {
-                ViewManager.ins().close(WarnWin);
-                if (type == 1) {
-                    url = url.replace(/&amp;/g, "&");
+            if (data.status == 1) {
+                if (url) {
+                    ViewManager.ins().close(WarnWin);
+                    if (type == 1) {
+                        url = url.replace(/&amp;/g, "&");
+                    }
+                    else {
+                        url = decodeURIComponent(url);
+                    }
+                    egret.ExternalInterface.call("openURL", url);
                 }
-                else {
-                    url = decodeURIComponent(url);
-                }
-                egret.ExternalInterface.call("openURL", url);
+            }
+            else {
+                alert(data.info);
             }
         });
     };
