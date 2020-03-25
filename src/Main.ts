@@ -92,7 +92,8 @@ class Main extends egret.DisplayObjectContainer {
 	}
 
 	private loadResVersionComplete(): void {
-		ResourceUtils.ins().addConfig(`${RES_RESOURCE}default.res.json?v=` + Version.UPDATE_NUMBER, `${RES_RESOURCE}`);
+		let version = window['getVersion']()
+		ResourceUtils.ins().addConfig(`${RES_RESOURCE}default.res.json?v=` + version, `${RES_RESOURCE}`);
 		ResourceUtils.ins().loadConfig(this.onConfigComplete, this);
 	}
 
@@ -100,9 +101,10 @@ class Main extends egret.DisplayObjectContainer {
 	 * 配置文件加载完成,开始预加载preload资源组。
 	 */
 	private onConfigComplete(): void {
+		let version = window['getVersion']()
 		// LocationProperty.setLoadProgress(40, "(加载游戏主题文件)");
 		this.loadingView.setProgress(40, '(加载游戏主题文件)')
-		let theme = new eui.Theme(`${RES_RESOURCE}default.thm.json?v=` + Version.UPDATE_NUMBER, this.stage);
+		let theme = new eui.Theme(`${RES_RESOURCE}default.thm.json?v=` + version, this.stage);
 		theme.addEventListener(eui.UIEvent.COMPLETE, this.onThemeLoadComplete, this);
 	}
 

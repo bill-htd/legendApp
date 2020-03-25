@@ -4,7 +4,8 @@
 <head>
 	<meta charset="utf-8">
 	<title>Egret</title>
-	<meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="full-screen" content="true" />
 	<meta name="screen-orientation" content="portrait" />
@@ -24,354 +25,394 @@
 </head>
 
 <body>
-	<div style="margin: auto;width: 100%;height: 100%;" class="egret-player" data-entry-class="Main" data-orientation="auto" data-scale-mode="showAll" data-frame-rate="30" data-content-width="600"
-data-content-height="1204" data-show-paint-rect="false" data-multi-fingered="2" data-show-fps="false" data-show-log="false"
-data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
-</div>
+	<div style="margin: auto;width: 100%;height: 100%;" class="egret-player" data-entry-class="Main"
+		data-orientation="auto" data-scale-mode="showAll" data-frame-rate="30" data-content-width="600"
+		data-content-height="1204" data-show-paint-rect="false" data-multi-fingered="2" data-show-fps="false"
+		data-show-log="false" data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
+	</div>
 
-<script>
-	var loadScript = function (list, callback) {
-		var loaded = 0;
-		var loadNext = function () {
-			loadSingleScript(list[loaded], function () {
-				loaded++;
-				if (loaded >= list.length) {
-					callback();
-				}
-				else {
-					loadNext();
-				}
-			})
+
+	<script>
+
+		var localAddress = 'http://back.dangxuexi.com';
+		window.info = {
+			version: '1.0.0',
+			get_gonggao_address: localAddress + '/gm/index.php?m=ServerInfo&a=game_notice',
+			get_AppInfo_address: localAddress + '/gm/index.php?m=ServerInfo&a=app_edition',
+			get_roomList_address: localAddress + '/gm/index.php?m=ServerInfo&a=server_list',
+			get_login_address: localAddress + '/gm/index.php?m=Regi&a=channel_reg&',
+			get_login_token_address: localAddress + '/gm/index.php?m=Regi&a=check_token&',
+			get_register_address: localAddress + '/gm/index.php?m=Regi&a=index&',
+			getreCharge_address: localAddress + '/gm/index.php?m=Paycc&a=placeorder&platform=' + this.channel,
+			getreCharge2_address: localAddress + '/gm/index.php?m=Payment&a=Placeorder&platform=' + this.channel,
+			getChatControl_address: localAddress + '/gm/index.php?m=Chat&a=chat_controls&',
+			getKeFu_address: 'https://chat-new.mqimg.com/widget/standalone.html?eid=184645',
+
+		}
+
+
+
+		var loadScript = function (list, callback) {
+			var loaded = 0;
+			var loadNext = function () {
+				loadSingleScript(list[loaded], function () {
+					loaded++;
+					if (loaded >= list.length) {
+						callback();
+					}
+					else {
+						loadNext();
+					}
+				})
+			};
+			loadNext();
 		};
-		loadNext();
-	};
 
-	var loadSingleScript = function (src, callback) {
-		var s = document.createElement('script');
-		s.async = false;
-		s.src = src + '?v=2.1.1';
-		s.addEventListener('load', function () {
-			s.parentNode.removeChild(s);
-			s.removeEventListener('load', arguments.callee, false);
-			callback();
-		}, false);
-		document.body.appendChild(s);
-	};
+		var loadSingleScript = function (src, callback) {
+			var s = document.createElement('script');
+			s.async = false;
+			s.src = src + '?v='+info.version;
+			s.addEventListener('load', function () {
+				s.parentNode.removeChild(s);
+				s.removeEventListener('load', arguments.callee, false);
+				callback();
+			}, false);
+			document.body.appendChild(s);
+		};
 
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', './manifest.json?v=' + Math.random(), true);
-	xhr.addEventListener("load", function () {
-		var manifest = JSON.parse(xhr.response);
-		var list = manifest.initial.concat(manifest.game);
-		loadScript(list, function () {
-			/**
-			 * {
-			 * "renderMode":, //Engine rendering mode, "canvas" or "webgl"
-			 * "audioType": 0 //Use the audio type, 0: default, 2: web audio, 3: audio
-			 * "antialias": //Whether the anti-aliasing is enabled in WebGL mode, true: on, false: off, defaults to false
-			 * "retina": //Whether the canvas is based on the devicePixelRatio
-			 * }
-			 **/
-			egret.runEgret({ renderMode: "webgl", audioType: 0 });
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', './manifest.json?v=' + Math.random(), true);
+		xhr.addEventListener("load", function () {
+			var manifest = JSON.parse(xhr.response);
+			var list = manifest.initial.concat(manifest.game);
+			loadScript(list, function () {
+				/**
+				 * {
+				 * "renderMode":, //Engine rendering mode, "canvas" or "webgl"
+				 * "audioType": 0 //Use the audio type, 0: default, 2: web audio, 3: audio
+				 * "antialias": //Whether the anti-aliasing is enabled in WebGL mode, true: on, false: off, defaults to false
+				 * "retina": //Whether the canvas is based on the devicePixelRatio
+				 * }
+				 **/
+				egret.runEgret({ renderMode: "webgl", audioType: 0 });
+			});
 		});
-	});
-	xhr.send(null);
+		xhr.send(null);
 
-
-	function showLoadProgress(progress, txt) {
-		console.log(txt + "进度" + progress + "%")
-		document.getElementById("progress").value = txt + "进度" + progress + "%";
-	}
-
-	function closeLoadProgress() {
-		document.getElementById("progress").style.display = "none";
-	}
-
-	function showGame() {
-
-	}
-
-	function stop() {
-		return false;
-	}
-	document.oncontextmenu = stop;
-
-	window.onorientationchange = function (e) {
-		var d = document.getElementById("screenHint");
-		if (d) {
-			d.style.display = "none";
+		function get_AppInfo_address(){
+			return info.get_AppInfo_address
 		}
-	}
-	function isSafari() {
-		if (/Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)) {
-			return true
-		} else {
-			return false
+		function get_gonggao_address(){
+			return info.get_gonggao_address
+		}
+		function get_roomList_address(){
+			return info.get_roomList_address
+		}
+		function get_login_address(){
+			return info.get_login_address
+		}
+		function get_register_address(){
+			return info.get_register_address
+		}
+		function getVersion(){
+			return info.version;
 		}
 
-	}
-	function sdkInit(appid) {
-	}
-	function isFullScree() {
-		return document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen
-	}
-	function FullScree() {
-		var el = document.documentElement;
-		var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-		if (typeof rfs != "undefined" && rfs) {
-			rfs.call(el);
-		};
-	}
 
-	function setChannel(channel) {
-		this.channel = channel
-	}
-	function getChannel() {
-		return this.channel || 'CQ'
-	}
-
-	function getChargeUrl() {
-		var channel = this.channel || 'CQ'
-		return 'http://47.112.63.204/gm/index.php?m=Payment&a=Placeorder&platform=' + channel;
-	}
-	function getChatControlUrl() {
-		return 'http://47.112.63.204/gm/index.php?m=Chat&a=chat_controls&';
-	}
-	function getkefuUrl() {
-		return 'https://temp-chat.mstatik.com/widget/standalone.html?eid=184645';
-	}
-
-
-	function statistics() {
-		if (this.channel == 'lx') {
-			var _hmt = _hmt || [];
-			var hm = document.createElement('script');
-			hm.src = 'https://hm.baidu.com/hm.js?3b899991c3fa1f777ead47bf4bc45c9b';
-			var s = document.getElementsByTagName('script')[0];
-			s.parentNode.insertBefore(hm, s);
-		} else {
-			var _hmt = _hmt || [];
-			var hm = document.createElement("script");
-			hm.src = "https://hm.baidu.com/hm.js?2f4d0caff62d3affc9d7ce51c369ca09";
-			var s = document.getElementsByTagName("script")[0];
-			s.parentNode.insertBefore(hm, s);
-		}
-	}
-
-
-	function createIframe(url) {
-		var div = document.getElementById("testId");
-		var iframe = document.createElement("iframe");
-		var button = document.createElement('div')
-		var bg = document.createElement('div')
-
-		bg.id = 'pay_bg'
-		bg.style.position = 'absolute'
-		bg.style.background = '#000000';
-		bg.style.width = '100%';
-		bg.style.height = '100%';
-		bg.style.top = 0;
-		bg.style.left = 0;
-		bg.style.opacity = 0.8;
-
-		bg.onclick = (function () {
-
-		})
-		div.appendChild(bg)
-
-
-		iframe.id = "pay_iframe";
-		iframe.style.background = '#ffffff'
-		iframe.src = url;
-		iframe.style.position = 'absolute';
-		iframe.style.border = '0px';
-		iframe.style.width = '90%';
-		iframe.style.height = '90%';
-		iframe.style.left = '5%';
-		iframe.style.top = '5%';
-		div.appendChild(iframe)
-
-		button.id = 'pay_closeBtn';
-		button.style.position = 'absolute';
-		button.style.right = 0;
-		button.style.top = '15px';
-		button.style.background = 'url(./assets/images/room/close.png)'
-		button.style.width = '60px';
-		button.style.height = '60px';
-		var self = this;
-		button.onclick = (function () {
-			self.removeIframe()
-		})
-
-		div.appendChild(button)
-	}
-	function removeIframe() {
-
-		var div = document.getElementById("testId");
-		var bg = document.getElementById("pay_bg");
-		var pay_iframe = document.getElementById("pay_iframe");
-		var pay_closeBtn = document.getElementById("pay_closeBtn");
-		if (pay_iframe) {
-			div.removeChild(pay_iframe);
-		}
-		if (pay_closeBtn) {
-			div.removeChild(pay_closeBtn);
-		}
-		if (bg) {
-			div.removeChild(bg);
-		}
-	}
-
-	// this.number = 0
-	this.testInfo = {}
-	this.str = ''
-	function saveTestInfo(data) {
-		var date = new Date(Date.now());
-		Y = date.getFullYear() + '-';
-		M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-		D = date.getDate() + ' ';
-		h = date.getHours() + ':';
-		m = date.getMinutes() + ':';
-		s = date.getSeconds();
-		let string = Y + M + D + h + m + s;
-		this.testInfo[string] = data
-		this.str += JSON.stringify(this.testInfo[string]) + '\n'
-
-	}
-
-	function downtestInfo() {
-		// var mobileCode =JSON.stringify(this.testInfo) 
-
-		var file = new File([this.str], "log.json", { type: "text/plain;charset=utf-8" });
-		saveAs(file);
-		console.log('保存成功')
-	}
-
-	function getLoginInfo() {
-		// return {
-		// 	// srvid: 8,
-		// 	// user: 'lx_fd4mksxw',
-		// 	// serverid: 8,
-		// 	// spverify: 'cc17c30cd111c7215fc8f51f8790e0e1',
-		// 	// srvaddr: '47.106.10.149',
-		// 	// srvport: 9004
-
-
-
-		// 	srvid: "5",
-		// 	// user: "lx_smjlrbqs",
-		// 	// spverify: "8037ccea85006fee74f58f86edf1788e",
-
-		// 	user: "lx_fd4mksxw",
-		// 	spverify: "cc17c30cd111c7215fc8f51f8790e0e1",
-		// 	serverid: "5",
-		// 	srvaddr: "47.106.10.149",
-		// 	srvport: "9001"
-		// 	// userID: 211
-		// 	// userName: "恶魔霸气"
-		// 	// roleID: 8060933
-		// }
-		if (this.LoginInfo) {
-			return this.LoginInfo
+		function showLoadProgress(progress, txt) {
+			console.log(txt + "进度" + progress + "%")
+			document.getElementById("progress").value = txt + "进度" + progress + "%";
 		}
 
-		return {
-			srvid: 8,
-			user: '',
-			serverid: 8,
-			spverify: '',
-			srvaddr: '',
-			srvport: 9004
+		function closeLoadProgress() {
+			document.getElementById("progress").style.display = "none";
 		}
-	}
 
-	function setLoginInfo(data) {
-		this.LoginInfo = data
-		// return {
-		// 	srvid: 8,
-		// 	user: 'lx_fd4mksxw',
-		// 	serverid: 8,
-		// 	spverify: 'cc17c30cd111c7215fc8f51f8790e0e1',
-		// 	srvaddr: '47.106.10.149',
-		// 	srvport: 9004
-		// }
-	}
+		function showGame() {
 
-
-	function setRoomList(roomListData) {
-		this.roomListData = roomListData
-	}
-
-	function getRoomList() {
-		return this.roomListData;
-	}
-	function exitfullscreen() { //退出全屏
-		if (document.exitFullscreen) {
-			document.exitFullscreen();
-		} else if (document.mozCancelFullScreen) {
-			document.mozCancelFullScreen();
-		} else if (document.webkitCancelFullScreen) {
-			document.webkitCancelFullScreen();
-		} else if (document.msExitFullscreen) {
-			document.msExitFullscreen();
 		}
-	}
-	function showRecharge(payItems) {
-		// console.log('这里吊起支付！！！')
-		// console.log(payItems)
-	}
-	function showQrCode(use) {
-	}
 
-	function connectError() {
-	}
+		function stop() {
+			return false;
+		}
+		document.oncontextmenu = stop;
 
-	function closeSocket() {
-		Main.closesocket();
-	}
+		window.onorientationchange = function (e) {
+			var d = document.getElementById("screenHint");
+			if (d) {
+				d.style.display = "none";
+			}
+		}
+		function isSafari() {
+			if (/Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)) {
+				return true
+			} else {
+				return false
+			}
 
-	function checkAWY() {
+		}
+		function sdkInit(appid) {
+		}
+		function isFullScree() {
+			return document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen
+		}
+		function FullScree() {
+			var el = document.documentElement;
+			var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+			if (typeof rfs != "undefined" && rfs) {
+				rfs.call(el);
+			};
+		}
 
-	}
-	function reportSDK(str) {
+		function setChannel(channel) {
+			this.channel = channel
+		}
+		function getChannel() {
+			return this.channel || 'CQ'
+		}
 
-	}
-	function showQRCode() {
-
-	}
-	function isFocus() {
-
-	}
-	function isShare() {
-
-	}
-	function roleUp() {
-
-	}
-	function enterGame() {
-
-	}
-	function createRole() {
-
-	}
-	function getVipInfo() {
-
-	}
-	function isShowGameDesktop() {
-	}
-	function saveGameDesktop() {
-	}
-	function getClientVersion(callback) {
-		if (callback) callback(0);
-	}
-
-	var ver = "0.12";
-	var verUrl = "http://nnqp.ruida2017.com/game/ver.txt?ver=";
+		function getChargeUrl() {
+			// var channel = this.channel || 'CQ'
+			return info.getreCharge2_address;
+		}
+		function getChatControlUrl() {
+			return info.getChatControl_address;
+		}
+		function getkefuUrl() {
+			return info.getKeFu_address;
+		}
 
 
+		function statistics() {
+			if (this.channel == 'lx') {
+				var _hmt = _hmt || [];
+				var hm = document.createElement('script');
+				hm.src = 'https://hm.baidu.com/hm.js?3b899991c3fa1f777ead47bf4bc45c9b';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(hm, s);
+			} else {
+				var _hmt = _hmt || [];
+				var hm = document.createElement("script");
+				hm.src = "https://hm.baidu.com/hm.js?2f4d0caff62d3affc9d7ce51c369ca09";
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(hm, s);
+			}
+		}
 
 
-</script>
+		function createIframe(url) {
+			var div = document.getElementById("testId");
+			var iframe = document.createElement("iframe");
+			var button = document.createElement('div')
+			var bg = document.createElement('div')
+
+			bg.id = 'pay_bg'
+			bg.style.position = 'absolute'
+			bg.style.background = '#000000';
+			bg.style.width = '100%';
+			bg.style.height = '100%';
+			bg.style.top = 0;
+			bg.style.left = 0;
+			bg.style.opacity = 0.8;
+
+			bg.onclick = (function () {
+
+			})
+			div.appendChild(bg)
+
+
+			iframe.id = "pay_iframe";
+			iframe.style.background = '#ffffff'
+			iframe.src = url;
+			iframe.style.position = 'absolute';
+			iframe.style.border = '0px';
+			iframe.style.width = '90%';
+			iframe.style.height = '90%';
+			iframe.style.left = '5%';
+			iframe.style.top = '5%';
+			div.appendChild(iframe)
+
+			button.id = 'pay_closeBtn';
+			button.style.position = 'absolute';
+			button.style.right = 0;
+			button.style.top = '15px';
+			button.style.background = 'url(./assets/images/room/close.png)'
+			button.style.width = '60px';
+			button.style.height = '60px';
+			var self = this;
+			button.onclick = (function () {
+				self.removeIframe()
+			})
+
+			div.appendChild(button)
+		}
+		function removeIframe() {
+
+			var div = document.getElementById("testId");
+			var bg = document.getElementById("pay_bg");
+			var pay_iframe = document.getElementById("pay_iframe");
+			var pay_closeBtn = document.getElementById("pay_closeBtn");
+			if (pay_iframe) {
+				div.removeChild(pay_iframe);
+			}
+			if (pay_closeBtn) {
+				div.removeChild(pay_closeBtn);
+			}
+			if (bg) {
+				div.removeChild(bg);
+			}
+		}
+
+		// this.number = 0
+		this.testInfo = {}
+		this.str = ''
+		function saveTestInfo(data) {
+			var date = new Date(Date.now());
+			Y = date.getFullYear() + '-';
+			M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+			D = date.getDate() + ' ';
+			h = date.getHours() + ':';
+			m = date.getMinutes() + ':';
+			s = date.getSeconds();
+			let string = Y + M + D + h + m + s;
+			this.testInfo[string] = data
+			this.str += JSON.stringify(this.testInfo[string]) + '\n'
+
+		}
+
+		function downtestInfo() {
+			// var mobileCode =JSON.stringify(this.testInfo) 
+
+			var file = new File([this.str], "log.json", { type: "text/plain;charset=utf-8" });
+			saveAs(file);
+			console.log('保存成功')
+		}
+
+		function getLoginInfo() {
+			// return {
+			// 	// srvid: 8,
+			// 	// user: 'lx_fd4mksxw',
+			// 	// serverid: 8,
+			// 	// spverify: 'cc17c30cd111c7215fc8f51f8790e0e1',
+			// 	// srvaddr: '47.106.10.149',
+			// 	// srvport: 9004
+
+
+
+			// 	srvid: "5",
+			// 	// user: "lx_smjlrbqs",
+			// 	// spverify: "8037ccea85006fee74f58f86edf1788e",
+
+			// 	user: "lx_fd4mksxw",
+			// 	spverify: "cc17c30cd111c7215fc8f51f8790e0e1",
+			// 	serverid: "5",
+			// 	srvaddr: "47.106.10.149",
+			// 	srvport: "9001"
+			// 	// userID: 211
+			// 	// userName: "恶魔霸气"
+			// 	// roleID: 8060933
+			// }
+			if (this.LoginInfo) {
+				return this.LoginInfo
+			}
+
+			return {
+				srvid: 8,
+				user: '',
+				serverid: 8,
+				spverify: '',
+				srvaddr: '',
+				srvport: 9004
+			}
+		}
+
+		function setLoginInfo(data) {
+			this.LoginInfo = data
+			// return {
+			// 	srvid: 8,
+			// 	user: 'lx_fd4mksxw',
+			// 	serverid: 8,
+			// 	spverify: 'cc17c30cd111c7215fc8f51f8790e0e1',
+			// 	srvaddr: '47.106.10.149',
+			// 	srvport: 9004
+			// }
+		}
+
+
+		function setRoomList(roomListData) {
+			this.roomListData = roomListData
+		}
+
+		function getRoomList() {
+			return this.roomListData;
+		}
+		function exitfullscreen() { //退出全屏
+			if (document.exitFullscreen) {
+				document.exitFullscreen();
+			} else if (document.mozCancelFullScreen) {
+				document.mozCancelFullScreen();
+			} else if (document.webkitCancelFullScreen) {
+				document.webkitCancelFullScreen();
+			} else if (document.msExitFullscreen) {
+				document.msExitFullscreen();
+			}
+		}
+		function showRecharge(payItems) {
+			// console.log('这里吊起支付！！！')
+			// console.log(payItems)
+		}
+		function showQrCode(use) {
+		}
+
+		function connectError() {
+		}
+
+		function closeSocket() {
+			Main.closesocket();
+		}
+
+		function checkAWY() {
+
+		}
+		function reportSDK(str) {
+
+		}
+		function showQRCode() {
+
+		}
+		function isFocus() {
+
+		}
+		function isShare() {
+
+		}
+		function roleUp() {
+
+		}
+		function enterGame() {
+
+		}
+		function createRole() {
+
+		}
+		function getVipInfo() {
+
+		}
+		function isShowGameDesktop() {
+		}
+		function saveGameDesktop() {
+		}
+		function getClientVersion(callback) {
+			if (callback) callback(0);
+		}
+
+		var ver = "0.12";
+		var verUrl = "http://nnqp.ruida2017.com/game/ver.txt?ver=";
+
+
+
+
+	</script>
 </body>
 
 </html>
