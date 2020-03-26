@@ -134,7 +134,8 @@ class OSATarget12Panel1 extends BaseView {
 		this.actPoint.text = activityData.score + "";
 		for( let i = activityData.logs.length-1; i >=0 ;i-- ){
 			let config:ActivityType12Config = GlobalConfig.ActivityType12Config[this.activityID][activityData.logs[i].index];
-			let roleName = `s${activityData.logs[i].serverId}.${activityData.logs[i].name}`;
+			let serverName = window['getServerName'](activityData.logs[i].serverId)
+			let roleName = `[${serverName}].${activityData.logs[i].name}`;
 			let str = StringUtils.replace(config.record,roleName);
 			arr.push(str);
 		}

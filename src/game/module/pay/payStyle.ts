@@ -52,8 +52,10 @@ class Pay extends BaseClass {
             self.sendNum++
             var request = <egret.HttpRequest>event.currentTarget;
             let data = JSON.parse(request.response)
-            let url = data.data.url;
+            
+            
             if (data.status == 1) {
+                let url = data.data.url;
                 if (url) {
                     ViewManager.ins().close(WarnWin);
                     if (type == 1) {
@@ -61,8 +63,12 @@ class Pay extends BaseClass {
                     } else {
                         url = decodeURIComponent(url)
                     }
-                    egret.ExternalInterface.call("openURL", url);
-
+                    if (window['getNative']() == 'web') {
+                        window.open(url)
+                    }else{
+                        egret.ExternalInterface.call("openURL", url);
+                    }
+                    
                 }
             }else{
                 alert(data.info)

@@ -345,11 +345,11 @@ class GameSocket {
 
 		// egret.log("派发协议：" + sysId + "-" + msgId);
 		// egret.log(byte);
-		let _data = {
-			'派发协议': sysId + "-" + msgId,
-			'byte':byte
-		}
-		window['saveTestInfo'](_data)
+		// let _data = {
+		// 	'派发协议': sysId + "-" + msgId,
+		// 	'byte':byte
+		// }
+		// window['saveTestInfo'](_data)
 		let arr: any[] = this.PACK_HANDLER[sysId][msgId];
 		arr[0].call(arr[1], byte);
 	}

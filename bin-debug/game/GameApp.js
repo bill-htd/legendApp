@@ -22,6 +22,10 @@ var GameApp = (function (_super) {
     GameApp.ins = function () {
         return _super.ins.call(this);
     };
+    GameApp.prototype.loadWeb = function () {
+        var groupName = "firstLoad";
+        ResourceUtils.ins().loadGroup(groupName, this.complete, this.progress, this);
+    };
     GameApp.prototype.load = function (loadingView) {
         this.loadingView = loadingView;
         var groupName = "firstLoad";
@@ -47,7 +51,12 @@ var GameApp = (function (_super) {
             }
             GlobalConfig.init();
             GameMap.init(data);
-            _this.loadingView.setProgress(90, '(登录游戏中)');
+            if (window['getNative']() == 'web') {
+                LocationProperty.setLoadProgress(90, "(登录游戏中)");
+            }
+            else {
+                _this.loadingView.setProgress(90, '(登录游戏中)');
+            }
             RoleMgr.ins().connectServer();
             eui.Label.default_fontFamily = "微软雅黑";
             RoleAI.ins().init();
@@ -57,7 +66,12 @@ var GameApp = (function (_super) {
         }, this);
     };
     GameApp.prototype.progress = function (itemsLoaded, itemsTotal) {
-        this.loadingView.setProgress(40 + (itemsLoaded / itemsTotal * 30), '(加载必要资源)');
+        if (window['getNative']() == 'web') {
+            LocationProperty.setLoadProgress(40 + (itemsLoaded / itemsTotal * 30), "(加载必要资源)");
+        }
+        else {
+            this.loadingView.setProgress(40 + (itemsLoaded / itemsTotal * 30), '(加载必要资源)');
+        }
     };
     GameApp.prototype.postPerLoadProgress = function (itemsLoaded, itemsTotal) {
         return [itemsLoaded, itemsTotal];

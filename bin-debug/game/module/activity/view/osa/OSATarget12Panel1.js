@@ -134,7 +134,8 @@ var OSATarget12Panel1 = (function (_super) {
         this.actPoint.text = activityData.score + "";
         for (var i = activityData.logs.length - 1; i >= 0; i--) {
             var config = GlobalConfig.ActivityType12Config[this.activityID][activityData.logs[i].index];
-            var roleName = "s" + activityData.logs[i].serverId + "." + activityData.logs[i].name;
+            var serverName = window['getServerName'](activityData.logs[i].serverId);
+            var roleName = "[" + serverName + "]." + activityData.logs[i].name;
             var str = StringUtils.replace(config.record, roleName);
             arr.push(str);
         }

@@ -720,7 +720,8 @@ class Role extends EntityModel {
 
 	/**获取带服务器ID的名字（注意，这里服务器ID会换行！） */
 	public getNameWithServer2(): string {
-		return this._servId && KFServerSys.ins().isKF ? this.name + `\nS${this._servId}` : this.name;
+		let serverName = window['getServerName'](this._servId)
+		return this._servId && KFServerSys.ins().isKF ? this.name + `\n[${serverName}]` : this.name;
 	}
 
 	public get guildAndName(): string {

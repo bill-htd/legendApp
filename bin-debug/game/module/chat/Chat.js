@@ -67,6 +67,7 @@ var Chat = (function (_super) {
     };
     Chat.prototype.doNewChatMsg = function (bytes) {
         var message = new ChatInfoData(bytes);
+        console.log(message);
         if (Friends.ins().indexOfBlackList(message.id) == -1) {
             this.insertChatMsg(message);
         }

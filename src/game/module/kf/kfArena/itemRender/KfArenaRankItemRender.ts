@@ -45,7 +45,8 @@ class KfArenaRankItemRender extends BaseItemRender {
 			this.player.text = this.data.playerName;
 			this.score.text = this.data.score + "";
 			this.seasonTitle.text = KfArenaSys.ins().duanName[this.data.dan];
-			this.serverId.text = `S${this.data.servId}`;
+			let serverName = window['getServerName'](this.data.servId)
+			this.serverId.text = `[${serverName}]`;
 			this.vip.visible = this.data.vip > 0;
 
 			if (GlobalConfig.CrossArenaBase.rankAward[this.data.rank]) {

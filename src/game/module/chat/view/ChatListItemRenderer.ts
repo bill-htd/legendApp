@@ -38,8 +38,8 @@ class ChatListItemRenderer extends BaseItemRender {
 			this.currentState = `sys`;
 		else
 			this.currentState = `other`;
-
-		let servStr: string = KFServerSys.ins().isKF ? `S${_data.servId}` : "";
+			let serverName = window['getServerName'](_data.servId)
+		let servStr: string = KFServerSys.ins().isKF ? `[${serverName}]` : "";
 
 		this.validateNow();
 		if (!this.vip) {

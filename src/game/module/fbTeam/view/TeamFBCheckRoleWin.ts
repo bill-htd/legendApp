@@ -56,7 +56,8 @@ class TeamFBCheckRoleWin extends BaseEuiView{
 
 	private setRoleInfo(): void {
 		let tempData = this.otherPlayerData.roleData[0];
-		let server: string = `[S${this.otherPlayerData.serverId}]`;
+		let serverName = window['getServerName'](this.otherPlayerData.serverId)
+		let server: string = `[${serverName}]`;
 		if (!this.otherPlayerData.serverId || this.otherPlayerData.serverId == LocationProperty.srvid) server = "";
 		this.nameTxt.text = this.otherPlayerData.name + server;
 		this.guildNameText.x = this.nameTxt.x + this.nameTxt.textWidth + 10;

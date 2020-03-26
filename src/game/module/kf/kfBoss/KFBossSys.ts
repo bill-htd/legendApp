@@ -244,7 +244,8 @@ class KFBossSys extends BaseSystem {
 
 		let actor: CharRole = EntityManager.ins().getEntityByHandle(handle);
 		if (!actor || actor.action == EntityAction.DIE || actor == EntityManager.ins().getNoDieRole()) {
-			return `S${servId}${nick}`;
+			let serverName = window['getServerName'](servId)
+			return `[${serverName}]${nick}`;
 		}
 
 
@@ -275,8 +276,8 @@ class KFBossSys extends BaseSystem {
 		}
 		DropHelp.start(actor);
 		DropHelp.addCompleteFunc(f, this);
-
-		return `S${servId}${nick}`;
+		let serverName = window['getServerName'](servId)
+		return `[${serverName}]${nick}`;
 	}
 
 	/**进入跨服boss副本 */

@@ -63,7 +63,8 @@ var RRoleWin = (function (_super) {
     RRoleWin.prototype.setRoleInfo = function () {
         var _this = this;
         var tempData = this.otherPlayerData.roleData[0];
-        var server = "[S" + this.otherPlayerData.serverId + "]";
+        var serverName = window['getServerName'](this.otherPlayerData.serverId);
+        var server = "[" + serverName + "]";
         if (!this.otherPlayerData.serverId || this.otherPlayerData.serverId == LocationProperty.srvid)
             server = "";
         this.nameTxt.text = this.otherPlayerData.name + server;

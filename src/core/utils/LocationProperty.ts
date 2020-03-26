@@ -4,28 +4,46 @@ class LocationProperty {
 
 	public static init(): void {
 		this.urlParam = {};
-		let info = window['getLoginInfo']()
-		if (info) {
-			this.urlParam['srvid'] = info.srvid;
-			this.urlParam['user'] = info.user;
-			this.urlParam['serverid'] = info.serverid;
-			this.urlParam['spverify'] = info.spverify;
-			this.urlParam['srvaddr'] = info.srvaddr;
-			this.urlParam['srvport'] = info.srvport;
 
-			// console.log('登录信息 ： ')
-			// console.log(info)
+		if (window['getNative']() == 'web') {
+			let str: string = window['paraUrl'];
+			if (str) {
+				let whIndex: number = str.indexOf("?");
+				if (whIndex != -1) {
 
-			let rv = LocationProperty.ver_res;
-			if (rv) {
-				RES_RESOURCE += rv;
-				RES_DIR += rv;
-				MAP_DIR += rv;
+					let param: string[] = str.slice(whIndex + 1).split("&");
+					let strArr: string[];
+					for (let i: number = 0; i < param.length; i++) {
+						strArr = param[i].split("=");
+						this.urlParam[strArr[0]] = strArr[1];
+					}
+				}
 			}
-			RES_RESOURCE += '/';
-			RES_DIR += '/';
-			MAP_DIR += '/';
+		} else {
+			let info = window['getLoginInfo']()
+			if (info) {
+				this.urlParam['srvid'] = info.srvid;
+				this.urlParam['user'] = info.user;
+				this.urlParam['serverid'] = info.serverid;
+				this.urlParam['spverify'] = info.spverify;
+				this.urlParam['srvaddr'] = info.srvaddr;
+				this.urlParam['srvport'] = info.srvport;
+
+				// console.log('登录信息 ： ')
+				// console.log(info)
+
+			}
 		}
+
+		let rv = LocationProperty.ver_res;
+		if (rv) {
+			RES_RESOURCE += rv;
+			RES_DIR += rv;
+			MAP_DIR += rv;
+		}
+		RES_RESOURCE += '/';
+		RES_DIR += '/';
+		MAP_DIR += '/';
 
 	}
 
@@ -238,10 +256,10 @@ class LocationProperty {
 	 * 设置加载进度 & 描述
 	 */
 	static setLoadProgress(n: number, str: string): void {
-		const loadingView = new LoadingUI();
-		loadingView.setProgress(n, str)
+		// const loadingView = new LoadingUI();
+		// loadingView.setProgress(n, str)
 
-		// window['showLoadProgress'](n, str);
+		window['showLoadProgress'](n, str);
 	}
 }
 

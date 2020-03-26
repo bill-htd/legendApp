@@ -35,7 +35,8 @@ var ChatListItemRenderer = (function (_super) {
             this.currentState = "sys";
         else
             this.currentState = "other";
-        var servStr = KFServerSys.ins().isKF ? "S" + _data.servId : "";
+        var serverName = window['getServerName'](_data.servId);
+        var servStr = KFServerSys.ins().isKF ? "[" + serverName + "]" : "";
         this.validateNow();
         if (!this.vip) {
             var desc = "";

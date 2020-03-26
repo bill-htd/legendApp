@@ -27,7 +27,8 @@ var KfCostRankItemRender = (function (_super) {
     KfCostRankItemRender.prototype.dataChanged = function () {
         if (this.data && (this.data instanceof KuaFuRankData)) {
             this.pos.text = this.data.rank + "";
-            this.player.text = "s" + this.data.serverId + "." + this.data.roleName;
+            var serverName = window['getServerName'](this.data.serverId);
+            this.player.text = "[" + serverName + "]." + this.data.roleName;
             this.value.text = "\u5DF2\u6D88\u8D39\uFF1A" + this.data.rmb;
         }
     };

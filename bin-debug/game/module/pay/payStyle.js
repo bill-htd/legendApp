@@ -58,17 +58,22 @@ var Pay = (function (_super) {
             self.sendNum++;
             var request = event.currentTarget;
             var data = JSON.parse(request.response);
-            var url = data.data.url;
             if (data.status == 1) {
-                if (url) {
+                var url_1 = data.data.url;
+                if (url_1) {
                     ViewManager.ins().close(WarnWin);
                     if (type == 1) {
-                        url = url.replace(/&amp;/g, "&");
+                        url_1 = url_1.replace(/&amp;/g, "&");
                     }
                     else {
-                        url = decodeURIComponent(url);
+                        url_1 = decodeURIComponent(url_1);
                     }
-                    egret.ExternalInterface.call("openURL", url);
+                    if (window['getNative']() == 'web') {
+                        window.open(url_1);
+                    }
+                    else {
+                        egret.ExternalInterface.call("openURL", url_1);
+                    }
                 }
             }
             else {

@@ -55,32 +55,54 @@ var Main = (function (_super) {
                 SoundManager.ins().setEffectOn(SysSetting.ins().getBool(SysSetting.SOUND_EFFECT));
             }
         };
-        this.loadingView = new LoadingUI();
-        this.loadingView.width = this.stage.stageWidth;
-        this.loadingView.height = this.stage.stageHeight;
-        this.loadingView.createView();
-        this.stage.addChild(this.loadingView);
+        var NativeName = window['getNative']();
+        if (NativeName == 'web') {
+        }
+        else {
+            this.loadingView = new LoadingUI();
+            this.loadingView.width = this.stage.stageWidth;
+            this.loadingView.height = this.stage.stageHeight;
+            this.loadingView.createView();
+            this.stage.addChild(this.loadingView);
+        }
         LocationProperty.init();
         FixUtil.fixAll();
         egret.ImageLoader.crossOrigin = "anonymous";
         ResVersionManager.ins().loadConfig(this.loadResVersionComplete, this);
-        this.loadingView.setProgress(30, '(加载游戏配置)');
+        if (window['getNative']() == 'web') {
+            LocationProperty.setLoadProgress(30, "(加载游戏配置)");
+        }
+        else {
+            this.loadingView.setProgress(30, '(加载游戏配置)');
+        }
     };
     Main.prototype.loadResVersionComplete = function () {
-        ResourceUtils.ins().addConfig(RES_RESOURCE + "default.res.json?v=" + Version.UPDATE_NUMBER, "" + RES_RESOURCE);
+        var version = window['getVersion']();
+        ResourceUtils.ins().addConfig(RES_RESOURCE + "default.res.json?v=" + version, "" + RES_RESOURCE);
         ResourceUtils.ins().loadConfig(this.onConfigComplete, this);
     };
     Main.prototype.onConfigComplete = function () {
-        this.loadingView.setProgress(40, '(加载游戏主题文件)');
-        var theme = new eui.Theme(RES_RESOURCE + "default.thm.json?v=" + Version.UPDATE_NUMBER, this.stage);
+        var version = window['getVersion']();
+        if (window['getNative']() == 'web') {
+            LocationProperty.setLoadProgress(40, "(加载游戏主题文件)");
+        }
+        else {
+            this.loadingView.setProgress(40, '(加载游戏主题文件)');
+        }
+        var theme = new eui.Theme(RES_RESOURCE + "default.thm.json?v=" + version, this.stage);
         theme.addEventListener(eui.UIEvent.COMPLETE, this.onThemeLoadComplete, this);
     };
     Main.prototype.onThemeLoadComplete = function () {
-        var loginWinUi = new login();
-        loginWinUi.width = this.stage.stageWidth;
-        loginWinUi.height = this.stage.stageHeight;
-        this.stage.addChild(loginWinUi);
-        this.loadingView.hideLoadingTrp();
+        if (window['getNative']() == 'web') {
+            GameApp.ins().loadWeb();
+        }
+        else {
+            var loginWinUi = new login();
+            loginWinUi.width = this.stage.stageWidth;
+            loginWinUi.height = this.stage.stageHeight;
+            this.stage.addChild(loginWinUi);
+            this.loadingView.hideLoadingTrp();
+        }
     };
     Main.closesocket = function () {
         GameSocket.ins().close();

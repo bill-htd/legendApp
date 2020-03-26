@@ -67,7 +67,8 @@ class KfArenaRankPanel extends BaseEuiView {
 		this.firstGroup.visible = true;
 		this.state.visible = false;
 		this.reward0.data = GlobalConfig.CrossArenaBase.rankAward[firstData.rank].mail.tAwardList[0];
-		this.serverId0.text = `S${firstData.servId}`;
+		let serverName = window['getServerName'](firstData.servId)
+		this.serverId0.text = `[${serverName}]`;
 		this.vip0.visible = firstData.vip > 0;
 		this.firstNameTxt0.text = firstData.playerName;
 		this.score0.text = firstData.score + "";

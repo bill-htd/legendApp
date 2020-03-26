@@ -24,7 +24,8 @@ class KFBossSceneWin extends BaseEuiView {
 			if (curFbId == GlobalConfig.CrossBossConfig[key].fbid) {
 				let dp: CrossBossConfig = GlobalConfig.CrossBossConfig[key];
 				let info = KFBossSys.ins().fbInfo[dp.id];
-				this.nameTxt.text = dp.sceneName == `跨服战场` ? `S.${info.serverId}跨服战场` : `苍月岛`;
+				let serverName = window['getServerName'](info.serverId)
+				this.nameTxt.text = dp.sceneName == `跨服战场` ? `[${serverName}]跨服战场` : `苍月岛`;
 				break;
 			}
 		}

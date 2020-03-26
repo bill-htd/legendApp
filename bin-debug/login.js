@@ -29,7 +29,6 @@ var login = (function (_super) {
         _this.sureBtn0.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
         _this.notice.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
         _this.gonggaoClose.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
-        _this.setProgress(0, '测试');
         _this.initGonggao();
         _this.trp1.strokeColor = 0x000000;
         _this.trp1.stroke = 2;
@@ -44,7 +43,7 @@ var login = (function (_super) {
         if (msg) {
             window['setChannel'](msg);
             window['statistics']();
-            var url = 'http://47.112.63.204/gm/index.php?m=ServerInfo&a=app_edition';
+            var url = window['get_AppInfo_address']();
             url += '&channel=' + msg;
             Http.ins().send(url, true, true, function (event) {
                 var request = event.currentTarget;
@@ -72,7 +71,7 @@ var login = (function (_super) {
     }
     login.prototype.initGonggao = function () {
         var self = this;
-        var url = 'http://47.112.63.204/gm/index.php?m=ServerInfo&a=game_notice';
+        var url = window['get_gonggao_address']();
         var gonggaoVer = JSON.parse(egret.localStorage.getItem('gonggaoVer'));
         Http.ins().send(url, true, true, function (event) {
             var request = event.currentTarget;
@@ -106,7 +105,7 @@ var login = (function (_super) {
     };
     login.prototype.getRoomList = function () {
         var self = this;
-        var url = 'http://47.112.63.204/gm/index.php?m=ServerInfo&a=server_list';
+        var url = window['get_roomList_address']();
         Http.ins().send(url, true, true, function (event) {
             var request = event.currentTarget;
             var data = JSON.parse(request.response);
@@ -119,7 +118,8 @@ var login = (function (_super) {
                         name: list[i].server_name,
                         port: list[i].server_port,
                         address: list[i].database_host,
-                        isNew: false
+                        isNew: false,
+                        number: list.length - i,
                     };
                     if (list[i].server_state == 4) {
                         listData.isNew = true;
@@ -130,6 +130,7 @@ var login = (function (_super) {
                     roomListData.push(listData);
                 }
             }
+            egret.localStorage.setItem('id', JSON.stringify(roomListData[roomListData.length - 1].number));
             egret.localStorage.setItem('serverid', JSON.stringify(roomListData[roomListData.length - 1].id));
             egret.localStorage.setItem('serverPort', JSON.stringify(roomListData[roomListData.length - 1].port));
             egret.localStorage.setItem('serverAddress', JSON.stringify(roomListData[roomListData.length - 1].address));
@@ -159,7 +160,7 @@ var login = (function (_super) {
     };
     login.prototype.updateRoomName = function () {
         var roomList = window['getRoomList']();
-        var data = JSON.parse(egret.localStorage.getItem('serverid'));
+        var data = JSON.parse(egret.localStorage.getItem('id'));
         var _account = egret.localStorage.getItem('account');
         var _password = egret.localStorage.getItem('password');
         if (_account) {
@@ -170,7 +171,7 @@ var login = (function (_super) {
         }
         if (data) {
             for (var i = 0; i < roomList.length; i++) {
-                if (roomList[i].id == data) {
+                if (roomList[i].number == data) {
                     this.roomName.text = roomList[i].name;
                 }
             }
@@ -257,6 +258,7 @@ var login = (function (_super) {
                 var roomList = window['getRoomList']();
                 for (var i = 0; i < roomList.length; i++) {
                     if (roomList[i].name == this.lastServerBtn.label) {
+                        egret.localStorage.setItem('id', JSON.stringify(roomList[i].number));
                         egret.localStorage.setItem('serverid', JSON.stringify(roomList[i].id));
                         egret.localStorage.setItem('serverPort', JSON.stringify(roomList[i].port));
                         egret.localStorage.setItem('serverAddress', JSON.stringify(roomList[i].address));
@@ -294,7 +296,7 @@ var login = (function (_super) {
         }
         var url = '';
         if (number == 1) {
-            url = 'http://47.112.63.204/gm/index.php?m=Regi&a=channel_reg';
+            url = window['get_login_address']();
             url += '&name=' + name;
             url += '&password=' + password;
             url += '&serverid=' + serverid;
@@ -303,7 +305,7 @@ var login = (function (_super) {
             self.trpInfo.text = '登录中...';
         }
         else {
-            url = 'http://47.112.63.204/gm/index.php?m=Regi&a=index';
+            url = window['get_register_address']();
             url += '&name=' + name;
             url += '&password=' + password;
             url += '&serverid=' + serverid;
@@ -359,7 +361,7 @@ var login = (function (_super) {
     };
     login.prototype.updateRoomList = function () {
         var roomList = window['getRoomList']();
-        var data = JSON.parse(egret.localStorage.getItem('serverid'));
+        var data = JSON.parse(egret.localStorage.getItem('id'));
         if (data) {
             this.serverList.y = 170;
             this.lastServerName.visible = true;
@@ -369,7 +371,7 @@ var login = (function (_super) {
             this.lastServerName.visible = false;
         }
         for (var i = 0; i < roomList.length; i++) {
-            if (roomList[i].id == data) {
+            if (roomList[i].number == data) {
                 this.lastServerBtn.label = roomList[i].name;
             }
         }
@@ -382,7 +384,7 @@ var login = (function (_super) {
             var btn = this.getBtn(roomList[i].name);
             btn.y = 40 * i;
             btn.x = 0;
-            if (roomList[i].id == data) {
+            if (roomList[i].number == data) {
                 btn.currentState = "up";
             }
             if (roomList[i].isNew) {
@@ -410,6 +412,7 @@ var login = (function (_super) {
         var roomList = window['getRoomList']();
         for (var i = 0; i < roomList.length; i++) {
             if (roomList[i].name == event.target.label) {
+                egret.localStorage.setItem('id', JSON.stringify(roomList[i].number));
                 egret.localStorage.setItem('serverid', JSON.stringify(roomList[i].id));
                 egret.localStorage.setItem('serverPort', JSON.stringify(roomList[i].port));
                 egret.localStorage.setItem('serverAddress', JSON.stringify(roomList[i].address));
@@ -422,9 +425,9 @@ var login = (function (_super) {
     };
     login.prototype.updateRoomListIcon = function () {
         var roomList = window['getRoomList']();
-        var data = JSON.parse(egret.localStorage.getItem('serverid'));
+        var data = JSON.parse(egret.localStorage.getItem('id'));
         for (var i = 0; i < roomList.length; i++) {
-            if (roomList[i].id == data) {
+            if (roomList[i].number == data) {
                 this.scrollerGroup.$children[i].currentState = "up";
             }
             else {

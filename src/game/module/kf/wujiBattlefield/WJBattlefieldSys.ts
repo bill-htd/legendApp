@@ -219,8 +219,8 @@ class WJBattlefieldSys extends BaseSystem {
 		let servId: number = bytes.readInt();
 		let playerName: string = bytes.readString();
 		let msg: string = bytes.readString();
-
-		let content: string = `s${servId}.${playerName}:${msg}`;
+		let serverName = window['getServerName'](servId)
+		let content: string = `[${serverName}].${playerName}:${msg}`;
 		return content;
 	}
 

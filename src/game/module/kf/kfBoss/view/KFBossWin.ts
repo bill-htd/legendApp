@@ -86,7 +86,8 @@ class KFBossWin extends BaseEuiView {
 				// this[`island${index}`].touchEnabled = true;
 				if (info.serverId) {
 					this[`island${index}`].serverInfo.visible = true;
-					this[`island${index}`].serverName.text = `${info.serverId == LocationProperty.srvid ? `本服` : `S.${info.serverId}服`}`;
+					let serverName = window['getServerName'](info.serverId)
+					this[`island${index}`].serverName.text = `${info.serverId == LocationProperty.srvid ? `本服` : `${serverName}服`}`;
 					if (info.serverId == LocationProperty.srvid) {
 						this[`island${index}`].headGroup.visible = true;
 						let roleData: Role = SubRoles.ins().getSubRoleByIndex(0);

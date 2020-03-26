@@ -52,7 +52,8 @@ var TeamFBCheckRoleWin = (function (_super) {
     };
     TeamFBCheckRoleWin.prototype.setRoleInfo = function () {
         var tempData = this.otherPlayerData.roleData[0];
-        var server = "[S" + this.otherPlayerData.serverId + "]";
+        var serverName = window['getServerName'](this.otherPlayerData.serverId);
+        var server = "[" + serverName + "]";
         if (!this.otherPlayerData.serverId || this.otherPlayerData.serverId == LocationProperty.srvid)
             server = "";
         this.nameTxt.text = this.otherPlayerData.name + server;

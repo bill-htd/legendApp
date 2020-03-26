@@ -146,7 +146,12 @@ var ChargeFirstWin = (function (_super) {
                 break;
             case this.kefuBtn:
                 var url = window['getkefuUrl']();
-                egret.ExternalInterface.call("openURL", url);
+                if (window['getNative']() == 'web') {
+                    window.open(url);
+                }
+                else {
+                    egret.ExternalInterface.call("openURL", url);
+                }
                 break;
             case this.vipBtn:
                 ViewManager.ins().open(VipWin);

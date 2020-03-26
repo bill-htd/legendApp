@@ -23,7 +23,8 @@ class KfCostRankItemRender extends BaseItemRender {
 	protected dataChanged(): void {
 		if( this.data && (this.data instanceof  KuaFuRankData) ){
 			this.pos.text = this.data.rank + "" ;
-			this.player.text = `s${this.data.serverId}.`+this.data.roleName;
+			let serverName = window['getServerName'](this.data.serverId)
+			this.player.text = `[${serverName}].`+this.data.roleName;
 			this.value.text = `已消费：${this.data.rmb}`;
 		}
 	}

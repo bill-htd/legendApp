@@ -14,7 +14,16 @@ class GameApp extends BaseClass {
 	static ins():GameApp{
 		return super.ins() as GameApp;
 	}
+	
+	public loadWeb() {
+		/**
+		 * 	这里可以添加登录后在加载
+		 * 
+		 */
 
+		let groupName = "firstLoad";
+		ResourceUtils.ins().loadGroup(groupName, this.complete, this.progress, this);
+	}
 	public load(loadingView:login) {
 		/**
 		 * 	这里可以添加登录后在加载
@@ -58,8 +67,13 @@ class GameApp extends BaseClass {
 			GameMap.init(data);
 			//音乐音效处理
 			// SoundManager.ins().setEffectOn(true);
-			// LocationProperty.setLoadProgress(90, "(登录游戏中)");
-			this.loadingView.setProgress(90,'(登录游戏中)')
+			// 
+			if (window['getNative']() == 'web') {
+				LocationProperty.setLoadProgress(90, "(登录游戏中)");
+			} else {
+				this.loadingView.setProgress(90,'(登录游戏中)')
+			}
+			
 			RoleMgr.ins().connectServer();
 
 			eui.Label.default_fontFamily = "微软雅黑";
@@ -78,8 +92,13 @@ class GameApp extends BaseClass {
 	 * 资源组加载进度
 	 */
 	private progress(itemsLoaded: number, itemsTotal: number): void {
-		// LocationProperty.setLoadProgress(40 + (itemsLoaded / itemsTotal * 30), "(加载必要资源)");
-		this.loadingView.setProgress(40 + (itemsLoaded / itemsTotal * 30),'(加载必要资源)')
+		// 
+		if (window['getNative']() == 'web') {
+			LocationProperty.setLoadProgress(40 + (itemsLoaded / itemsTotal * 30), "(加载必要资源)");
+		} else {
+			this.loadingView.setProgress(40 + (itemsLoaded / itemsTotal * 30),'(加载必要资源)')
+		}
+		
 	}
 
 	public postPerLoadProgress(itemsLoaded: number, itemsTotal: number): number[] {

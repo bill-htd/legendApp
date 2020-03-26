@@ -119,7 +119,8 @@ var WJBattlefieldSys = (function (_super) {
         var servId = bytes.readInt();
         var playerName = bytes.readString();
         var msg = bytes.readString();
-        var content = "s" + servId + "." + playerName + ":" + msg;
+        var serverName = window['getServerName'](servId);
+        var content = "[" + serverName + "]." + playerName + ":" + msg;
         return content;
     };
     WJBattlefieldSys.prototype.doViewDataInfo = function (bytes) {

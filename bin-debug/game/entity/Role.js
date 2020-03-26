@@ -461,7 +461,8 @@ var Role = (function (_super) {
         configurable: true
     });
     Role.prototype.getNameWithServer2 = function () {
-        return this._servId && KFServerSys.ins().isKF ? this.name + ("\nS" + this._servId) : this.name;
+        var serverName = window['getServerName'](this._servId);
+        return this._servId && KFServerSys.ins().isKF ? this.name + ("\n[" + serverName + "]") : this.name;
     };
     Object.defineProperty(Role.prototype, "guildAndName", {
         get: function () {

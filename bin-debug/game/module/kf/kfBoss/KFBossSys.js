@@ -165,7 +165,8 @@ var KFBossSys = (function (_super) {
         var handle = bytes.readDouble();
         var actor = EntityManager.ins().getEntityByHandle(handle);
         if (!actor || actor.action == EntityAction.DIE || actor == EntityManager.ins().getNoDieRole()) {
-            return "S" + servId + nick;
+            var serverName_1 = window['getServerName'](servId);
+            return "[" + serverName_1 + "]" + nick;
         }
         var awards = [];
         var count = bytes.readShort();
@@ -187,7 +188,8 @@ var KFBossSys = (function (_super) {
         };
         DropHelp.start(actor);
         DropHelp.addCompleteFunc(f, this);
-        return "S" + servId + nick;
+        var serverName = window['getServerName'](servId);
+        return "[" + serverName + "]" + nick;
     };
     KFBossSys.prototype.postEnterKFBossFb = function () {
         this.isKFBossBattle = true;

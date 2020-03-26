@@ -31,7 +31,8 @@ var KfArenaRankItemRender = (function (_super) {
             this.player.text = this.data.playerName;
             this.score.text = this.data.score + "";
             this.seasonTitle.text = KfArenaSys.ins().duanName[this.data.dan];
-            this.serverId.text = "S" + this.data.servId;
+            var serverName = window['getServerName'](this.data.servId);
+            this.serverId.text = "[" + serverName + "]";
             this.vip.visible = this.data.vip > 0;
             if (GlobalConfig.CrossArenaBase.rankAward[this.data.rank]) {
                 this.reward.data = GlobalConfig.CrossArenaBase.rankAward[this.data.rank].mail.tAwardList[0];

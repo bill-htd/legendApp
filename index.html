@@ -36,7 +36,7 @@
 
 		var localAddress = 'http://back.dangxuexi.com';
 		window.info = {
-			version: '1.0.0',
+			version: '1.0.4',
 			get_gonggao_address: localAddress + '/gm/index.php?m=ServerInfo&a=game_notice',
 			get_AppInfo_address: localAddress + '/gm/index.php?m=ServerInfo&a=app_edition',
 			get_roomList_address: localAddress + '/gm/index.php?m=ServerInfo&a=server_list',
@@ -46,7 +46,8 @@
 			getreCharge_address: localAddress + '/gm/index.php?m=Paycc&a=placeorder&platform=' + this.channel,
 			getreCharge2_address: localAddress + '/gm/index.php?m=Payment&a=Placeorder&platform=' + this.channel,
 			getChatControl_address: localAddress + '/gm/index.php?m=Chat&a=chat_controls&',
-			getKeFu_address: 'https://chat-new.mqimg.com/widget/standalone.html?eid=184645',
+			getKeFu_address: 'https://temp-chat.mstatik.com/widget/standalone.html?eid=184645',
+			
 
 		}
 
@@ -71,7 +72,7 @@
 		var loadSingleScript = function (src, callback) {
 			var s = document.createElement('script');
 			s.async = false;
-			s.src = src + '?v='+info.version;
+			s.src = src + '?v=' + info.version;
 			s.addEventListener('load', function () {
 				s.parentNode.removeChild(s);
 				s.removeEventListener('load', arguments.callee, false);
@@ -99,25 +100,27 @@
 		});
 		xhr.send(null);
 
-		function get_AppInfo_address(){
+		function get_AppInfo_address() {
 			return info.get_AppInfo_address
 		}
-		function get_gonggao_address(){
+		function get_gonggao_address() {
 			return info.get_gonggao_address
 		}
-		function get_roomList_address(){
+		function get_roomList_address() {
 			return info.get_roomList_address
 		}
-		function get_login_address(){
+		function get_login_address() {
 			return info.get_login_address
 		}
-		function get_register_address(){
+		function get_register_address() {
 			return info.get_register_address
 		}
-		function getVersion(){
+		function getVersion() {
 			return info.version;
 		}
-
+		function getNative(){
+			return 'native'
+		}
 
 		function showLoadProgress(progress, txt) {
 			console.log(txt + "进度" + progress + "%")
@@ -340,11 +343,19 @@
 
 
 		function setRoomList(roomListData) {
+			console.log(roomListData)
 			this.roomListData = roomListData
 		}
 
 		function getRoomList() {
 			return this.roomListData;
+		}
+		function getServerName(id){
+			for(let i = 0; i< this.roomListData.length;i++){
+				if(this.roomListData.id == id){
+					return 's'+this.roomListData.number
+				}
+			}
 		}
 		function exitfullscreen() { //退出全屏
 			if (document.exitFullscreen) {

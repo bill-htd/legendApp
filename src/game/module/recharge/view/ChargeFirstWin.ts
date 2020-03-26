@@ -147,7 +147,12 @@ class ChargeFirstWin extends BaseEuiView {
 				let url = window['getkefuUrl']()
 				// window.open(url)
 				// window['createIframe'](url)
-				egret.ExternalInterface.call("openURL", url);
+				if (window['getNative']() == 'web') {
+					window.open(url)
+				}else{
+					egret.ExternalInterface.call("openURL", url);
+				}
+				// egret.ExternalInterface.call("openURL", url);
 				break;
 			case this.vipBtn:
 				ViewManager.ins().open(VipWin);

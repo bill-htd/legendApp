@@ -70,12 +70,17 @@ class Main extends egret.DisplayObjectContainer {
 			// self.firm()
 		}
 
-		this.loadingView = new LoadingUI();
-		this.loadingView.width = this.stage.stageWidth;
-		this.loadingView.height = this.stage.stageHeight;
-		this.loadingView.createView()
+		let NativeName = window['getNative']()
+		if (NativeName == 'web') {
 
-		this.stage.addChild(this.loadingView);
+		} else {
+			this.loadingView = new LoadingUI();
+			this.loadingView.width = this.stage.stageWidth;
+			this.loadingView.height = this.stage.stageHeight;
+			this.loadingView.createView()
+			this.stage.addChild(this.loadingView);
+		}
+
 
 
 		LocationProperty.init();
@@ -85,9 +90,13 @@ class Main extends egret.DisplayObjectContainer {
 		//设置跨域访问资源
 		egret.ImageLoader.crossOrigin = "anonymous";
 		ResVersionManager.ins().loadConfig(this.loadResVersionComplete, this);
+		if (window['getNative']() == 'web') {
+			LocationProperty.setLoadProgress(30, "(加载游戏配置)");
+		} else {
+			this.loadingView.setProgress(30, '(加载游戏配置)')
+		}
+		// 
 
-		// LocationProperty.setLoadProgress(30, "(加载游戏配置)");
-		this.loadingView.setProgress(30, '(加载游戏配置)')
 
 	}
 
@@ -102,8 +111,13 @@ class Main extends egret.DisplayObjectContainer {
 	 */
 	private onConfigComplete(): void {
 		let version = window['getVersion']()
-		// LocationProperty.setLoadProgress(40, "(加载游戏主题文件)");
-		this.loadingView.setProgress(40, '(加载游戏主题文件)')
+		// 
+		if (window['getNative']() == 'web') {
+			LocationProperty.setLoadProgress(40, "(加载游戏主题文件)");
+		} else {
+			this.loadingView.setProgress(40, '(加载游戏主题文件)')
+		}
+
 		let theme = new eui.Theme(`${RES_RESOURCE}default.thm.json?v=` + version, this.stage);
 		theme.addEventListener(eui.UIEvent.COMPLETE, this.onThemeLoadComplete, this);
 	}
@@ -112,14 +126,20 @@ class Main extends egret.DisplayObjectContainer {
 	 * 主题文件加载完成
 	 */
 	private onThemeLoadComplete(): void {
-		var loginWinUi:login = new login();
-		// console.log(payWin)
-		loginWinUi.width = this.stage.stageWidth;
-		loginWinUi.height = this.stage.stageHeight;
-		// loginWinUi.initLoginInfo(this.loadingView)
-		this.stage.addChild(loginWinUi)
-		// this.stage.removeChild(this.loadingView)
-		this.loadingView.hideLoadingTrp()
+
+		if (window['getNative']() == 'web') {
+			GameApp.ins().loadWeb();
+		} else {
+			var loginWinUi: login = new login();
+			// console.log(payWin)
+			loginWinUi.width = this.stage.stageWidth;
+			loginWinUi.height = this.stage.stageHeight;
+			// loginWinUi.initLoginInfo(this.loadingView)
+			this.stage.addChild(loginWinUi)
+			// this.stage.removeChild(this.loadingView)
+			this.loadingView.hideLoadingTrp()
+		}
+
 
 	}
 

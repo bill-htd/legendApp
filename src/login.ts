@@ -89,9 +89,9 @@ class login extends eui.Component {
         this.dengluInfo.visible = true
         this.zhuceInfo.visible = false
         let self = this
-        egret.ExternalInterface.call("getChannel", '');
-        egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            // var msg = 'lx';
+        // egret.ExternalInterface.call("getChannel", '');
+        // egret.ExternalInterface.addCallback("backChannel", function (msg) {
+            var msg = 'lx';
             if (msg) {
                 window['setChannel'](msg)
                 window['statistics']() // 统计
@@ -119,7 +119,7 @@ class login extends eui.Component {
             if (msg == 'zhousi' || msg == 'CQ') {
                 self.zhuceLabel.visible = true
             }
-        })
+        // })
     }
 
 	/*
@@ -189,7 +189,8 @@ class login extends eui.Component {
                         name: list[i].server_name,
                         port: list[i].server_port,
                         address: list[i].database_host,
-                        isNew: false
+                        isNew: false,
+                        number:list.length - i,
                     }
                     if (list[i].server_state == 4) {
                         listData.isNew = true
@@ -200,6 +201,7 @@ class login extends eui.Component {
                 }
             }
 
+            egret.localStorage.setItem('id', JSON.stringify(roomListData[roomListData.length - 1].number));
             egret.localStorage.setItem('serverid', JSON.stringify(roomListData[roomListData.length - 1].id));
             egret.localStorage.setItem('serverPort', JSON.stringify(roomListData[roomListData.length - 1].port));
             egret.localStorage.setItem('serverAddress', JSON.stringify(roomListData[roomListData.length - 1].address));
@@ -231,7 +233,7 @@ class login extends eui.Component {
 
     private updateRoomName() {
         let roomList = window['getRoomList']()
-        var data = JSON.parse(<string>egret.localStorage.getItem('serverid'));
+        var data = JSON.parse(<string>egret.localStorage.getItem('id'));
         var _account = egret.localStorage.getItem('account');
         var _password = egret.localStorage.getItem('password');
 
@@ -245,7 +247,7 @@ class login extends eui.Component {
 
         if (data) {
             for (let i = 0; i < roomList.length; i++) {
-                if (roomList[i].id == data) {
+                if (roomList[i].number == data) {
                     this.roomName.text = roomList[i].name
                 }
             }
@@ -342,6 +344,7 @@ class login extends eui.Component {
                 let roomList = window['getRoomList']()
                 for (let i = 0; i < roomList.length; i++) {
                     if (roomList[i].name == this.lastServerBtn.label) {
+                        egret.localStorage.setItem('id', JSON.stringify(roomList[i].number));
                         egret.localStorage.setItem('serverid', JSON.stringify(roomList[i].id));
                         egret.localStorage.setItem('serverPort', JSON.stringify(roomList[i].port));
                         egret.localStorage.setItem('serverAddress', JSON.stringify(roomList[i].address));
@@ -391,9 +394,9 @@ class login extends eui.Component {
             return
         }
 
-        egret.ExternalInterface.call("getChannel", '');
-        egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            // let msg = 'lx'
+        // egret.ExternalInterface.call("getChannel", '');
+        // egret.ExternalInterface.addCallback("backChannel", function (msg) {
+            let msg = 'lx'
 
             let channel = msg;
             if (channel == 'lx') {
@@ -477,7 +480,7 @@ class login extends eui.Component {
             }
 
 
-        });
+        // });
 
 
 
@@ -488,7 +491,7 @@ class login extends eui.Component {
     // ---------------------
     private updateRoomList() {
         let roomList = window['getRoomList']()
-        var data = JSON.parse(<string>egret.localStorage.getItem('serverid'));
+        var data = JSON.parse(<string>egret.localStorage.getItem('id'));
         if (data) {
             this.serverList.y = 170;
             this.lastServerName.visible = true;
@@ -497,7 +500,7 @@ class login extends eui.Component {
             this.lastServerName.visible = false;
         }
         for (let i = 0; i < roomList.length; i++) {
-            if (roomList[i].id == data) {
+            if (roomList[i].number == data) {
                 this.lastServerBtn.label = roomList[i].name
             }
         }
@@ -512,7 +515,7 @@ class login extends eui.Component {
             let btn = this.getBtn(roomList[i].name)
             btn.y = 40 * i;
             btn.x = 0;
-            if (roomList[i].id == data) {
+            if (roomList[i].number == data) {
                 btn.currentState = "up"
             }
             if (roomList[i].isNew) {
@@ -543,6 +546,7 @@ class login extends eui.Component {
         let roomList = window['getRoomList']()
         for (let i = 0; i < roomList.length; i++) {
             if (roomList[i].name == event.target.label) {
+                egret.localStorage.setItem('id', JSON.stringify(roomList[i].number));
                 egret.localStorage.setItem('serverid', JSON.stringify(roomList[i].id));
                 egret.localStorage.setItem('serverPort', JSON.stringify(roomList[i].port));
                 egret.localStorage.setItem('serverAddress', JSON.stringify(roomList[i].address));
@@ -557,9 +561,9 @@ class login extends eui.Component {
 
     private updateRoomListIcon() {
         let roomList = window['getRoomList']()
-        var data = JSON.parse(<string>egret.localStorage.getItem('serverid'));
+        var data = JSON.parse(<string>egret.localStorage.getItem('id'));
         for (let i = 0; i < roomList.length; i++) {
-            if (roomList[i].id == data) {
+            if (roomList[i].number == data) {
                 this.scrollerGroup.$children[i].currentState = "up"
             } else {
                 this.scrollerGroup.$children[i].currentState = "normal"

@@ -6,24 +6,40 @@ var LocationProperty = (function () {
     }
     LocationProperty.init = function () {
         this.urlParam = {};
-        var info = window['getLoginInfo']();
-        if (info) {
-            this.urlParam['srvid'] = info.srvid;
-            this.urlParam['user'] = info.user;
-            this.urlParam['serverid'] = info.serverid;
-            this.urlParam['spverify'] = info.spverify;
-            this.urlParam['srvaddr'] = info.srvaddr;
-            this.urlParam['srvport'] = info.srvport;
-            var rv = LocationProperty.ver_res;
-            if (rv) {
-                RES_RESOURCE += rv;
-                RES_DIR += rv;
-                MAP_DIR += rv;
+        if (window['getNative']() == 'web') {
+            var str = window['paraUrl'];
+            if (str) {
+                var whIndex = str.indexOf("?");
+                if (whIndex != -1) {
+                    var param = str.slice(whIndex + 1).split("&");
+                    var strArr = void 0;
+                    for (var i = 0; i < param.length; i++) {
+                        strArr = param[i].split("=");
+                        this.urlParam[strArr[0]] = strArr[1];
+                    }
+                }
             }
-            RES_RESOURCE += '/';
-            RES_DIR += '/';
-            MAP_DIR += '/';
         }
+        else {
+            var info = window['getLoginInfo']();
+            if (info) {
+                this.urlParam['srvid'] = info.srvid;
+                this.urlParam['user'] = info.user;
+                this.urlParam['serverid'] = info.serverid;
+                this.urlParam['spverify'] = info.spverify;
+                this.urlParam['srvaddr'] = info.srvaddr;
+                this.urlParam['srvport'] = info.srvport;
+            }
+        }
+        var rv = LocationProperty.ver_res;
+        if (rv) {
+            RES_RESOURCE += rv;
+            RES_DIR += rv;
+            MAP_DIR += rv;
+        }
+        RES_RESOURCE += '/';
+        RES_DIR += '/';
+        MAP_DIR += '/';
     };
     Object.defineProperty(LocationProperty, "roleID", {
         get: function () {
@@ -314,8 +330,7 @@ var LocationProperty = (function () {
         configurable: true
     });
     LocationProperty.setLoadProgress = function (n, str) {
-        var loadingView = new LoadingUI();
-        loadingView.setProgress(n, str);
+        window['showLoadProgress'](n, str);
     };
     return LocationProperty;
 }());

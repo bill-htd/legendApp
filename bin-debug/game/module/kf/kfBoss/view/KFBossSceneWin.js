@@ -30,7 +30,8 @@ var KFBossSceneWin = (function (_super) {
             if (curFbId == GlobalConfig.CrossBossConfig[key].fbid) {
                 var dp = GlobalConfig.CrossBossConfig[key];
                 var info = KFBossSys.ins().fbInfo[dp.id];
-                this.nameTxt.text = dp.sceneName == "\u8DE8\u670D\u6218\u573A" ? "S." + info.serverId + "\u8DE8\u670D\u6218\u573A" : "\u82CD\u6708\u5C9B";
+                var serverName = window['getServerName'](info.serverId);
+                this.nameTxt.text = dp.sceneName == "\u8DE8\u670D\u6218\u573A" ? "[" + serverName + "]\u8DE8\u670D\u6218\u573A" : "\u82CD\u6708\u5C9B";
                 break;
             }
         }

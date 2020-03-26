@@ -88,7 +88,8 @@ class KfRankPanel extends BaseComponent {
 						serverId:kfdata.serverId
 					}
 					this.actorIds.push(actD);
-					this[`playName${i}`].text = `s${kfdata.serverId}.` + kfdata.roleName;
+					let serverName = window['getServerName'](kfdata.serverId)
+					this[`playName${i}`].text = `[${serverName}].` + kfdata.roleName;
 					this[`recharge${i}`].text = `已消费：${kfdata.rmb}`;
 					this[`playName${i}`].visible = this[`recharge${i}`].visible = true;
 				}else{

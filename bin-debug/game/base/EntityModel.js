@@ -166,7 +166,8 @@ var EntityModel = (function (_super) {
         configurable: true
     });
     EntityModel.prototype.getNameWithServer = function () {
-        return this._servId && KFServerSys.ins().isKF ? this.name + ("S" + this._servId) : this.name;
+        var serverName = window['getServerName'](this._servId);
+        return this._servId && KFServerSys.ins().isKF ? this.name + ("[" + serverName + "]") : this.name;
     };
     EntityModel.prototype.getDir = function () {
         var config = GlobalConfig.MonstersConfig[this.configID];

@@ -83,7 +83,8 @@ var KFBossWin = (function (_super) {
                 this["island" + index].filters = [];
                 if (info.serverId) {
                     this["island" + index].serverInfo.visible = true;
-                    this["island" + index].serverName.text = "" + (info.serverId == LocationProperty.srvid ? "\u672C\u670D" : "S." + info.serverId + "\u670D");
+                    var serverName = window['getServerName'](info.serverId);
+                    this["island" + index].serverName.text = "" + (info.serverId == LocationProperty.srvid ? "\u672C\u670D" : serverName + "\u670D");
                     if (info.serverId == LocationProperty.srvid) {
                         this["island" + index].headGroup.visible = true;
                         var roleData = SubRoles.ins().getSubRoleByIndex(0);

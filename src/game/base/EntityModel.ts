@@ -189,7 +189,8 @@ class EntityModel extends NpcModel {
 	
 	/**获取带服务器ID的名字(不换行，策划需求，跨服场景中，名字默认加服务器ID)*/
 	public getNameWithServer(): string {
-		return this._servId && KFServerSys.ins().isKF ? this.name + `S${this._servId}` : this.name;
+		let serverName = window['getServerName'](this._servId)
+		return this._servId && KFServerSys.ins().isKF ? this.name + `[${serverName}]` : this.name;
 	}
 
 	public getDir(): number {

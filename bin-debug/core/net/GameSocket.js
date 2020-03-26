@@ -250,11 +250,6 @@ var GameSocket = (function () {
         if (!this.PACK_HANDLER[sysId] || !this.PACK_HANDLER[sysId][msgId]) {
             return;
         }
-        var _data = {
-            '派发协议': sysId + "-" + msgId,
-            'byte': byte
-        };
-        window['saveTestInfo'](_data);
         var arr = this.PACK_HANDLER[sysId][msgId];
         arr[0].call(arr[1], byte);
     };
