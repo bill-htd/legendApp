@@ -47,14 +47,14 @@ class ActivityType22Data extends ActivityBaseData {
 		}
 
 		//限制商品
-		this.limitItems = [];
-		len = bytes.readShort();
-		let vo: SpringBeginShopVo;
-		for (let i: number = 0; i < len; i++) {
-			vo = new SpringBeginShopVo();
-			vo.parser3(bytes);
-			this.limitItems.push(vo);
-		}
+		// this.limitItems = [];
+		// len = bytes.readShort();
+		// let vo: SpringBeginShopVo;
+		// for (let i: number = 0; i < len; i++) {
+		// 	vo = new SpringBeginShopVo();
+		// 	vo.parser3(bytes);
+		// 	this.limitItems.push(vo);
+		// }
 
 	}
 

@@ -3,7 +3,14 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Egret</title>
+	<title>优优传奇</title>
+	<!--防止index.html被浏览器缓存--begin-->
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+	<META HTTP-EQUIV="Expires" CONTENT="0">
+	<!--防止index.html被浏览器缓存--over-->
+
+	<link href="favicon.ico" rel="shortcut icon" />
 	<meta name="viewport"
 		content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -11,32 +18,42 @@
 	<meta name="screen-orientation" content="portrait" />
 	<meta name="x5-fullscreen" content="true" />
 	<meta name="360-fullscreen" content="true" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<style>
 		html,
 		body {
 			-ms-touch-action: none;
-			background: #888888;
+			background: url(./resourceundefined/bg.png);
 			padding: 0;
 			border: 0;
 			margin: 0;
 			height: 100%;
 		}
 	</style>
+
 </head>
 
-<body>
+<body onunload="closeSocket()">
+
 	<div style="margin: auto;width: 100%;height: 100%;" class="egret-player" data-entry-class="Main"
 		data-orientation="auto" data-scale-mode="showAll" data-frame-rate="30" data-content-width="600"
 		data-content-height="1204" data-show-paint-rect="false" data-multi-fingered="2" data-show-fps="false"
 		data-show-log="false" data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 	</div>
-
-
+	<div style="text-align:center; vertical-align:middel;height:30px;"> <input id="progress" type="text" size="4"
+			value=""
+			style="margin-left:100px;margin-top:500px;width:640px;background-color:transparent;border:none;color:#00ff00"></input>
+	</div>
+	<!-- <script src="./assets/js/custom/index.min.js"></script> -->
 	<script>
-
+		var paraUrl = location.href;
+		var urlParam = {};
+		paramInit(paraUrl);
+		urlParam['egretWidth'] = '600';
+		urlParam['egretHeight'] = '1204';
 		var localAddress = 'http://back.dangxuexi.com';
 		window.info = {
-			version: '1.0.4',
+			version: '1.0.2',
 			get_gonggao_address: localAddress + '/gm/index.php?m=ServerInfo&a=game_notice',
 			get_AppInfo_address: localAddress + '/gm/index.php?m=ServerInfo&a=app_edition',
 			get_roomList_address: localAddress + '/gm/index.php?m=ServerInfo&a=server_list',
@@ -47,8 +64,6 @@
 			getreCharge2_address: localAddress + '/gm/index.php?m=Payment&a=Placeorder&platform=' + this.channel,
 			getChatControl_address: localAddress + '/gm/index.php?m=Chat&a=chat_controls&',
 			getKeFu_address: 'https://temp-chat.mstatik.com/widget/standalone.html?eid=184645',
-			
-
 		}
 
 
@@ -95,11 +110,23 @@
 				 * "retina": //Whether the canvas is based on the devicePixelRatio
 				 * }
 				 **/
-				egret.runEgret({ renderMode: "webgl", audioType: 0 });
+				// egret.runEgret({ renderMode: "webgl", audioType: 0 });
+				// _login()
+				if(window.location.search){
+					_login()
+					this.nativeType = 'web' 
+				}else{
+					egret.runEgret({ renderMode: "webgl", audioType: 0 });
+					this.nativeType = 'native' 
+				}
 			});
 		});
 		xhr.send(null);
 
+		function getNative() {
+			return this.nativeType
+		}
+		// Appfunction
 		function get_AppInfo_address() {
 			return info.get_AppInfo_address
 		}
@@ -118,54 +145,6 @@
 		function getVersion() {
 			return info.version;
 		}
-		function getNative(){
-			return 'native'
-		}
-
-		function showLoadProgress(progress, txt) {
-			console.log(txt + "进度" + progress + "%")
-			document.getElementById("progress").value = txt + "进度" + progress + "%";
-		}
-
-		function closeLoadProgress() {
-			document.getElementById("progress").style.display = "none";
-		}
-
-		function showGame() {
-
-		}
-
-		function stop() {
-			return false;
-		}
-		document.oncontextmenu = stop;
-
-		window.onorientationchange = function (e) {
-			var d = document.getElementById("screenHint");
-			if (d) {
-				d.style.display = "none";
-			}
-		}
-		function isSafari() {
-			if (/Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)) {
-				return true
-			} else {
-				return false
-			}
-
-		}
-		function sdkInit(appid) {
-		}
-		function isFullScree() {
-			return document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen
-		}
-		function FullScree() {
-			var el = document.documentElement;
-			var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-			if (typeof rfs != "undefined" && rfs) {
-				rfs.call(el);
-			};
-		}
 
 		function setChannel(channel) {
 			this.channel = channel
@@ -173,19 +152,6 @@
 		function getChannel() {
 			return this.channel || 'CQ'
 		}
-
-		function getChargeUrl() {
-			// var channel = this.channel || 'CQ'
-			return info.getreCharge2_address;
-		}
-		function getChatControlUrl() {
-			return info.getChatControl_address;
-		}
-		function getkefuUrl() {
-			return info.getKeFu_address;
-		}
-
-
 		function statistics() {
 			if (this.channel == 'lx') {
 				var _hmt = _hmt || [];
@@ -201,96 +167,6 @@
 				s.parentNode.insertBefore(hm, s);
 			}
 		}
-
-
-		function createIframe(url) {
-			var div = document.getElementById("testId");
-			var iframe = document.createElement("iframe");
-			var button = document.createElement('div')
-			var bg = document.createElement('div')
-
-			bg.id = 'pay_bg'
-			bg.style.position = 'absolute'
-			bg.style.background = '#000000';
-			bg.style.width = '100%';
-			bg.style.height = '100%';
-			bg.style.top = 0;
-			bg.style.left = 0;
-			bg.style.opacity = 0.8;
-
-			bg.onclick = (function () {
-
-			})
-			div.appendChild(bg)
-
-
-			iframe.id = "pay_iframe";
-			iframe.style.background = '#ffffff'
-			iframe.src = url;
-			iframe.style.position = 'absolute';
-			iframe.style.border = '0px';
-			iframe.style.width = '90%';
-			iframe.style.height = '90%';
-			iframe.style.left = '5%';
-			iframe.style.top = '5%';
-			div.appendChild(iframe)
-
-			button.id = 'pay_closeBtn';
-			button.style.position = 'absolute';
-			button.style.right = 0;
-			button.style.top = '15px';
-			button.style.background = 'url(./assets/images/room/close.png)'
-			button.style.width = '60px';
-			button.style.height = '60px';
-			var self = this;
-			button.onclick = (function () {
-				self.removeIframe()
-			})
-
-			div.appendChild(button)
-		}
-		function removeIframe() {
-
-			var div = document.getElementById("testId");
-			var bg = document.getElementById("pay_bg");
-			var pay_iframe = document.getElementById("pay_iframe");
-			var pay_closeBtn = document.getElementById("pay_closeBtn");
-			if (pay_iframe) {
-				div.removeChild(pay_iframe);
-			}
-			if (pay_closeBtn) {
-				div.removeChild(pay_closeBtn);
-			}
-			if (bg) {
-				div.removeChild(bg);
-			}
-		}
-
-		// this.number = 0
-		this.testInfo = {}
-		this.str = ''
-		function saveTestInfo(data) {
-			var date = new Date(Date.now());
-			Y = date.getFullYear() + '-';
-			M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-			D = date.getDate() + ' ';
-			h = date.getHours() + ':';
-			m = date.getMinutes() + ':';
-			s = date.getSeconds();
-			let string = Y + M + D + h + m + s;
-			this.testInfo[string] = data
-			this.str += JSON.stringify(this.testInfo[string]) + '\n'
-
-		}
-
-		function downtestInfo() {
-			// var mobileCode =JSON.stringify(this.testInfo) 
-
-			var file = new File([this.str], "log.json", { type: "text/plain;charset=utf-8" });
-			saveAs(file);
-			console.log('保存成功')
-		}
-
 		function getLoginInfo() {
 			// return {
 			// 	// srvid: 8,
@@ -350,22 +226,200 @@
 		function getRoomList() {
 			return this.roomListData;
 		}
-		function getServerName(id){
-			for(let i = 0; i< this.roomListData.length;i++){
-				if(this.roomListData.id == id){
-					return 's'+this.roomListData.number
+
+		//webFunction
+		function _login() {
+			var isTokenLogin = false
+			var url = decodeURI(window.location.search); //获取url中"?"符后的字串
+			console.log(url)
+			var theRequest = new Object();
+			if (url.indexOf("?") != -1) {
+				var str = url.substr(1);
+				strs = str.split("&");
+				for (var i = 0; i < strs.length; i++) {
+					if (strs[i].split("=")[0] == 'key') {
+						isTokenLogin = true
+					}
+					theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+				}
+			}
+			console.log(theRequest)
+			var token = theRequest['token']
+			var loginInfo = fromCode(token)
+			loginInfo = JSON.parse(loginInfo)
+			channel = loginInfo.channel;
+			// var infoTime = Date.now() - loginInfo.time
+			// if (infoTime > 43200000) {
+			//     alert('登录信息失效，请重新登录')
+			//     return;
+			// }
+			initLoginData(loginInfo)
+		}
+
+		var fromCode = function (str) {
+			var key = "9873216540AZCDEFGHIJKLMNOPQRSTUVWXYB";
+			var l = key.length;
+			var b, b1, b2, b3, d = 0, s;
+			s = new Array(Math.floor(str.length / 3));
+			b = s.length;
+			for (var i = 0; i < b; i++) {
+				b1 = key.indexOf(str.charAt(d));
+				d++;
+				b2 = key.indexOf(str.charAt(d));
+				d++;
+				b3 = key.indexOf(str.charAt(d));
+				d++;
+				s[i] = b1 * l * l + b2 * l + b3
+			}
+			b = eval("String.fromCharCode(" + s.join(',') + ")");
+			return b;
+		}
+
+		function paramInit(str) {
+			var whIndex = str.indexOf("?");
+			if (whIndex != -1) {
+				var param = str.slice(whIndex + 1).split("&");
+				var strArr;
+				for (var i = 0; i < param.length; i++) {
+					strArr = param[i].split("=");
+					urlParam[strArr[0]] = strArr[1];
 				}
 			}
 		}
-		function exitfullscreen() { //退出全屏
-			if (document.exitFullscreen) {
-				document.exitFullscreen();
-			} else if (document.mozCancelFullScreen) {
-				document.mozCancelFullScreen();
-			} else if (document.webkitCancelFullScreen) {
-				document.webkitCancelFullScreen();
-			} else if (document.msExitFullscreen) {
-				document.msExitFullscreen();
+
+		function initLoginData(loginInfo) {
+			this.loginData = []
+			var paramObj = {
+				httpUrl: info.get_roomList_address,
+				type: 'post',
+			}
+			httpRequest(paramObj, function (respondDada) {
+				// self.loading.hide();
+				var _data = JSON.parse(respondDada);
+				if (_data.code == 0) {
+					for (var i = 0; i < _data.data.length; i++) {
+						if (_data.data[i].is_test == 2) {
+							var _info = {
+								serverId: _data.data[i].server_id,
+								serverName: _data.data[i].server_name,
+								serverPort: _data.data[i].server_port,
+								address: _data.data[i].database_host,
+								id: _data.data.length - i,
+							}
+							this.loginData.push(_info)
+						}
+					}
+					// console.log(this.loginData)
+					var paramObj2 = {
+						httpUrl: info.get_login_token_address,
+						type: 'post',
+						data: {
+							token: loginInfo.token,
+							channel: loginInfo.channel,
+							serverid: loginInfo.serverid,
+							userid: loginInfo.userid,
+						}
+					}
+					httpRequest(paramObj2, function (respondDada) {
+						// self.loading.hide();
+						var _data = JSON.parse(respondDada);
+						if (_data.status == 1) {
+							var address = '';
+							var serverPort = '';
+							for (var i = 0; i < this.loginData.length; i++) {
+								if (this.loginData[i].serverId == _data.data.serverid) {
+									// return this.loginData[i].serverName
+									address = this.loginData[i].address;
+									serverPort = this.loginData[i].serverPort;
+								}
+							}
+							// username":"zhousi_333333333","password":"77c9749b451ab8c713c48037ddfbb2c4","serverid":"16
+							var arr = window.location.href.split('?');
+							var ar = arr[0];
+							var paraUrl = ar
+								+ "?srvid=" + _data.data.serverid
+								+ "&user=" + _data.data.username
+								+ "&spverify=" + _data.data.password
+								+ "&serverid=" + _data.data.serverid
+								+ "&srvaddr=" + address
+								+ "&srvport=" + serverPort;
+							start(paraUrl);
+						} else {
+							alert(_data.info)
+						}
+					})
+
+				}
+			})
+		}
+
+		function start(param) {
+			if (param) {
+				paramInit(param);
+				paraUrl = param;
+			}
+			egret.runEgret({ renderMode: urlParam['renderMode'] });
+			egret.MainContext.instance.stage.dirtyRegionPolicy = urlParam['dirty'];
+		}
+
+		function showLoadProgress(progress, txt) {
+			document.getElementById("progress").value = txt + "进度" + progress + "%";
+		}
+
+		function closeLoadProgress() {
+			document.getElementById("progress").style.display = "none";
+		}
+		function isFullScree() {
+			return document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen
+		}
+		function FullScree() {
+			var el = document.documentElement;
+			var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+			if (typeof rfs != "undefined" && rfs) {
+				rfs.call(el);
+			};
+		}
+
+
+
+		// common
+
+
+		function getChargeUrl_2() {
+			return info.getreCharge_address;
+		}
+		function getChargeUrl() {
+			return info.getreCharge2_address;
+		}
+		function getChatControlUrl() {
+			return info.getChatControl_address;
+		}
+		function getkefuUrl() {
+			return info.getKeFu_address;
+		}
+
+		function getServerName(id) {
+			if (this.loginData) {
+				for (var i = 0; i < this.loginData.length; i++) {
+					if (this.loginData[i].serverId == id) {
+						return 's' + this.loginData[i].id
+					}
+				}
+			} else {
+				for (let i = 0; i < this.roomListData.length; i++) {
+					if (this.roomListData.id == id) {
+						return 's' + this.roomListData.number
+					}
+				}
+			}
+		}
+
+
+		function isSafari() {
+			if (/Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)) {
+				return true
+			} else {
+				return false
 			}
 		}
 		function showRecharge(payItems) {
@@ -386,6 +440,9 @@
 
 		}
 		function reportSDK(str) {
+
+		}
+		function showGame() {
 
 		}
 		function showQRCode() {
@@ -417,13 +474,64 @@
 			if (callback) callback(0);
 		}
 
+		function httpRequest(paramObj, fun, errFun) {
+			var xmlhttp = null;
+			/*创建XMLHttpRequest对象，
+			 *老版本的 Internet Explorer（IE5 和 IE6）使用 ActiveX 对象：new ActiveXObject("Microsoft.XMLHTTP")
+			 * */
+			if (window.XMLHttpRequest) {
+				xmlhttp = new XMLHttpRequest();
+			} else if (window.ActiveXObject) {
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			/*判断是否支持请求*/
+			if (xmlhttp == null) {
+				alert('你的浏览器不支持XMLHttp');
+				return;
+			}
+			/*请求方式，并且转换为大写*/
+			var httpType = (paramObj.type || 'GET').toUpperCase();
+			/*数据类型*/
+			var dataType = paramObj.dataType || 'json';
+			/*请求接口*/
+			var httpUrl = paramObj.httpUrl || '';
+			/*是否异步请求*/
+			var async = paramObj.async || true;
+			/*请求参数--post请求参数格式为：foo=bar&lorem=ipsum*/
+			var paramData = paramObj.data || [];
+			var requestData = '';
+			for (var name in paramData) {
+				requestData += name + '=' + paramData[name] + '&';
+			}
+			requestData = requestData == '' ? '' : requestData.substring(0, requestData.length - 1);
+
+			/*请求接收*/
+			xmlhttp.onreadystatechange = function () {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					/*成功回调函数*/
+					fun(xmlhttp.responseText);
+				} else {
+					/*失败回调函数*/
+					errFun;
+				}
+			}
+
+			/*接口连接，先判断连接类型是post还是get*/
+			if (httpType == 'GET') {
+				xmlhttp.open("GET", httpUrl, async);
+				xmlhttp.send(null);
+			} else if (httpType == 'POST') {
+				httpUrl += requestData;
+				//  httpUrl =  'http://ezz25.com/gm/?m=Regi&a=index&serverid=80&name=test123465&password=123456&ID_card=2121212342342'
+				xmlhttp.open("POST", httpUrl, async);
+				//发送合适的请求头信息
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xmlhttp.send(requestData);
+			}
+		}
 		var ver = "0.12";
 		var verUrl = "http://nnqp.ruida2017.com/game/ver.txt?ver=";
 
-
-
-
 	</script>
-</body>
 
-</html>
+</body>

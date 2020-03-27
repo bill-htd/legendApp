@@ -35,9 +35,9 @@ class SpringBeginShopVo {
 		this.price = bytes.readInt();
 		this.discount = bytes.readByte();
 		this.state = bytes.readByte();
-		this.buyCount = bytes.readByte();
-		this.buyMax = bytes.readByte();
-		this.materialNum = bytes.readShort();
+		// this.buyCount = bytes.readByte();
+		// this.buyMax = bytes.readByte();
+		// this.materialNum = bytes.readShort();
 	}
 
 	/**
