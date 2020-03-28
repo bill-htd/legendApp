@@ -114,35 +114,49 @@ class RoleMgr extends BaseSystem {
 			//  资源加载完成，删除加载界面
 			if (StageUtils.ins().getStage().$children[2]) {
 				StageUtils.ins().getStage().$children[2].setProgress(100, '加载完成，进入游戏')
-				StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
 			}
-		}
-		switch (code) {
-			case 0:
+		} else {
+			LocationProperty.setLoadProgress(100, "(加载完成，进入游戏)");
 
-				SceneManager.ins().runScene(CreateRoleScene);
-				window['showGame']();
-				break;
-			case 1:
-				let roleNum: number = bytes.readInt();
-				let roleArr: SelectRoleData[] = [];
-				for (let i: number = 0; i < roleNum; i++) {
-					let role = new SelectRoleData(bytes);
-					roleArr.push(role);
-				}
-				if (roleNum == 1) {
-					LocationProperty.userName = roleArr[0].name;
-					this.enterID = roleArr[0].id;
-					this.sendEnterGame(roleArr[0].id);
-				} else if (!this.isFirstEnter && this.lastRoleID != -1) {
-					this.sendEnterGame(this.lastRoleID);
-				} else {
-					SceneManager.ins().runScene(SelectRoleScene);
-					ViewManager.ins().open(SelectRoleWin, roleArr);
-					window['showGame']();
-				}
-				break;
 		}
+		let self = this
+		// TimerManager.ins().doTimer(1000, 1, function () {
+			if (window['getNative']() != 'web') {
+				//  资源加载完成，删除加载界面
+				if (StageUtils.ins().getStage().$children[2]) {
+					StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
+				}
+			} else {
+				LocationProperty.setLoadProgress(100, "(加载完成，进入游戏)");
+				window['closeLoadProgress']()
+			}
+			switch (code) {
+				case 0:
+					SceneManager.ins().runScene(CreateRoleScene);
+					window['showGame']();
+					break;
+				case 1:
+					let roleNum: number = bytes.readInt();
+					let roleArr: SelectRoleData[] = [];
+					for (let i: number = 0; i < roleNum; i++) {
+						let role = new SelectRoleData(bytes);
+						roleArr.push(role);
+					}
+					if (roleNum == 1) {
+						LocationProperty.userName = roleArr[0].name;
+						self.enterID = roleArr[0].id;
+						self.sendEnterGame(roleArr[0].id);
+					} else if (!self.isFirstEnter && self.lastRoleID != -1) {
+						self.sendEnterGame(self.lastRoleID);
+					} else {
+						SceneManager.ins().runScene(SelectRoleScene);
+						ViewManager.ins().open(SelectRoleWin, roleArr);
+						window['showGame']();
+					}
+					break;
+			}
+		// }, this);
+
 	}
 
 
@@ -178,30 +192,46 @@ class RoleMgr extends BaseSystem {
 
 				break;
 			case 1:
-
 				if (window['getNative']() != 'web') {
 					//  资源加载完成，删除加载界面
 					if (StageUtils.ins().getStage().$children[2]) {
 						StageUtils.ins().getStage().$children[2].setProgress(100, '加载完成，进入游戏')
-						StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
 					}
+				} else {
+					LocationProperty.setLoadProgress(100, "(加载完成，进入游戏)");
+
 				}
+				// TimerManager.ins().doTimer(1000, 1, function () {
+					if (window['getNative']() != 'web') {
+						//  资源加载完成，删除加载界面
+						if (StageUtils.ins().getStage().$children[2]) {
+							StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
+						}
+					} else {
+						LocationProperty.setLoadProgress(100, "(加载完成，进入游戏)");
+						window['closeLoadProgress']()
+					}
 
-				//验证成功，正在登录游戏
-				//成功进入游戏后，将正在连接的跨服状态关掉
-				KFServerSys.ins().linkingKFState(false);
-				SceneManager.ins().runScene(MainScene);
-				EntityManager.ins().removeAll();
-				Encounter.ins().clearEncounterModel();
-				Chat.ins().initData();
-				Guild.ins().initData();
+					//验证成功，正在登录游戏
+					//成功进入游戏后，将正在连接的跨服状态关掉
+					KFServerSys.ins().linkingKFState(false);
+					SceneManager.ins().runScene(MainScene);
+					EntityManager.ins().removeAll();
+					Encounter.ins().clearEncounterModel();
+					Chat.ins().initData();
+					Guild.ins().initData();
 
 
-				//进入打点数据 避免创角后断网重新链接，造成数据多发
-				if (this.isFirstEnter) {
-					this.isFirstEnter = false;
-					ReportData.getIns().report("entergame", ReportData.LOAD);
-				}
+					//进入打点数据 避免创角后断网重新链接，造成数据多发
+					if (this.isFirstEnter) {
+						this.isFirstEnter = false;
+						ReportData.getIns().report("entergame", ReportData.LOAD);
+					}
+
+				// }, this);
+
+
+
 				break;
 			default:
 				alert("错误码:" + result);
