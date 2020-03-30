@@ -178,34 +178,34 @@ var Recharge = (function (_super) {
         var money = 0;
         switch (payIndex) {
             case 1:
-                money = 10;
+                money = 9.8;
                 break;
             case 2:
-                money = 20;
+                money = 19.2;
                 break;
             case 3:
-                money = 50;
+                money = 48;
                 break;
             case 4:
-                money = 100;
+                money = 92;
                 break;
             case 5:
-                money = 200;
+                money = 182;
                 break;
             case 6:
-                money = 500;
+                money = 440;
                 break;
             case 7:
-                money = 1000;
+                money = 840;
                 break;
             case 8:
-                money = 1500;
+                money = 1230;
                 break;
             case 9:
-                money = 2000;
+                money = 1560;
                 break;
             case 10:
-                money = 3000;
+                money = 2250;
                 break;
             case 1000:
                 money = 28;

@@ -79,8 +79,20 @@ var RoleMgr = (function (_super) {
         if (window['getNative']() != 'web') {
             if (StageUtils.ins().getStage().$children[2]) {
                 StageUtils.ins().getStage().$children[2].setProgress(100, '加载完成，进入游戏');
+            }
+        }
+        else {
+            LocationProperty.setLoadProgress(100, "(加载完成，进入游戏)");
+        }
+        var self = this;
+        if (window['getNative']() != 'web') {
+            if (StageUtils.ins().getStage().$children[2]) {
                 StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2]);
             }
+        }
+        else {
+            LocationProperty.setLoadProgress(100, "(加载完成，进入游戏)");
+            window['closeLoadProgress']();
         }
         switch (code) {
             case 0:
@@ -96,11 +108,11 @@ var RoleMgr = (function (_super) {
                 }
                 if (roleNum == 1) {
                     LocationProperty.userName = roleArr[0].name;
-                    this.enterID = roleArr[0].id;
-                    this.sendEnterGame(roleArr[0].id);
+                    self.enterID = roleArr[0].id;
+                    self.sendEnterGame(roleArr[0].id);
                 }
-                else if (!this.isFirstEnter && this.lastRoleID != -1) {
-                    this.sendEnterGame(this.lastRoleID);
+                else if (!self.isFirstEnter && self.lastRoleID != -1) {
+                    self.sendEnterGame(self.lastRoleID);
                 }
                 else {
                     SceneManager.ins().runScene(SelectRoleScene);
@@ -129,8 +141,19 @@ var RoleMgr = (function (_super) {
                 if (window['getNative']() != 'web') {
                     if (StageUtils.ins().getStage().$children[2]) {
                         StageUtils.ins().getStage().$children[2].setProgress(100, '加载完成，进入游戏');
+                    }
+                }
+                else {
+                    LocationProperty.setLoadProgress(100, "(加载完成，进入游戏)");
+                }
+                if (window['getNative']() != 'web') {
+                    if (StageUtils.ins().getStage().$children[2]) {
                         StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2]);
                     }
+                }
+                else {
+                    LocationProperty.setLoadProgress(100, "(加载完成，进入游戏)");
+                    window['closeLoadProgress']();
                 }
                 KFServerSys.ins().linkingKFState(false);
                 SceneManager.ins().runScene(MainScene);

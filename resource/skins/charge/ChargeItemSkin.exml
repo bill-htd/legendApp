@@ -19,10 +19,12 @@
 			<e:HorizontalLayout/>
 		</e:layout>
 	</e:Group>
-	<e:Label id="pay" text="￥10" size="28" textColor="0xffd93f"  right="10" bold="true" y="20" textAlign="right"/>
-	<e:Button id="payBtn" label="60元" x="114" skinName="Btn1Skin" verticalCenter="0" visible="false" />
+	<e:Label id="pay" text="￥3000" size="22" textColor="0xffd93f"  right="10" bold="true" textAlign="right" top="22"/>
+	<e:Label id="pay0" text="￥3000" size="25" textColor="0xFFD93F" right="10" bold="true" y="47" textAlign="right"/>
+	<e:Button id="payBtn" label="60元" x="114" skinName="Btn1Skin" verticalCenter="0"  visible="false"/>
 	<e:Label id="desc" text="2000元=20000元宝   首充送20000元宝" x="103" y="88" size="16" textColor="0xDFD1B5" width="144"
-	         visible="false" />
-	<e:Image id="priceImg" x="103" y="76" source="" visible="false" />
+	          visible="false"/>
+	<e:Image id="priceImg" x="103" y="76" source=""  visible="false"/>
+	<e:Image source="boolRed_png" width="59" right="10" top="30" height="5"/>
 
 </e:Skin>

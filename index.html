@@ -151,8 +151,8 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 		get_login_address: localAddress + '/gm/index.php?m=Regi&a=channel_reg&',
 		get_login_token_address: localAddress + '/gm/index.php?m=Regi&a=check_token&',
 		get_register_address: localAddress + '/gm/index.php?m=Regi&a=index&',
-		getreCharge_address: localAddress + '/gm/index.php?m=Paycc&a=placeorder&platform=' + this.channel,
-		getreCharge2_address: localAddress + '/gm/index.php?m=Payment&a=Placeorder&platform=' + this.channel,
+		getreCharge_address: localAddress + '/gm/index.php?m=Paycc&a=placeorder&platform=',
+		getreCharge2_address: localAddress + '/gm/index.php?m=Payment&a=Placeorder&platform=',
 		getChatControl_address: localAddress + '/gm/index.php?m=Chat&a=chat_controls&',
 		getKeFu_address: 'https://temp-chat.mstatik.com/widget/standalone.html?eid=184645',
 	}
@@ -342,7 +342,7 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 		var token = theRequest['token']
 		var loginInfo = fromCode(token)
 		loginInfo = JSON.parse(loginInfo)
-		channel = loginInfo.channel;
+		this.channel = loginInfo.channel;
 		// var infoTime = Date.now() - loginInfo.time
 		// if (infoTime > 43200000) {
 		//     alert('登录信息失效，请重新登录')
@@ -499,10 +499,10 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 
 
 	function getChargeUrl_2() {
-		return info.getreCharge_address;
+		return info.getreCharge2_address + this.channel;
 	}
 	function getChargeUrl() {
-		return info.getreCharge2_address;
+		return info.getreCharge2_address + this.channel;
 	}
 	function getChatControlUrl() {
 		return info.getChatControl_address;

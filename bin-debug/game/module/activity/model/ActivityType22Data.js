@@ -38,14 +38,6 @@ var ActivityType22Data = (function (_super) {
             this.scoreItems[i] = new SpringBeginShopVo();
             this.scoreItems[i].parser2(bytes);
         }
-        this.limitItems = [];
-        len = bytes.readShort();
-        var vo;
-        for (var i = 0; i < len; i++) {
-            vo = new SpringBeginShopVo();
-            vo.parser3(bytes);
-            this.limitItems.push(vo);
-        }
     };
     ActivityType22Data.prototype.canReward = function () {
         return this.checkRedPoint();

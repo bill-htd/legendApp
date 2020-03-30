@@ -32,6 +32,7 @@
 		</e:Scroller>
 		<e:Rect left="0" right="0" bottom="0" fillAlpha="0.6" height="50" visible="false"/>
 		<e:Button id="closeBtn0" label="按钮" skinName="Btn0Skin" right="0" visible="false"/>
+		<e:Label text="每天汇率不同，以付款界面金额为准" horizontalCenter="2" size="20" textColor="0xffa202" bottom="115"/>
 	</e:Group>
 
 	<e:Button id="closeBtn" label="按钮" skinName="Btn0Skin" bottom="0" icon="zjmfanhui" horizontalCenter="250"/>

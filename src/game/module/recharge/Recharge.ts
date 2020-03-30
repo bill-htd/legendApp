@@ -244,49 +244,60 @@ class Recharge extends BaseSystem {
 			UserTips.ins().showTips(`充值已屏蔽`);
 			return;
 		}
-
+/*
+		10  9.8
+		20  19.2
+		50  48
+		100  92
+		200  182
+		500  440
+		1000  840
+		1500  1230
+		2000  1560
+		3000  2250
+		*/
 
 		let money: number = 0
 		// let yuanbao: number = 0
 		switch (payIndex) {
 			case 1:
-				money = 10
+				money = 9.8
 				// yuanbao = 2000
 				break;
 			case 2:
-				money = 20
+				money = 19.2
 				// yuanbao = 4000
 				break;
 			case 3:
-				money = 50
+				money = 48
 				// yuanbao = 10000
 				break;
 			case 4:
-				money = 100
+				money = 92
 				// yuanbao = 20000
 				break;
 			case 5:
-				money = 200
+				money = 182
 				// yuanbao = 40000
 				break;
 			case 6:
-				money = 500
+				money = 440
 				// yuanbao = 100000
 				break;
 			case 7:
-				money = 1000
+				money = 840
 				// yuanbao = 100000
 				break;
 			case 8:
-				money = 1500
+				money = 1230
 				// yuanbao = 300000
 				break;
 			case 9:
-				money = 2000
+				money = 1560
 				// yuanbao = 400000
 				break;
 			case 10:
-				money = 3000
+				money = 2250
 				// yuanbao = 600000
 				break;
 			case 1000:

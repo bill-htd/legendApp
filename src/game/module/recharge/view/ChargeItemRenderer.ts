@@ -2,6 +2,7 @@ class ChargeItemRenderer extends BaseItemRender {
 	public gain0: eui.Label;
 	public gain1: eui.Label;
 	public pay: eui.Label;
+	public pay0: eui.Label;
 	public moneyGroup: eui.Group;
 	public yuanbaoImg: eui.Image;
 	private totalPower: egret.DisplayObjectContainer;
@@ -45,11 +46,57 @@ class ChargeItemRenderer extends BaseItemRender {
 			default:
 				this.yuanbaoImg.source = 'new_chongzhi_yuanbao6';
 				break;
-
 		}
+		/*
+		10  9.8
+		20  19.2
+		50  48
+		100  92
+		200  182
+		500  440
+		1000  840
+		1500  1230
+		2000  1560
+		3000  2250
+		*/
+
 
 		let cost: number = this.data.cash;
 		this.pay.text = `￥${cost}`;
+		let trueCost: number = 0;
+		switch (cost) {
+			case 10:
+				trueCost = 9.8;
+				break;
+			case 20:
+				trueCost = 19.2;
+				break;
+			case 50:
+				trueCost = 48;
+				break;
+			case 100:
+				trueCost = 92;
+				break;
+			case 200:
+				trueCost = 182;
+				break;
+			case 500:
+				trueCost = 440;
+				break;
+			case 1000:
+				trueCost = 840;
+				break;
+			case 1500:
+				trueCost = 1230;
+				break;
+			case 2000:
+				trueCost = 1560;
+				break;
+			case 3000:
+				trueCost = 2250;
+				break;
+		}
+		this.pay0.text = `￥${trueCost}`;
 		if (Recharge.ins().getOrderByIndex(this.data.id)) {
 			BitmapNumber.ins().changeNum(this.totalPower, this.data.amount, "vip_v", 3);
 		} else {

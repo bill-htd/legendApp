@@ -12,9 +12,6 @@ var SpringBeginShopVo = (function () {
         this.price = bytes.readInt();
         this.discount = bytes.readByte();
         this.state = bytes.readByte();
-        this.buyCount = bytes.readByte();
-        this.buyMax = bytes.readByte();
-        this.materialNum = bytes.readShort();
     };
     SpringBeginShopVo.prototype.parser2 = function (bytes) {
         this.id = bytes.readInt();

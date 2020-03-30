@@ -53,6 +53,40 @@ var ChargeItemRenderer = (function (_super) {
         }
         var cost = this.data.cash;
         this.pay.text = "\uFFE5" + cost;
+        var trueCost = 0;
+        switch (cost) {
+            case 10:
+                trueCost = 9.8;
+                break;
+            case 20:
+                trueCost = 19.2;
+                break;
+            case 50:
+                trueCost = 48;
+                break;
+            case 100:
+                trueCost = 92;
+                break;
+            case 200:
+                trueCost = 182;
+                break;
+            case 500:
+                trueCost = 440;
+                break;
+            case 1000:
+                trueCost = 840;
+                break;
+            case 1500:
+                trueCost = 1230;
+                break;
+            case 2000:
+                trueCost = 1560;
+                break;
+            case 3000:
+                trueCost = 2250;
+                break;
+        }
+        this.pay0.text = "\uFFE5" + trueCost;
         if (Recharge.ins().getOrderByIndex(this.data.id)) {
             BitmapNumber.ins().changeNum(this.totalPower, this.data.amount, "vip_v", 3);
         }
