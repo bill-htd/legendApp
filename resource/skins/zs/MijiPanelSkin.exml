@@ -10,7 +10,7 @@
 
 	<!--<e:Image x="10" y="98" source="zjmzhandouli" locked="true"/>-->
 	<ns1:BaseComponent id="powerPanel" skinName="PowerPanelSkin" className="PowerPanel" horizontalCenter="0" scaleX="0.8" scaleY="0.8" top="76"/>
-	<e:Group y="191" width="380" height="380" horizontalCenter="0" scaleX="0.9" scaleY="0.9">
+	<e:Group width="380" height="380" horizontalCenter="0" scaleX="0.9" scaleY="0.9" verticalCenter="4">
 		<e:Image id="imageMax_1" y="11" x="177" source="jineng_json.mijifu_1b" visible="false"/>
 		<e:Image id="imageMax_2" x="292" y="66" source="jineng_json.mijifu_2b" visible="false"/>
 		<e:Image id="imageMax_3" x="331" y="169" source="jineng_json.mijifu_3b" visible="false"/>

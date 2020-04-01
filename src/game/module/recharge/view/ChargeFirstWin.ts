@@ -26,6 +26,7 @@ class ChargeFirstWin extends BaseEuiView {
 		this.scrollBar.viewport = this.list;
 
 		let dataList: RechargeItemsConfig[] = GlobalConfig.RechargeItemsConfig;
+		// console.log(dataList)
 		let dataArr: any[] = [];
 		for (let str in dataList) {
 			dataArr.push(dataList[str]);
@@ -145,14 +146,11 @@ class ChargeFirstWin extends BaseEuiView {
 				break;
 			case this.kefuBtn:
 				let url = window['getkefuUrl']()
-				// window.open(url)
-				// window['createIframe'](url)
 				if (window['getNative']() == 'web') {
 					window.open(url)
 				}else{
 					egret.ExternalInterface.call("openURL", url);
 				}
-				// egret.ExternalInterface.call("openURL", url);
 				break;
 			case this.vipBtn:
 				ViewManager.ins().open(VipWin);

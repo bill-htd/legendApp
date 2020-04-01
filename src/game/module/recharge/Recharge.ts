@@ -261,23 +261,24 @@ class Recharge extends BaseSystem {
 		// let yuanbao: number = 0
 		switch (payIndex) {
 			case 1:
-				money = 9.8
+				money = 10
 				// yuanbao = 2000
 				break;
 			case 2:
-				money = 19.2
+				money = 20
 				// yuanbao = 4000
 				break;
 			case 3:
-				money = 48
+				money = 50
 				// yuanbao = 10000
 				break;
 			case 4:
-				money = 92
+				money = 100
 				// yuanbao = 20000
 				break;
 			case 5:
-				money = 182
+				money = 200
+				// money = 300
 				// yuanbao = 40000
 				break;
 			case 6:
@@ -309,7 +310,12 @@ class Recharge extends BaseSystem {
 				// yuanbao = 1
 				break;
 		}
-		ViewManager.ins().open(payWin, {money:money,yuanbao:yuanbao});
+		// if(money == 100||money == 200){
+		// 	WarnWin.show("该支付额度维护中，请选择其他额度支付", function () { }, this);
+		// }else{
+			ViewManager.ins().open(payWin, {money:money,yuanbao:yuanbao});
+		// }
+		
 		
 	}
 

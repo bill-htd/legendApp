@@ -59,21 +59,31 @@ var Pay = (function (_super) {
             var request = event.currentTarget;
             var data = JSON.parse(request.response);
             if (data.status == 1) {
-                var url_1 = data.data.url;
-                if (url_1) {
-                    ViewManager.ins().close(WarnWin);
-                    if (type == 1) {
-                        url_1 = url_1.replace(/&amp;/g, "&");
+                if (data.data) {
+                    if (data.data.url) {
+                        var url_1 = data.data.url;
+                        if (url_1) {
+                            ViewManager.ins().close(WarnWin);
+                            if (type == 1) {
+                                url_1 = url_1.replace(/&amp;/g, "&");
+                            }
+                            else {
+                                url_1 = decodeURIComponent(url_1);
+                            }
+                            if (window['getNative']() == 'web') {
+                                window.open(url_1);
+                            }
+                            else {
+                                egret.ExternalInterface.call("openURL", url_1);
+                            }
+                        }
                     }
                     else {
-                        url_1 = decodeURIComponent(url_1);
+                        alert('获取地址失败，请重新请求');
                     }
-                    if (window['getNative']() == 'web') {
-                        window.open(url_1);
-                    }
-                    else {
-                        egret.ExternalInterface.call("openURL", url_1);
-                    }
+                }
+                else {
+                    alert('获取地址失败，请重新请求');
                 }
             }
             else {

@@ -3,6 +3,8 @@ class ChargeItemRenderer extends BaseItemRender {
 	public gain1: eui.Label;
 	public pay: eui.Label;
 	public pay0: eui.Label;
+	public pay1: eui.Label;
+	public payPrice: eui.Group;
 	public moneyGroup: eui.Group;
 	public yuanbaoImg: eui.Image;
 	private totalPower: egret.DisplayObjectContainer;
@@ -60,43 +62,67 @@ class ChargeItemRenderer extends BaseItemRender {
 		3000  2250
 		*/
 
-
 		let cost: number = this.data.cash;
-		this.pay.text = `￥${cost}`;
+		this.pay.text = `原价:${cost}元`;
 		let trueCost: number = 0;
 		switch (cost) {
 			case 10:
-				trueCost = 9.8;
+				// trueCost = 9.8;
+				this.payPrice.visible = false
+				this.pay1.visible = true
 				break;
 			case 20:
-				trueCost = 19.2;
+				this.payPrice.visible = false
+				this.pay1.visible = true
 				break;
 			case 50:
-				trueCost = 48;
+				this.payPrice.visible = false
+				this.pay1.visible = true
 				break;
 			case 100:
-				trueCost = 92;
+				this.payPrice.visible = false
+				this.pay1.visible = true
 				break;
 			case 200:
-				trueCost = 182;
+				this.payPrice.visible = false
+				this.pay1.visible = true
 				break;
 			case 500:
+
+				this.payPrice.visible = true
+				this.pay1.visible = false
 				trueCost = 440;
 				break;
 			case 1000:
+				this.payPrice.visible = true
+				this.pay1.visible = false
 				trueCost = 840;
 				break;
 			case 1500:
+				this.payPrice.visible = true
+				this.pay1.visible = false
 				trueCost = 1230;
 				break;
 			case 2000:
+				this.payPrice.visible = true
+				this.pay1.visible = false
 				trueCost = 1560;
 				break;
 			case 3000:
+				this.payPrice.visible = true
+				this.pay1.visible = false
 				trueCost = 2250;
 				break;
 		}
-		this.pay0.text = `￥${trueCost}`;
+		this.pay1.text = `${cost}元`
+		this.pay0.text = `${trueCost}元`;
+		
+		this.pay.strokeColor = 0x000000;
+        this.pay.stroke = 2;
+		this.pay1.strokeColor = 0x000000;
+        this.pay1.stroke = 2;
+		this.pay0.strokeColor = 0x000000;
+        this.pay0.stroke = 2;
 		if (Recharge.ins().getOrderByIndex(this.data.id)) {
 			BitmapNumber.ins().changeNum(this.totalPower, this.data.amount, "vip_v", 3);
 		} else {

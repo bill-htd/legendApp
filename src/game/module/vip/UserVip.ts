@@ -111,7 +111,7 @@ class UserVip extends BaseSystem {
 		
 		ViewManager.ins().close(WarnWin);
 		WarnWin.show("恭喜你，充值成功，具体金额可查左下角看邮件", function () { }, this);
-		window['removeIframe']()
+		// window['removeIframe']()
 		this.weekState = bytes.readShort();
 		if (lv > this.lv) {
 			this.lv = lv;

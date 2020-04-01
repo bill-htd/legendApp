@@ -41,6 +41,7 @@ var SmeltEquipNormalPanel = (function (_super) {
             param[_i] = arguments[_i];
         }
         this.addTouchEvent(this.smeltBtn, this.onTap);
+        this.addTouchEvent(this.oneKeySmeltBtn, this.onTap);
         this.addTouchEvent(this.itemList, this.onTap);
         this.addTouchEvent(this.smeltLable, this.onTap);
         this.addTouchEvent(this.backbtn, this.onTap);
@@ -48,6 +49,14 @@ var SmeltEquipNormalPanel = (function (_super) {
         this.observe(UserEquip.ins().postSmeltEquipComplete, this.smeltComplete);
         this.observe(UserEquip.ins().postEquipCheckList, this.setItemList);
         this.observe(UserEquip.ins().postSmeltEquipComplete, this.smeltShowTips);
+        if (Recharge.ins().franchise) {
+            this.smeltBtn.visible = false;
+            this.oneKeySmeltBtn.x = 25;
+        }
+        else {
+            this.smeltBtn.visible = true;
+            this.oneKeySmeltBtn.x = -105;
+        }
     };
     SmeltEquipNormalPanel.prototype.close = function () {
         var param = [];
@@ -55,6 +64,7 @@ var SmeltEquipNormalPanel = (function (_super) {
             param[_i] = arguments[_i];
         }
         this.removeTouchEvent(this.smeltBtn, this.onTap);
+        this.removeTouchEvent(this.oneKeySmeltBtn, this.onTap);
         this.removeTouchEvent(this.itemList, this.onTap);
         this.removeTouchEvent(this.smeltLable, this.onTap);
         this.removeTouchEvent(this.backbtn, this.onTap);
@@ -72,7 +82,7 @@ var SmeltEquipNormalPanel = (function (_super) {
                     var quality = ItemConfig.getQualityColor(itemConfig);
                     var str = "获得|C:" + quality + "&T:" + itemConfig.name + " x " + idata.count + "|";
                     var p = this.smeltBtn.localToGlobal();
-                    UserTips.ins().showEverTips({ str: str, x: p.x - 25, y: p.y - 45 });
+                    UserTips.ins().showEverTips({ str: str, x: p.x - 45, y: p.y - 45 });
                 }
             }
         }
@@ -87,7 +97,7 @@ var SmeltEquipNormalPanel = (function (_super) {
     SmeltEquipNormalPanel.prototype.setItemData = function () {
         this.smeltEquips = UserBag.ins().getOutEquips();
         this.dataInfo.replaceAll(this.smeltEquips);
-        if (this.smeltBtn.label != "取消熔炼") {
+        if (this.oneKeySmeltBtn.label != "取消熔炼") {
             this.setBtnLabel();
         }
     };
@@ -103,25 +113,31 @@ var SmeltEquipNormalPanel = (function (_super) {
     };
     SmeltEquipNormalPanel.prototype.onTap = function (e) {
         switch (e.currentTarget) {
-            case this.smeltBtn:
+            case this.oneKeySmeltBtn:
                 if (Recharge.ins().franchise) {
-                    if (this.smeltBtn.label == "取消熔炼") {
+                    if (this.oneKeySmeltBtn.label == "取消熔炼") {
                         this.setBtnLabel();
                         TimerManager.ins().remove(this.AutoSmeltEquip, this);
                     }
                     else {
                         if (!TimerManager.ins().isExists(this.AutoSmeltEquip, this)) {
-                            this.smeltBtn.label = "取消熔炼";
+                            this.oneKeySmeltBtn.label = "取消熔炼";
                             TimerManager.ins().doTimer(200, 0, this.AutoSmeltEquip, this);
                         }
                     }
                 }
                 else {
-                    DisplayUtils.removeFromParent(this.eff);
-                    var b = UserEquip.ins().sendSmeltEquip(this.viewIndex, this.smeltEquips);
-                    if (b) {
-                        SoundUtil.ins().playEffect(SoundUtil.SMELT);
-                    }
+                    WarnWin.show("开通特权月卡立即享受一键熔炼功能，是否前往查看", function () {
+                        ViewManager.ins().close(SmeltEquipTotalWin);
+                        ViewManager.ins().open(FuliWin, 3);
+                    }, this);
+                }
+                break;
+            case this.smeltBtn:
+                DisplayUtils.removeFromParent(this.eff);
+                var b = UserEquip.ins().sendSmeltEquip(this.viewIndex, this.smeltEquips);
+                if (b) {
+                    SoundUtil.ins().playEffect(SoundUtil.SMELT);
                 }
                 break;
             case this.itemList:
@@ -153,10 +169,7 @@ var SmeltEquipNormalPanel = (function (_super) {
         }
     };
     SmeltEquipNormalPanel.prototype.setBtnLabel = function () {
-        if (Recharge.ins().franchise)
-            this.smeltBtn.label = "一键熔炼";
-        else
-            this.smeltBtn.label = "熔  炼";
+        this.oneKeySmeltBtn.label = "一键熔炼";
     };
     return SmeltEquipNormalPanel;
 }(BaseComponent));

@@ -1,9 +1,10 @@
 class SmeltEquipNormalPanel extends BaseComponent {
 	/** 关闭按钮 */
-		// public closeBtn: eui.Button;
-		// public closeBtn0: eui.Button;
+	// public closeBtn: eui.Button;
+	// public closeBtn0: eui.Button;
 	public itemList: eui.List;
 	private smeltBtn: eui.Button;
+	private oneKeySmeltBtn: eui.Button;
 	/** 可熔炼装备列表 */
 	private smeltEquips: ItemData[];
 	private dataInfo: eui.ArrayCollection;
@@ -13,8 +14,8 @@ class SmeltEquipNormalPanel extends BaseComponent {
 	private eff: MovieClip;
 	private btnGroup: eui.Group;
 
-	private smeltLable:eui.Label;
-	private backbtn:eui.Button;
+	private smeltLable: eui.Label;
+	private backbtn: eui.Button;
 	constructor() {
 		super();
 		this.name = "普通装备";
@@ -40,10 +41,12 @@ class SmeltEquipNormalPanel extends BaseComponent {
 		this.eff.scaleX = 1;
 		this.eff.scaleY = 1;
 		this.eff.touchEnabled = false;
+		
 	}
 
 	public open(...param: any[]): void {
 		this.addTouchEvent(this.smeltBtn, this.onTap);
+		this.addTouchEvent(this.oneKeySmeltBtn, this.onTap);
 		this.addTouchEvent(this.itemList, this.onTap);
 		this.addTouchEvent(this.smeltLable, this.onTap);
 		this.addTouchEvent(this.backbtn, this.onTap);
@@ -51,17 +54,24 @@ class SmeltEquipNormalPanel extends BaseComponent {
 		this.observe(UserEquip.ins().postSmeltEquipComplete, this.smeltComplete);
 		this.observe(UserEquip.ins().postEquipCheckList, this.setItemList);
 		this.observe(UserEquip.ins().postSmeltEquipComplete, this.smeltShowTips);
-
+		if (Recharge.ins().franchise) {
+			this.smeltBtn.visible = false;
+			this.oneKeySmeltBtn.x = 25
+		} else {
+			this.smeltBtn.visible = true;
+			this.oneKeySmeltBtn.x = -105
+		}
 	}
 
 	public close(...param: any[]): void {
 		this.removeTouchEvent(this.smeltBtn, this.onTap);
+		this.removeTouchEvent(this.oneKeySmeltBtn, this.onTap);
 		this.removeTouchEvent(this.itemList, this.onTap);
 		this.removeTouchEvent(this.smeltLable, this.onTap);
 		this.removeTouchEvent(this.backbtn, this.onTap);
 		this.removeObserve();
 		DisplayUtils.removeFromParent(this.eff);
-		TimerManager.ins().remove(this.AutoSmeltEquip,this);
+		TimerManager.ins().remove(this.AutoSmeltEquip, this);
 	}
 
 	private smeltShowTips(itemList: { itemId: number, count: number }[]) {
@@ -75,7 +85,7 @@ class SmeltEquipNormalPanel extends BaseComponent {
 					let quality: number = ItemConfig.getQualityColor(itemConfig);
 					let str = "获得|C:" + quality + "&T:" + itemConfig.name + " x " + idata.count + "|";
 					let p: egret.Point = this.smeltBtn.localToGlobal();
-					UserTips.ins().showEverTips({str: str, x: p.x - 25, y: p.y - 45});
+					UserTips.ins().showEverTips({ str: str, x: p.x - 45, y: p.y - 45 });
 				}
 			}
 		}
@@ -92,7 +102,7 @@ class SmeltEquipNormalPanel extends BaseComponent {
 	private setItemData(): void {
 		this.smeltEquips = UserBag.ins().getOutEquips();
 		this.dataInfo.replaceAll(this.smeltEquips);
-		if( this.smeltBtn.label != "取消熔炼" ){
+		if (this.oneKeySmeltBtn.label != "取消熔炼") {
 			this.setBtnLabel();
 		}
 	}
@@ -110,24 +120,31 @@ class SmeltEquipNormalPanel extends BaseComponent {
 
 	private onTap(e: egret.TouchEvent): void {
 		switch (e.currentTarget) {
-			case this.smeltBtn:
-				if( Recharge.ins().franchise ){
-					if( this.smeltBtn.label == "取消熔炼" ){
+			case this.oneKeySmeltBtn:
+				if (Recharge.ins().franchise) {
+					if (this.oneKeySmeltBtn.label == "取消熔炼") {
 						this.setBtnLabel();
-						TimerManager.ins().remove(this.AutoSmeltEquip,this);
-					}else{
-						if( !TimerManager.ins().isExists(this.AutoSmeltEquip,this) ){
-							this.smeltBtn.label = "取消熔炼";
+						TimerManager.ins().remove(this.AutoSmeltEquip, this);
+					} else {
+						if (!TimerManager.ins().isExists(this.AutoSmeltEquip, this)) {
+							this.oneKeySmeltBtn.label = "取消熔炼";
 							TimerManager.ins().doTimer(200, 0, this.AutoSmeltEquip, this);
 						}
 					}
 				}else{
+					WarnWin.show("开通特权月卡立即享受一键熔炼功能，是否前往查看", function () { 
+						// ViewManager.ins().close(SmeltEquipNormalPanel)
+						ViewManager.ins().close(SmeltEquipTotalWin)
+						ViewManager.ins().open(FuliWin, 3);
+					}, this);
+				}
+				break;
+			case this.smeltBtn:
 					DisplayUtils.removeFromParent(this.eff);
 					let b = UserEquip.ins().sendSmeltEquip(this.viewIndex, this.smeltEquips);
 					if (b) {
 						SoundUtil.ins().playEffect(SoundUtil.SMELT);
 					}
-				}
 				break;
 			case this.itemList:
 				let item: SmeltEquipItem = e.target as SmeltEquipItem;
@@ -159,21 +176,18 @@ class SmeltEquipNormalPanel extends BaseComponent {
 		}
 	}
 	/**特权 自动熔炼*/
-	private AutoSmeltEquip(){
+	private AutoSmeltEquip() {
 		DisplayUtils.removeFromParent(this.eff);
 		let b = UserEquip.ins().sendSmeltEquip(this.viewIndex, this.smeltEquips);
 		if (b) {
 			SoundUtil.ins().playEffect(SoundUtil.SMELT);
-		}else{
+		} else {
 			this.setBtnLabel();
-			TimerManager.ins().remove(this.AutoSmeltEquip,this);
+			TimerManager.ins().remove(this.AutoSmeltEquip, this);
 		}
 	}
 
-	private setBtnLabel(){
-		if( Recharge.ins().franchise )
-			this.smeltBtn.label = "一键熔炼";
-		else
-			this.smeltBtn.label = "熔  炼";
+	private setBtnLabel() {
+		this.oneKeySmeltBtn.label = "一键熔炼";
 	}
 }

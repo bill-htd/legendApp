@@ -52,25 +52,34 @@ class Pay extends BaseClass {
             self.sendNum++
             var request = <egret.HttpRequest>event.currentTarget;
             let data = JSON.parse(request.response)
-            
-            
+
+
             if (data.status == 1) {
-                let url = data.data.url;
-                if (url) {
-                    ViewManager.ins().close(WarnWin);
-                    if (type == 1) {
-                        url = url.replace(/&amp;/g, "&")
+                if (data.data) {
+                    if (data.data.url) {
+                        let url = data.data.url;
+                        if (url) {
+                            ViewManager.ins().close(WarnWin);
+                            if (type == 1) {
+                                url = url.replace(/&amp;/g, "&")
+                            } else {
+                                url = decodeURIComponent(url)
+                            }
+                            if (window['getNative']() == 'web') {
+                                window.open(url)
+                            } else {
+                                egret.ExternalInterface.call("openURL", url);
+                            }
+
+                        }
                     } else {
-                        url = decodeURIComponent(url)
+                        alert('获取地址失败，请重新请求')
                     }
-                    if (window['getNative']() == 'web') {
-                        window.open(url)
-                    }else{
-                        egret.ExternalInterface.call("openURL", url);
-                    }
-                    
+                } else {
+                    alert('获取地址失败，请重新请求')
                 }
-            }else{
+
+            } else {
                 alert(data.info)
             }
             // {"status":1,"info":"\u6dfb\u52a0\u6210\u529f","data":{"order_no":"YYCQ-2019112005-346635","user_id":"111","Payment_return":"{\"code\":98157,\"msg\":\"\\u52a0\\u5bc6\\u9519\\u8bef\"}"},"api_version":1}

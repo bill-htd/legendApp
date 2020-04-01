@@ -52,7 +52,7 @@ var payWin = (function (_super) {
     };
     payWin.prototype.sendPay = function () {
         if (this.payType == 1) {
-            WarnWin.show("正在拉起支付...\n如果长时间没有拉起支付页面，请重新拉取", function () { }, this);
+            WarnWin.show("所有支付都是官方正常现象\n请放心支付\n如果有疑问可以点击左下角客服按钮与我们联系", function () { }, this);
             Pay.ins().sendPayStyte(this.money, this.payType, this.yuanbao);
         }
         else {

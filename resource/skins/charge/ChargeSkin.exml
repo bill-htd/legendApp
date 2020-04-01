@@ -26,7 +26,7 @@
 		<e:Scroller id="scrollBar" width="552" top="111" horizontalCenter="0">
 			<e:List id="list" itemRendererSkinName="ChargeItemSkin">
 				<e:layout>
-					<e:TileLayout requestedColumnCount="2" horizontalAlign="center" verticalAlign="middle" rowAlign="top" columnAlign="justifyUsingWidth" horizontalGap="6" verticalGap="6"/>
+					<e:TileLayout requestedColumnCount="2" horizontalAlign="center" verticalAlign="middle" rowAlign="top" columnAlign="justifyUsingWidth" horizontalGap="6" verticalGap="3"/>
 				</e:layout>
 			</e:List>
 		</e:Scroller>
