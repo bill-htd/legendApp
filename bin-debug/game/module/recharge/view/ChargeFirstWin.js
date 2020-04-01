@@ -25,7 +25,6 @@ var ChargeFirstWin = (function (_super) {
         this.list.itemRenderer = ChargeItemRenderer;
         this.scrollBar.viewport = this.list;
         var dataList = GlobalConfig.RechargeItemsConfig;
-        console.log(dataList);
         var dataArr = [];
         for (var str in dataList) {
             dataArr.push(dataList[str]);
