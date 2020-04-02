@@ -51,7 +51,7 @@ class Main extends egret.DisplayObjectContainer {
 		// context.stage = new egret.Stage(wid, hei); //设置
 
 
-
+		
 
 
 		egret.lifecycle.onPause = function () {

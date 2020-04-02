@@ -29,11 +29,13 @@ var SmeltEquipNormalPanel = (function (_super) {
         this.dataInfo = new eui.ArrayCollection(this.smeltEquips);
         this.itemList.dataProvider = this.dataInfo;
         this.eff = new MovieClip;
-        this.eff.x = 78;
-        this.eff.y = 30;
+        this.eff.x = 81;
+        this.eff.y = 10;
         this.eff.scaleX = 1;
         this.eff.scaleY = 1;
         this.eff.touchEnabled = false;
+        console.log(this.eff);
+        console.log(this.smeltBtn);
     };
     SmeltEquipNormalPanel.prototype.open = function () {
         var param = [];

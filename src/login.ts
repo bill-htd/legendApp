@@ -115,8 +115,7 @@ class login extends eui.Component {
 
                 })
             }
-
-            if (msg == 'zhousi' || msg == 'CQ') {
+            if (msg != 'lx') {
                 self.zhuceLabel.visible = true
             }
         })
@@ -394,9 +393,9 @@ class login extends eui.Component {
             return
         }
 
-        egret.ExternalInterface.call("getChannel", '');
-        egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            // let msg = 'lx'
+        // egret.ExternalInterface.call("getChannel", '');
+        // egret.ExternalInterface.addCallback("backChannel", function (msg) {
+            let msg = window['getChannel']() || 'zhousi'
 
             let channel = msg;
             if (channel == 'lx') {
@@ -435,18 +434,10 @@ class login extends eui.Component {
 
                         if (number == 1) {
                             //登录
-                            var _info = {
-                                aa: 1,
-                                bb: 2
-                            }
-                            egret.ExternalInterface.call("loginStatistics", JSON.stringify(_info));
+                            egret.ExternalInterface.call("loginStatistics", JSON.stringify(msg));
                         } else {
                             //注册
-                            var _info = {
-                                aa: 1,
-                                bb: 2
-                            }
-                            egret.ExternalInterface.call("registerStatistics", JSON.stringify(_info));
+                            egret.ExternalInterface.call("registerStatistics", JSON.stringify(msg));
                         }
 
                         if (channel == 'lx') {
@@ -480,7 +471,7 @@ class login extends eui.Component {
             }
 
 
-        });
+        // });
 
 
 

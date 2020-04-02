@@ -65,7 +65,7 @@ var login = (function (_super) {
                     }
                 });
             }
-            if (msg == 'zhousi' || msg == 'CQ') {
+            if (msg != 'lx') {
                 self.zhuceLabel.visible = true;
             }
         });
@@ -291,77 +291,67 @@ var login = (function (_super) {
             alert('请选择服务器');
             return;
         }
-        egret.ExternalInterface.call("getChannel", '');
-        egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            var channel = msg;
-            if (channel == 'lx') {
-                password = self.password.text;
-            }
-            var url = '';
-            if (number == 1) {
-                url = window['get_login_address']();
-                url += '&name=' + name;
-                url += '&password=' + password;
-                url += '&serverid=' + serverid;
-                url += '&channel=' + channel;
-                self.blackBg.visible = true;
-                self.trpInfo.text = '登录中...';
-            }
-            else {
-                url = window['get_register_address']();
-                url += '&name=' + name;
-                url += '&password=' + password;
-                url += '&serverid=' + serverid;
-                url += '&channel=' + channel;
-            }
-            if (url) {
-                Http.ins().send(url, true, true, function (event) {
-                    var request = event.currentTarget;
-                    var data = JSON.parse(request.response);
-                    self.blackBg.visible = false;
-                    if (data.status == 1) {
-                        egret.localStorage.setItem("account", self.account.text);
-                        egret.localStorage.setItem("password", self.password.text);
-                        if (number == 1) {
-                            var _info = {
-                                aa: 1,
-                                bb: 2
-                            };
-                            egret.ExternalInterface.call("loginStatistics", JSON.stringify(_info));
-                        }
-                        else {
-                            var _info = {
-                                aa: 1,
-                                bb: 2
-                            };
-                            egret.ExternalInterface.call("registerStatistics", JSON.stringify(_info));
-                        }
-                        if (channel == 'lx') {
-                            password = md5.hex_md5(self.password.text);
-                        }
-                        var info = {
-                            srvid: serverid,
-                            user: channel + '_' + name,
-                            serverid: serverid,
-                            spverify: password,
-                            srvaddr: address,
-                            srvport: port
-                        };
-                        window['setLoginInfo'](info);
-                        if (StageUtils.ins().getStage().$children[2]) {
-                            StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2]);
-                        }
-                        self.loadingpb.visible = true;
-                        self.setProgress(0, '资源加载中...');
-                        LocationProperty.init();
-                        GameApp.ins().load(self);
+        var msg = window['getChannel']() || 'zhousi';
+        var channel = msg;
+        if (channel == 'lx') {
+            password = self.password.text;
+        }
+        var url = '';
+        if (number == 1) {
+            url = window['get_login_address']();
+            url += '&name=' + name;
+            url += '&password=' + password;
+            url += '&serverid=' + serverid;
+            url += '&channel=' + channel;
+            self.blackBg.visible = true;
+            self.trpInfo.text = '登录中...';
+        }
+        else {
+            url = window['get_register_address']();
+            url += '&name=' + name;
+            url += '&password=' + password;
+            url += '&serverid=' + serverid;
+            url += '&channel=' + channel;
+        }
+        if (url) {
+            Http.ins().send(url, true, true, function (event) {
+                var request = event.currentTarget;
+                var data = JSON.parse(request.response);
+                self.blackBg.visible = false;
+                if (data.status == 1) {
+                    egret.localStorage.setItem("account", self.account.text);
+                    egret.localStorage.setItem("password", self.password.text);
+                    if (number == 1) {
+                        egret.ExternalInterface.call("loginStatistics", JSON.stringify(msg));
                     }
                     else {
-                        alert(data.info);
+                        egret.ExternalInterface.call("registerStatistics", JSON.stringify(msg));
                     }
-                });
-            }
-        });
+                    if (channel == 'lx') {
+                        password = md5.hex_md5(self.password.text);
+                    }
+                    var info = {
+                        srvid: serverid,
+                        user: channel + '_' + name,
+                        serverid: serverid,
+                        spverify: password,
+                        srvaddr: address,
+                        srvport: port
+                    };
+                    window['setLoginInfo'](info);
+                    if (StageUtils.ins().getStage().$children[2]) {
+                        StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2]);
+                    }
+                    self.loadingpb.visible = true;
+                    self.setProgress(0, '资源加载中...');
+                    LocationProperty.init();
+                    GameApp.ins().load(self);
+                }
+                else {
+                    alert(data.info);
+                }
+            });
+        }
     };
     login.prototype.updateRoomList = function () {
         var roomList = window['getRoomList']();

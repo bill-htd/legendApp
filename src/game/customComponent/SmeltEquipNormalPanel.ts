@@ -36,8 +36,8 @@ class SmeltEquipNormalPanel extends BaseComponent {
 		this.dataInfo = new eui.ArrayCollection(this.smeltEquips);
 		this.itemList.dataProvider = this.dataInfo;
 		this.eff = new MovieClip;
-		this.eff.x = 78;
-		this.eff.y = 30;
+		this.eff.x = 158;
+		this.eff.y = 38;
 		this.eff.scaleX = 1;
 		this.eff.scaleY = 1;
 		this.eff.touchEnabled = false;
