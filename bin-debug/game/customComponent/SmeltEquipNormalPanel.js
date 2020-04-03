@@ -29,13 +29,11 @@ var SmeltEquipNormalPanel = (function (_super) {
         this.dataInfo = new eui.ArrayCollection(this.smeltEquips);
         this.itemList.dataProvider = this.dataInfo;
         this.eff = new MovieClip;
-        this.eff.x = 81;
-        this.eff.y = 10;
+        this.eff.x = 158;
+        this.eff.y = 38;
         this.eff.scaleX = 1;
         this.eff.scaleY = 1;
         this.eff.touchEnabled = false;
-        console.log(this.eff);
-        console.log(this.smeltBtn);
     };
     SmeltEquipNormalPanel.prototype.open = function () {
         var param = [];
@@ -53,10 +51,12 @@ var SmeltEquipNormalPanel = (function (_super) {
         this.observe(UserEquip.ins().postSmeltEquipComplete, this.smeltShowTips);
         if (Recharge.ins().franchise) {
             this.smeltBtn.visible = false;
+            this.tequanimg.visible = false;
             this.oneKeySmeltBtn.x = 25;
         }
         else {
             this.smeltBtn.visible = true;
+            this.tequanimg.visible = true;
             this.oneKeySmeltBtn.x = -105;
         }
     };

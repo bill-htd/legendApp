@@ -5,6 +5,7 @@ class SmeltEquipNormalPanel extends BaseComponent {
 	public itemList: eui.List;
 	private smeltBtn: eui.Button;
 	private oneKeySmeltBtn: eui.Button;
+	private tequanimg: eui.Image;
 	/** 可熔炼装备列表 */
 	private smeltEquips: ItemData[];
 	private dataInfo: eui.ArrayCollection;
@@ -56,9 +57,12 @@ class SmeltEquipNormalPanel extends BaseComponent {
 		this.observe(UserEquip.ins().postSmeltEquipComplete, this.smeltShowTips);
 		if (Recharge.ins().franchise) {
 			this.smeltBtn.visible = false;
+			this.tequanimg.visible = false;
+			
 			this.oneKeySmeltBtn.x = 25
 		} else {
 			this.smeltBtn.visible = true;
+			this.tequanimg.visible = true;
 			this.oneKeySmeltBtn.x = -105
 		}
 	}

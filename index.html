@@ -144,7 +144,7 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 	urlParam['egretHeight'] = '1204';
 	var localAddress = 'http://back.dangxuexi.com';
 	window.info = {
-		version: '1.2.5',
+		version: '1.2.6',
 		get_gonggao_address: localAddress + '/gm/index.php?m=ServerInfo&a=game_notice',
 		get_AppInfo_address: localAddress + '/gm/index.php?m=ServerInfo&a=app_edition',
 		get_roomList_address: localAddress + '/gm/index.php?m=ServerInfo&a=server_list',
@@ -467,7 +467,7 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 		document.getElementById("loadingtxt").innerText = parseInt(progress) + '/100';
 		document.getElementById("progress").value = progress;
 		this.timer = setInterval(function () {
-			if (progress >= 100) {
+			if (progress >= 99) {
 				clearInterval(self.timer)
 				return;
 			}
