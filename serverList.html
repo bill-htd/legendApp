@@ -39,11 +39,14 @@
 		<font size="4">服务器</font>
 		<br>
 		<select id="serverSelect">
-			<option value='{"ip":"47.90.90.194","id":1,"port":9001}'>测试服1</option>
-			<option value='{"ip":"47.90.90.194","id":2,"port":9002}'>测试服2</option>
-			<!--<option value='{"ip":"192.168.50.62","id":1,"port":9001}'>"ip":"192.168.50.62","id":1,"port":9001 本地服</option>
-			<option value='{"ip":"47.90.90.194","id":1,"port":9001}'>正式服1</option>
-			<option value='{"ip":"47.90.90.194","id":2,"port":9002}'>正式服2</option>-->
+			<option value='{"ip":"47.90.90.194","id":1,"port":9001}'>内测服1 </option>
+			<option value='{"ip":"47.90.90.194","id":2,"port":9002}'>内测服2 </option>
+			<option value='{"ip":"47.90.90.194","id":5,"port":9003}'>大帝1 </option>
+			<option value='{"ip":"47.90.90.194","id":6,"port":9004}'>大帝2 </option>
+			<option value='{"ip":"47.244.158.134","id":13,"port":9001}'>大帝5 </option>
+			<option value='{"ip":"47.244.158.134","id":14,"port":9002}'>大帝10 </option>
+			<option value='{"ip":"47.106.10.149","id":1001,"port":9001}'>大帝和服100 </option>
+			<!-- <option value='{"ip":"47.90.90.194","id":6001,"port":9007}'>战斗服</option> -->
 		</select>
 		<br><br>
 		<font size="4">账号</font>
@@ -61,6 +64,7 @@
 		document.getElementById("exdata").value = localStorage.getItem("exdata") || "";
 		document.getElementById("acount").value = localStorage.getItem("acount") || "";
 		function button_onclick() {
+	
 			launchFullscreen()
 			var acount = document.getElementById("acount").value
 			var server = JSON.parse(document.getElementById("serverSelect").value);
@@ -71,11 +75,12 @@
 			localStorage.setItem("selectedIndex1", document.getElementById("serverSelect").selectedIndex);
 			var arr = window.location.href.split('?');
 			var ar = arr[0];
+			console.log(hex_md5(exdata) )
 			var paraUrl = ar
 				+ "?srvid=" + server.id
 				+ "&user=" + acount
 				+ "&serverid=" + server.id
-				+ "&spverify=" + hex_md5(exdata) 
+				+ "&spverify=" + hex_md5(exdata)
 				+ "&srvaddr=" + server.ip
 				+ "&srvport=" + server.port
 			var data = {};

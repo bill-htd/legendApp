@@ -4,13 +4,13 @@
 		<e:Rect left="0" right="0" top="0" bottom="0" fillAlpha="0.6" x="0" y="0"  />
 		<e:Image top="0" bottom="0" source="tongyongmianbanbg2" width="580" scale9Grid="15,12,2,3" y="0"   horizontalCenter="0"/>
 		<e:Image source="tongyongmianbanbg" scale9Grid="10,9,27,30" width="570" horizontalCenter="0" top="44" bottom="120"/>
-		<e:Group width="556" horizontalCenter="0" bottom="58">
+		<e:Group width="556" horizontalCenter="0" bottom="58" visible="false">
 			<e:Image source="bantoumingkuang4" x="0" top="0" bottom="0" width="278" height="90"/>
 			<e:Image source="bantoumingkuang4" scaleX="-1" right="0" top="0" bottom="0" width="278" height="90"/>
 		</e:Group>
 		<ns1:BaseComponent id="roleSelect" skinName="RoleSelectPanelSkin" className="RoleSelectPanel" currentState="nohead" width="580" y="0" horizontalCenter="0"/>
 		<e:Image source="shang_7" y="-2" height="30" width="181" horizontalCenter="-165"/>
-		<e:Image horizontalCenter="-155" y="6" source="biaoti_springBegin"/>
+		<e:Image horizontalCenter="-186" y="3" source="biaoti_beizhandianfeng"/>
 		<e:ViewStack id="viewStack" width="560" selectedIndex="0" top="82" bottom="226" horizontalCenter="0">
 			<ns1:BaseComponent id="ZLHighPanel" left="0" right="0" top="0" bottom="0" className="" skinName="activityStoreSkin" visible="false"/>
 			<ns1:BaseComponent id="ZLTargetPanel" left="0" right="0" top="0" bottom="0" className="" skinName="springBeginLogSkin" visible="false"/>
@@ -41,13 +41,13 @@
 			<e:Image bottom="0" source="shang_8" scale9Grid="60,4,7,24" width="275" scaleX="-1" right="16"/>
 			<e:Image x="11" bottom="-6" source="shang_5" touchEnabled="false"/>
 			<e:Image bottom="-2" source="shang_6" right="11" touchEnabled="false"/>
-			<e:Image source="ny_topframe1_png" y="-33" left="1" touchEnabled="false"/>
-			<e:Image y="-33" source="ny_topframe2_png" right="1" width="104" touchEnabled="false"/>
-			<e:Image source="ny_bottomframe1_png" bottom="-1" left="0"/>
-			<e:Image bottom="-2" source="ny_bottomframe2_png" right="5" width="155"/>
+			<e:Image source="ny_topframe1_png" y="-33" left="1" touchEnabled="false" visible="false"/>
+			<e:Image y="-33" source="ny_topframe2_png" right="1" width="104" touchEnabled="false" visible="false"/>
+			<e:Image source="ny_bottomframe1_png" bottom="-1" left="0" visible="false"/>
+			<e:Image bottom="-2" source="ny_bottomframe2_png" right="5" width="155" visible="false"/>
 		</e:Group>
-		<e:Scroller id="menuScroller" scrollPolicyV="off" scrollPolicyH="on" height="82" horizontalCenter="0" bottom="134" width="450">
-			<e:List id="menuList" y="74" itemRendererSkinName="ActBtnSkin" horizontalCenter="0" scrollEnabled="false">
+		<e:Scroller id="menuScroller" scrollPolicyV="off" scrollPolicyH="on" height="110" horizontalCenter="0" bottom="108" width="450">
+			<e:List id="menuList" y="-8" itemRendererSkinName="ActBtnSkin" horizontalCenter="0" scrollEnabled="false" anchorOffsetY="0" height="110">
 			<e:layout>
 				<e:HorizontalLayout gap="10" paddingLeft="0" horizontalAlign="center"/>
 			</e:layout>

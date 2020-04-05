@@ -86,6 +86,17 @@ class ChargeItemRenderer extends BaseItemRender {
 			case 200:
 				this.payPrice.visible = false
 				this.pay1.visible = true
+				// cost = 300
+				break;
+			case 300:
+				this.payPrice.visible = false
+				this.pay1.visible = true
+				// cost = 300
+				break;
+			case 350:
+				this.payPrice.visible = true
+				this.pay1.visible = false
+				trueCost = 300;
 				break;
 			case 500:
 

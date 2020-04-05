@@ -190,7 +190,7 @@ var Recharge = (function (_super) {
                 money = 100;
                 break;
             case 5:
-                money = 200;
+                money = 300;
                 break;
             case 6:
                 money = 440;
@@ -214,7 +214,12 @@ var Recharge = (function (_super) {
                 money = 88;
                 break;
         }
-        ViewManager.ins().open(payWin, { money: money, yuanbao: yuanbao });
+        if (money < 300) {
+            WarnWin.show("对不起，该额度的充值通道维护中，非常抱歉，我们正在全力修复中。目前300及以上的充值通道可以正常使用。如果遇到问题，请点击左下角联系客服。", function () { }, this, function () { }, this, 'sure');
+        }
+        else {
+            ViewManager.ins().open(payWin, { money: money, yuanbao: yuanbao });
+        }
     };
     Recharge.prototype.getIsForeve = function () {
         return Recharge.ins().forevetCard == 2;

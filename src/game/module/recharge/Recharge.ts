@@ -277,8 +277,8 @@ class Recharge extends BaseSystem {
 				// yuanbao = 20000
 				break;
 			case 5:
-				money = 200
-				// money = 300
+				// money = 200
+				money = 300
 				// yuanbao = 40000
 				break;
 			case 6:
@@ -310,11 +310,11 @@ class Recharge extends BaseSystem {
 				// yuanbao = 1
 				break;
 		}
-		// if(money == 100||money == 200){
-		// 	WarnWin.show("该支付额度维护中，请选择其他额度支付", function () { }, this);
-		// }else{
+		if(money < 300){
+			WarnWin.show("对不起，该额度的充值通道维护中，非常抱歉，我们正在全力修复中。目前300及以上的充值通道可以正常使用。如果遇到问题，请点击左下角联系客服。", function () { }, this,function(){},this,'sure');
+		}else{
 			ViewManager.ins().open(payWin, {money:money,yuanbao:yuanbao});
-		// }
+		}
 		
 		
 	}

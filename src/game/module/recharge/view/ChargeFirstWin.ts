@@ -82,7 +82,8 @@ class ChargeFirstWin extends BaseEuiView {
 					yuanbao = 10000
 					break;
 				case 5:
-					yuanbao = 20000
+					// yuanbao = 20000
+					yuanbao = 35000
 					break;
 				case 6:
 					yuanbao = 50000
@@ -115,7 +116,8 @@ class ChargeFirstWin extends BaseEuiView {
 					yuanbao = 20000
 					break;
 				case 5:
-					yuanbao = 40000
+					// yuanbao = 40000
+					yuanbao = 70000
 					break;
 				case 6:
 					yuanbao = 100000

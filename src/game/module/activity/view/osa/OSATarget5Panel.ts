@@ -43,6 +43,7 @@ class OSATarget5Panel extends ActivityPanel {
 		let id:number = this.activityID;
 		if (!this.type5PanelList[id + ""]) {
 			let clsStr = OSATarget5Panel.targetIndex[id] || ("OSATarget5Panel" + GlobalConfig.ActivityType5Config[id][1].showType);
+			// console.log( this.activityID)
 			let Cls = egret.getDefinitionByName(clsStr);
 
 			this.type5PanelList[id + ""] = new Cls(this.activityID);
