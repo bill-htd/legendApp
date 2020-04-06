@@ -214,8 +214,8 @@ var Recharge = (function (_super) {
                 money = 88;
                 break;
         }
-        if (money < 300) {
-            WarnWin.show("对不起，该额度的充值通道维护中，非常抱歉，我们正在全力修复中。目前300及以上的充值通道可以正常使用。如果遇到问题，请点击左下角联系客服。", function () { }, this, function () { }, this, 'sure');
+        if (money == 10 || money == 20) {
+            WarnWin.show("对不起，该额度的充值通道维护中，非常抱歉，我们正在全力修复中。目前50及以上的充值通道可以正常使用。如果遇到问题，请点击左下角联系客服。", function () { }, this, function () { }, this, 'sure');
         }
         else {
             ViewManager.ins().open(payWin, { money: money, yuanbao: yuanbao });

@@ -16,5 +16,5 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
-	<e:Button id="npcBtn" icon="btn_npc" skinName="MainBtn2" bottom="255" right="0" visible="false"/>
+	<e:Button id="npcBtn" icon="btn_npc" skinName="MainBtn2" bottom="255" right="0"/>
 </e:Skin>

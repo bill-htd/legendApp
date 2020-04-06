@@ -130,19 +130,19 @@ class Recharge1Win extends BaseEuiView {
 		let i = 0;
 		for (let k in GlobalConfig.FirstRechargeConfig) {
 			let frc: FirstRechargeConfig = GlobalConfig.FirstRechargeConfig[k];
-			if (i == 3) {
-				this.btnArr[i]["zhekou"].visible = true
-				this.btnArr[i]["rmb"].visible = false
-				this.btnArr[i]["rmb1"].text = frc.paydesc;
-				this.btnArr[i]["yuanbao"].text = frc.payReturn;
-				this.btnArr[i]['money'] = frc.pay;
-			} else {
+			// if (i == 3) {
+			// 	this.btnArr[i]["zhekou"].visible = true
+			// 	this.btnArr[i]["rmb"].visible = false
+			// 	this.btnArr[i]["rmb1"].text = frc.paydesc;
+			// 	this.btnArr[i]["yuanbao"].text = frc.payReturn;
+			// 	this.btnArr[i]['money'] = frc.pay;
+			// } else {
 				this.btnArr[i]["zhekou"].visible = false
 				this.btnArr[i]["rmb"].visible = true
 				this.btnArr[i]["rmb"].text = frc.paydesc;
 				this.btnArr[i]["yuanbao"].text = frc.payReturn;
 				this.btnArr[i]['money'] = frc.pay;
-			}
+			// }
 			i++;
 		}
 
@@ -227,8 +227,8 @@ class Recharge1Win extends BaseEuiView {
 						for (let i in GlobalConfig.RechargeItemsConfig) {
 
 							if (money == GlobalConfig.RechargeItemsConfig[i].amount) {
-								if (money != 35000) {
-									WarnWin.show("对不起，该额度的充值通道维护中。。。\n目前只有300的可以使用，并且同样享受首充返4倍元宝。\n（请点击联系客服，申领额外返回元宝）", function () { }, this, function () { }, this, 'sure');
+								if (money == 2000||money == 1000) {
+									WarnWin.show("对不起，该额度的充值通道维护中。。。\n目前只有50的可以使用，并且同样享受首充返4倍元宝。\n（请点击联系客服，申领额外返回元宝）", function () { }, this, function () { }, this, 'sure');
 								} else {
 									Recharge.ins().showReCharge(GlobalConfig.RechargeItemsConfig[i].id, money);
 								}
