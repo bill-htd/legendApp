@@ -41,6 +41,17 @@ var MonthCardWin = (function (_super) {
             this.leftTime.visible = Recharge.ins().monthDay > 0 ? true : false;
             this.setView();
         }
+        var colorMatrix = [
+            0.3, 0.6, 0, 0, 0,
+            0.3, 0.6, 0, 0, 0,
+            0.3, 0.6, 0, 0, 0,
+            0, 0, 0, 1, 0
+        ];
+        var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
+        var monthCardPriceInfo = window['getmonthCardPriceInfo']();
+        if (monthCardPriceInfo[0].status != 1) {
+            this.btn1.filters = [colorFlilter];
+        }
     };
     MonthCardWin.prototype.setView = function () {
         this.first.visible = !Setting.ins().getValue(ClientSet.firstMonthCard);
@@ -63,7 +74,13 @@ var MonthCardWin = (function (_super) {
     MonthCardWin.prototype.onTap = function (e) {
         switch (e.currentTarget) {
             case this.btn1:
-                Recharge.ins().showReCharge(1000, 2800);
+                var monthCardPriceInfo = window['getmonthCardPriceInfo']();
+                if (monthCardPriceInfo[0].status != 1) {
+                    WarnWin.show(monthCardPriceInfo[0].msg, function () { }, this, function () { }, this, 'sure');
+                }
+                else {
+                    Recharge.ins().showReCharge(28, 2800);
+                }
                 break;
         }
     };

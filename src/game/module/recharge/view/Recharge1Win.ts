@@ -127,23 +127,38 @@ class Recharge1Win extends BaseEuiView {
 		}
 
 		/**充值档次*/
-		let i = 0;
-		for (let k in GlobalConfig.FirstRechargeConfig) {
-			let frc: FirstRechargeConfig = GlobalConfig.FirstRechargeConfig[k];
-			// if (i == 3) {
-			// 	this.btnArr[i]["zhekou"].visible = true
-			// 	this.btnArr[i]["rmb"].visible = false
-			// 	this.btnArr[i]["rmb1"].text = frc.paydesc;
-			// 	this.btnArr[i]["yuanbao"].text = frc.payReturn;
-			// 	this.btnArr[i]['money'] = frc.pay;
-			// } else {
+		var colorMatrix = [
+			0.3, 0.6, 0, 0, 0,
+			0.3, 0.6, 0, 0, 0,
+			0.3, 0.6, 0, 0, 0,
+			0, 0, 0, 1, 0
+		];
+		var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
+		let firstChargeInfo = window['getfirChargePriceInfo']()
+		for (let i = 0; i < firstChargeInfo.length; i++) {
+
+			this.btnArr[i]['status'] = firstChargeInfo[i].status;
+			if (this.btnArr[i]['status'] != 1) {
+				this.btnArr[i].filters =  [colorFlilter];
+			}
+			// this.btnArr[i].filters =  [colorFlilter];
+
+			this.btnArr[i]['msg'] = firstChargeInfo[i].msg;
+			if (firstChargeInfo[i].trueCost == 1) {
+				this.btnArr[i]["zhekou"].visible = true
+				this.btnArr[i]["rmb"].visible = false
+				this.btnArr[i]['money'] = parseInt(firstChargeInfo[i].dazhe_num);
+			} else {
 				this.btnArr[i]["zhekou"].visible = false
 				this.btnArr[i]["rmb"].visible = true
-				this.btnArr[i]["rmb"].text = frc.paydesc;
-				this.btnArr[i]["yuanbao"].text = frc.payReturn;
-				this.btnArr[i]['money'] = frc.pay;
-			// }
-			i++;
+				this.btnArr[i]['money'] = parseInt(firstChargeInfo[i].money_num);
+			}
+
+			this.btnArr[i]["rmb"].text = parseInt(firstChargeInfo[i].money_num) + '元';
+			this.btnArr[i]["rmb0"].text = parseInt(firstChargeInfo[i].money_num) + '元';
+			this.btnArr[i]["rmb1"].text = parseInt(firstChargeInfo[i].dazhe_num) + '元';
+			this.btnArr[i]["yuanbao"].text = firstChargeInfo[i].award;
+			this.btnArr[i]['yuanbao'] = firstChargeInfo[i].award;
 		}
 
 		this.setWinData();
@@ -223,19 +238,13 @@ class Recharge1Win extends BaseEuiView {
 				//首充4个档次
 				for (let i = 0; i < 4; i++) {
 					if (e.currentTarget == this.btnArr[i]) {
-						let money = this.btnArr[i]["money"];
-						for (let i in GlobalConfig.RechargeItemsConfig) {
 
-							if (money == GlobalConfig.RechargeItemsConfig[i].amount) {
-								if (money == 2000||money == 1000) {
-									WarnWin.show("对不起，该额度的充值通道维护中。。。\n目前只有50的可以使用，并且同样享受首充返4倍元宝。\n（请点击联系客服，申领额外返回元宝）", function () { }, this, function () { }, this, 'sure');
-								} else {
-									Recharge.ins().showReCharge(GlobalConfig.RechargeItemsConfig[i].id, money);
-								}
-
-								break;
-							}
+						if (this.btnArr[i]['status'] == 1) {
+							Recharge.ins().showReCharge(this.btnArr[i]["money"], this.btnArr[i]['yuanbao']);
+						} else {
+							WarnWin.show(this.btnArr[i]['msg'], function () { }, this, function () { }, this, 'sure');
 						}
+
 						break;
 						// frc.pay//充值额度
 						// frc.payReturn//充值返利

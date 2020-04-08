@@ -30,6 +30,7 @@ var payWin = (function (_super) {
         this.money = param[0].money;
         this.yuanbao = param[0].yuanbao;
         this.moneyNum.text = this.money + '元';
+        this.yuanbaoNum.text = this.yuanbao + '元宝';
         this.addTouchEvent(this.WXbtn, this.onTap);
         this.addTouchEvent(this.ZFBbtn, this.onTap);
         this.addTouchEvent(this.Paybtn, this.sendPay);

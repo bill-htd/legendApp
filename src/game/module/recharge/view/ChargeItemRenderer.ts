@@ -6,7 +6,9 @@ class ChargeItemRenderer extends BaseItemRender {
 	public pay1: eui.Label;
 	public payPrice: eui.Group;
 	public moneyGroup: eui.Group;
+	public allImg: eui.Group;
 	public yuanbaoImg: eui.Image;
+	// private blackRect: eui.Rect;
 	private totalPower: egret.DisplayObjectContainer;
 	public constructor() {
 		super();
@@ -24,118 +26,42 @@ class ChargeItemRenderer extends BaseItemRender {
 	}
 
 	private refushInfo(): void {
-		this.gain0.text = this.data.itemName;
-		this.gain1.text = this.data.desc;
-		switch (this.data.icon) {
-			case 'cz_11':
-				this.yuanbaoImg.source = 'new_chongzhi_yuanbao1';
-				break;
-			case 'cz_12':
-				this.yuanbaoImg.source = 'new_chongzhi_yuanbao2';
-				break;
-			case 'cz_13':
-				this.yuanbaoImg.source = 'new_chongzhi_yuanbao3';
-				break;
-			case 'cz_14':
-				this.yuanbaoImg.source = 'new_chongzhi_yuanbao4';
-				break;
-			case 'cz_15':
-				this.yuanbaoImg.source = 'new_chongzhi_yuanbao5';
-				break;
-			case 'cz_16':
-				this.yuanbaoImg.source = 'new_chongzhi_yuanbao6';
-				break;
-			default:
-				this.yuanbaoImg.source = 'new_chongzhi_yuanbao6';
-				break;
-		}
-		/*
-		10  9.8
-		20  19.2
-		50  48
-		100  92
-		200  182
-		500  440
-		1000  840
-		1500  1230
-		2000  1560
-		3000  2250
-		*/
+		this.yuanbaoImg.source = this.data.icon;
 
-		let cost: number = this.data.cash;
+		//颜色矩阵数组
+		var colorMatrix = [
+			0.3, 0.6, 0, 0, 0,
+			0.3, 0.6, 0, 0, 0,
+			0.3, 0.6, 0, 0, 0,
+			0, 0, 0, 1, 0
+		];
+		var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
+
+		if(this.data.status != 1) {
+			this.allImg.filters =  [colorFlilter];
+		} 
+
+		let cost: number = parseInt(this.data.money_num);
 		this.pay.text = `原价:${cost}元`;
-		let trueCost: number = 0;
-		switch (cost) {
-			case 10:
-				// trueCost = 9.8;
-				this.payPrice.visible = false
-				this.pay1.visible = true
-				break;
-			case 20:
-				this.payPrice.visible = false
-				this.pay1.visible = true
-				break;
-			case 50:
-				this.payPrice.visible = false
-				this.pay1.visible = true
-				break;
-			case 100:
-				this.payPrice.visible = false
-				this.pay1.visible = true
-				break;
-			case 200:
-				this.payPrice.visible = false
-				this.pay1.visible = true
-				// cost = 300
-				break;
-			case 300:
-				this.payPrice.visible = false
-				this.pay1.visible = true
-				// cost = 300
-				break;
-			case 350:
-				this.payPrice.visible = true
-				this.pay1.visible = false
-				trueCost = 300;
-				break;
-			case 500:
-
-				this.payPrice.visible = true
-				this.pay1.visible = false
-				trueCost = 440;
-				break;
-			case 1000:
-				this.payPrice.visible = true
-				this.pay1.visible = false
-				trueCost = 840;
-				break;
-			case 1500:
-				this.payPrice.visible = true
-				this.pay1.visible = false
-				trueCost = 1230;
-				break;
-			case 2000:
-				this.payPrice.visible = true
-				this.pay1.visible = false
-				trueCost = 1560;
-				break;
-			case 3000:
-				this.payPrice.visible = true
-				this.pay1.visible = false
-				trueCost = 2250;
-				break;
+		let trueCost: number = parseInt(this.data.dazhe_num);
+		if (this.data.trueCost == 1) {
+			this.payPrice.visible = true
+			this.pay1.visible = false
+		} else {
+			this.payPrice.visible = false
+			this.pay1.visible = true
 		}
 		this.pay1.text = `${cost}元`
 		this.pay0.text = `${trueCost}元`;
-		
+
 		this.pay.strokeColor = 0x000000;
-        this.pay.stroke = 2;
+		this.pay.stroke = 2;
 		this.pay1.strokeColor = 0x000000;
-        this.pay1.stroke = 2;
+		this.pay1.stroke = 2;
 		this.pay0.strokeColor = 0x000000;
-        this.pay0.stroke = 2;
-		if (Recharge.ins().getOrderByIndex(this.data.id)) {
-			BitmapNumber.ins().changeNum(this.totalPower, this.data.amount, "vip_v", 3);
+		this.pay0.stroke = 2;
+		if (Recharge.ins().getOrderByIndex(this.data.moneyid)) {
+			BitmapNumber.ins().changeNum(this.totalPower, this.data.yuanbao_num, "vip_v", 3);
 		} else {
 			BitmapNumber.ins().changeNum(this.totalPower, this.data.award, "vip_v", 3);
 		}
@@ -145,7 +71,7 @@ class ChargeItemRenderer extends BaseItemRender {
 
 	protected getCurrentState(): string {
 		let state = "up";
-		if (Recharge.ins().getOrderByIndex(this.data.id)) {
+		if (Recharge.ins().getOrderByIndex(this.data.moneyid)) {
 			if (this.selected) {
 				state = "down";
 			}

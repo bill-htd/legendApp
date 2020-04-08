@@ -238,85 +238,12 @@ class Recharge extends BaseSystem {
 		// return 0;
 	}
 
-	public showReCharge(payIndex: number,yuanbao:number): void {
-		// SDK.pay(0, RMB, "");
+	public showReCharge(money: number,yuanbao:number): void {
 		if (!OpenSystem.ins().checkSysOpen(SystemType.FIRSTCHARGE)) {
 			UserTips.ins().showTips(`充值已屏蔽`);
 			return;
 		}
-/*
-		10  9.8
-		20  19.2
-		50  48
-		100  92
-		200  182
-		500  440
-		1000  840
-		1500  1230
-		2000  1560
-		3000  2250
-		*/
-
-		let money: number = 0
-		// let yuanbao: number = 0
-		switch (payIndex) {
-			case 1:
-				money = 10
-				// yuanbao = 2000
-				break;
-			case 2:
-				money = 20
-				// yuanbao = 4000
-				break;
-			case 3:
-				money = 50
-				// yuanbao = 10000
-				break;
-			case 4:
-				money = 100
-				// yuanbao = 20000
-				break;
-			case 5:
-				// money = 200
-				money = 300
-				// yuanbao = 40000
-				break;
-			case 6:
-				money = 440
-				// yuanbao = 100000
-				break;
-			case 7:
-				money = 840
-				// yuanbao = 100000
-				break;
-			case 8:
-				money = 1230
-				// yuanbao = 300000
-				break;
-			case 9:
-				money = 1560
-				// yuanbao = 400000
-				break;
-			case 10:
-				money = 2250
-				// yuanbao = 600000
-				break;
-			case 1000:
-				money = 28
-				// yuanbao = 1
-				break;
-			case 1001:
-				money = 88
-				// yuanbao = 1
-				break;
-		}
-		if(money ==10||money == 20){
-			WarnWin.show("对不起，该额度的充值通道维护中，非常抱歉，我们正在全力修复中。目前50及以上的充值通道可以正常使用。如果遇到问题，请点击左下角联系客服。", function () { }, this,function(){},this,'sure');
-		}else{
-			ViewManager.ins().open(payWin, {money:money,yuanbao:yuanbao});
-		}
-		
-		
+		ViewManager.ins().open(payWin, {money:money,yuanbao:yuanbao});
 	}
 
 	public getIsForeve(): boolean {

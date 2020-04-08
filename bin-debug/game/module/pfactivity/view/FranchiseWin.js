@@ -47,6 +47,17 @@ var FranchiseWin = (function (_super) {
         }
         this.setIconEff();
         this.depictLabel.textFlow = TextFlowMaker.generateTextFlow1(GlobalConfig.PrivilegeData.rightDesc);
+        var colorMatrix = [
+            0.3, 0.6, 0, 0, 0,
+            0.3, 0.6, 0, 0, 0,
+            0.3, 0.6, 0, 0, 0,
+            0, 0, 0, 1, 0
+        ];
+        var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
+        var monthCardPriceInfo = window['getmonthCardPriceInfo']();
+        if (monthCardPriceInfo[1].status != 1) {
+            this.btn1.filters = [colorFlilter];
+        }
     };
     FranchiseWin.prototype.setView = function () {
         if (!Recharge.ins().franchiseget) {
@@ -80,10 +91,18 @@ var FranchiseWin = (function (_super) {
     FranchiseWin.prototype.onTap = function (e) {
         switch (e.currentTarget) {
             case this.btn1:
-                if (this.btn1.label != "领取奖励")
-                    Recharge.ins().showReCharge(1001, 8800);
-                else
+                if (this.btn1.label != "领取奖励") {
+                    var monthCardPriceInfo = window['getmonthCardPriceInfo']();
+                    if (monthCardPriceInfo[1].status != 1) {
+                        WarnWin.show(monthCardPriceInfo[1].msg, function () { }, this, function () { }, this, 'sure');
+                    }
+                    else {
+                        Recharge.ins().showReCharge(88, 8800);
+                    }
+                }
+                else {
                     Recharge.ins().sendGetFranchise();
+                }
                 break;
         }
     };

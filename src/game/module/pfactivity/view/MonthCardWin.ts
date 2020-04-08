@@ -3,10 +3,10 @@ class MonthCardWin extends BaseView {
 
 	public monthGroup: eui.Group;
 
-	private btn1:eui.Button;
-	private leftTime:eui.Label;
-	private feng:eui.Label;
-	private first:eui.Label;
+	private btn1: eui.Button;
+	private leftTime: eui.Label;
+	private feng: eui.Label;
+	private first: eui.Label;
 	constructor() {
 		super();
 		this.skinName = "MonthCardSkin";
@@ -15,9 +15,9 @@ class MonthCardWin extends BaseView {
 	public open(...param: any[]): void {
 		this.observe(Recharge.ins().postUpdateRecharge, this.setView);
 		this.addTouchEvent(this.btn1, this.onTap);
-		if( this.feng.visible ){
+		if (this.feng.visible) {
 			this.btn1.visible = false;
-		}else{
+		} else {
 			if (Recharge.ins().monthDay > 0) {
 				TimerManager.ins().doTimer(1000, 0, this.setTimeLbel, this);
 				this.setTimeLbel();
@@ -26,15 +26,28 @@ class MonthCardWin extends BaseView {
 				this.btn1.visible = true;
 				TimerManager.ins().remove(this.setTimeLbel, this);
 			}
-			this.leftTime.visible = Recharge.ins().monthDay > 0?true:false;
+			this.leftTime.visible = Recharge.ins().monthDay > 0 ? true : false;
 			this.setView();
 		}
 
-        //
+		//颜色矩阵数组
+		var colorMatrix = [
+			0.3, 0.6, 0, 0, 0,
+			0.3, 0.6, 0, 0, 0,
+			0.3, 0.6, 0, 0, 0,
+			0, 0, 0, 1, 0
+		];
+		var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
+		let monthCardPriceInfo = window['getmonthCardPriceInfo']()
+		// this.btn1.filters = [colorFlilter];
+		if (monthCardPriceInfo[0].status != 1) {
+			this.btn1.filters = [colorFlilter];
+		}
+		//
 		// if (Recharge.ins().getIsForeve()) {
-        //
+		//
 		// } else {
-        //
+		//
 		// }
 		// // let data: RechargeData = Recharge.ins().getRechargeData(0);
 		// this.setView();
@@ -61,7 +74,14 @@ class MonthCardWin extends BaseView {
 	private onTap(e: egret.TouchEvent): void {
 		switch (e.currentTarget) {
 			case this.btn1:
-				 Recharge.ins().showReCharge(1000,2800);
+
+				let monthCardPriceInfo = window['getmonthCardPriceInfo']()
+				if (monthCardPriceInfo[0].status != 1) {
+					WarnWin.show(monthCardPriceInfo[0].msg, function () { }, this, function () { }, this, 'sure');
+				} else {
+					Recharge.ins().showReCharge(28, 2800);
+				}
+
 				// Pay.ins().sendPayStyte('28',1);
 				break;
 		}

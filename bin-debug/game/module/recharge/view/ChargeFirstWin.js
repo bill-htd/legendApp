@@ -24,11 +24,7 @@ var ChargeFirstWin = (function (_super) {
         _super.prototype.initUI.call(this);
         this.list.itemRenderer = ChargeItemRenderer;
         this.scrollBar.viewport = this.list;
-        var dataList = GlobalConfig.RechargeItemsConfig;
-        var dataArr = [];
-        for (var str in dataList) {
-            dataArr.push(dataList[str]);
-        }
+        var dataArr = window["getsecChargePriceInfo"]();
         this.list.dataProvider = new eui.ArrayCollection(dataArr);
         this.barbc.setWidth(340);
         this.barbc.x = 80;
@@ -52,6 +48,7 @@ var ChargeFirstWin = (function (_super) {
         this.list.addEventListener(eui.ItemTapEvent.ITEM_TAP, this.onListTap, this);
         this.barbc.reset();
         this.setView();
+        WarnWin.show('充值300以上，可以找客服拿月卡特权', function () { }, this, function () { }, this, 'sure');
     };
     ChargeFirstWin.prototype.close = function () {
         var param = [];
@@ -67,76 +64,26 @@ var ChargeFirstWin = (function (_super) {
     };
     ChargeFirstWin.prototype.onListTap = function (e) {
         var data = e.item;
-        var yuanbao = 1000;
-        if (Recharge.ins().getOrderByIndex(data.id)) {
-            switch (data.id) {
-                case 1:
-                    yuanbao = 1000;
-                    break;
-                case 2:
-                    yuanbao = 2000;
-                    break;
-                case 3:
-                    yuanbao = 5000;
-                    break;
-                case 4:
-                    yuanbao = 10000;
-                    break;
-                case 5:
-                    yuanbao = 35000;
-                    break;
-                case 6:
-                    yuanbao = 50000;
-                    break;
-                case 7:
-                    yuanbao = 100000;
-                    break;
-                case 8:
-                    yuanbao = 150000;
-                    break;
-                case 9:
-                    yuanbao = 200000;
-                    break;
-                case 10:
-                    yuanbao = 300000;
-                    break;
-            }
+        var yuanbao = 0;
+        var money = 0;
+        if (Recharge.ins().getOrderByIndex(data.moneyid)) {
+            yuanbao = data.yuanbao_num;
         }
         else {
-            switch (data.id) {
-                case 1:
-                    yuanbao = 2000;
-                    break;
-                case 2:
-                    yuanbao = 4000;
-                    break;
-                case 3:
-                    yuanbao = 10000;
-                    break;
-                case 4:
-                    yuanbao = 20000;
-                    break;
-                case 5:
-                    yuanbao = 70000;
-                    break;
-                case 6:
-                    yuanbao = 100000;
-                    break;
-                case 7:
-                    yuanbao = 200000;
-                    break;
-                case 8:
-                    yuanbao = 300000;
-                    break;
-                case 9:
-                    yuanbao = 400000;
-                    break;
-                case 10:
-                    yuanbao = 600000;
-                    break;
-            }
+            yuanbao = data.award;
         }
-        Recharge.ins().showReCharge(data.id, yuanbao);
+        if (data.trueCost == 1) {
+            money = parseInt(data.dazhe_num);
+        }
+        else {
+            money = parseInt(data.money_num);
+        }
+        if (data.status == 1) {
+            Recharge.ins().showReCharge(money, yuanbao);
+        }
+        else {
+            WarnWin.show(data.msg, function () { }, this, function () { }, this, 'sure');
+        }
     };
     ChargeFirstWin.prototype.onTap = function (e) {
         switch (e.currentTarget) {

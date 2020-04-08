@@ -170,56 +170,12 @@ var Recharge = (function (_super) {
     Recharge.prototype.getAddBagFranchiseGrid = function () {
         return this.franchise > 0 ? 100 : 0;
     };
-    Recharge.prototype.showReCharge = function (payIndex, yuanbao) {
+    Recharge.prototype.showReCharge = function (money, yuanbao) {
         if (!OpenSystem.ins().checkSysOpen(SystemType.FIRSTCHARGE)) {
             UserTips.ins().showTips("\u5145\u503C\u5DF2\u5C4F\u853D");
             return;
         }
-        var money = 0;
-        switch (payIndex) {
-            case 1:
-                money = 10;
-                break;
-            case 2:
-                money = 20;
-                break;
-            case 3:
-                money = 50;
-                break;
-            case 4:
-                money = 100;
-                break;
-            case 5:
-                money = 300;
-                break;
-            case 6:
-                money = 440;
-                break;
-            case 7:
-                money = 840;
-                break;
-            case 8:
-                money = 1230;
-                break;
-            case 9:
-                money = 1560;
-                break;
-            case 10:
-                money = 2250;
-                break;
-            case 1000:
-                money = 28;
-                break;
-            case 1001:
-                money = 88;
-                break;
-        }
-        if (money == 10 || money == 20) {
-            WarnWin.show("对不起，该额度的充值通道维护中，非常抱歉，我们正在全力修复中。目前50及以上的充值通道可以正常使用。如果遇到问题，请点击左下角联系客服。", function () { }, this, function () { }, this, 'sure');
-        }
-        else {
-            ViewManager.ins().open(payWin, { money: money, yuanbao: yuanbao });
-        }
+        ViewManager.ins().open(payWin, { money: money, yuanbao: yuanbao });
     };
     Recharge.prototype.getIsForeve = function () {
         return Recharge.ins().forevetCard == 2;

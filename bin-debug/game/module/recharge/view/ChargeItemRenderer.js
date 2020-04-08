@@ -26,89 +26,27 @@ var ChargeItemRenderer = (function (_super) {
         this.refushInfo();
     };
     ChargeItemRenderer.prototype.refushInfo = function () {
-        this.gain0.text = this.data.itemName;
-        this.gain1.text = this.data.desc;
-        switch (this.data.icon) {
-            case 'cz_11':
-                this.yuanbaoImg.source = 'new_chongzhi_yuanbao1';
-                break;
-            case 'cz_12':
-                this.yuanbaoImg.source = 'new_chongzhi_yuanbao2';
-                break;
-            case 'cz_13':
-                this.yuanbaoImg.source = 'new_chongzhi_yuanbao3';
-                break;
-            case 'cz_14':
-                this.yuanbaoImg.source = 'new_chongzhi_yuanbao4';
-                break;
-            case 'cz_15':
-                this.yuanbaoImg.source = 'new_chongzhi_yuanbao5';
-                break;
-            case 'cz_16':
-                this.yuanbaoImg.source = 'new_chongzhi_yuanbao6';
-                break;
-            default:
-                this.yuanbaoImg.source = 'new_chongzhi_yuanbao6';
-                break;
+        this.yuanbaoImg.source = this.data.icon;
+        var colorMatrix = [
+            0.3, 0.6, 0, 0, 0,
+            0.3, 0.6, 0, 0, 0,
+            0.3, 0.6, 0, 0, 0,
+            0, 0, 0, 1, 0
+        ];
+        var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
+        if (this.data.status != 1) {
+            this.allImg.filters = [colorFlilter];
         }
-        var cost = this.data.cash;
+        var cost = parseInt(this.data.money_num);
         this.pay.text = "\u539F\u4EF7:" + cost + "\u5143";
-        var trueCost = 0;
-        switch (cost) {
-            case 10:
-                this.payPrice.visible = false;
-                this.pay1.visible = true;
-                break;
-            case 20:
-                this.payPrice.visible = false;
-                this.pay1.visible = true;
-                break;
-            case 50:
-                this.payPrice.visible = false;
-                this.pay1.visible = true;
-                break;
-            case 100:
-                this.payPrice.visible = false;
-                this.pay1.visible = true;
-                break;
-            case 200:
-                this.payPrice.visible = false;
-                this.pay1.visible = true;
-                break;
-            case 300:
-                this.payPrice.visible = false;
-                this.pay1.visible = true;
-                break;
-            case 350:
-                this.payPrice.visible = true;
-                this.pay1.visible = false;
-                trueCost = 300;
-                break;
-            case 500:
-                this.payPrice.visible = true;
-                this.pay1.visible = false;
-                trueCost = 440;
-                break;
-            case 1000:
-                this.payPrice.visible = true;
-                this.pay1.visible = false;
-                trueCost = 840;
-                break;
-            case 1500:
-                this.payPrice.visible = true;
-                this.pay1.visible = false;
-                trueCost = 1230;
-                break;
-            case 2000:
-                this.payPrice.visible = true;
-                this.pay1.visible = false;
-                trueCost = 1560;
-                break;
-            case 3000:
-                this.payPrice.visible = true;
-                this.pay1.visible = false;
-                trueCost = 2250;
-                break;
+        var trueCost = parseInt(this.data.dazhe_num);
+        if (this.data.trueCost == 1) {
+            this.payPrice.visible = true;
+            this.pay1.visible = false;
+        }
+        else {
+            this.payPrice.visible = false;
+            this.pay1.visible = true;
         }
         this.pay1.text = cost + "\u5143";
         this.pay0.text = trueCost + "\u5143";
@@ -118,8 +56,8 @@ var ChargeItemRenderer = (function (_super) {
         this.pay1.stroke = 2;
         this.pay0.strokeColor = 0x000000;
         this.pay0.stroke = 2;
-        if (Recharge.ins().getOrderByIndex(this.data.id)) {
-            BitmapNumber.ins().changeNum(this.totalPower, this.data.amount, "vip_v", 3);
+        if (Recharge.ins().getOrderByIndex(this.data.moneyid)) {
+            BitmapNumber.ins().changeNum(this.totalPower, this.data.yuanbao_num, "vip_v", 3);
         }
         else {
             BitmapNumber.ins().changeNum(this.totalPower, this.data.award, "vip_v", 3);
@@ -129,7 +67,7 @@ var ChargeItemRenderer = (function (_super) {
     };
     ChargeItemRenderer.prototype.getCurrentState = function () {
         var state = "up";
-        if (Recharge.ins().getOrderByIndex(this.data.id)) {
+        if (Recharge.ins().getOrderByIndex(this.data.moneyid)) {
             if (this.selected) {
                 state = "down";
             }

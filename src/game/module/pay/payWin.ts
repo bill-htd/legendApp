@@ -1,6 +1,7 @@
 class payWin extends BaseEuiView {
 
 	private moneyNum: eui.Label;
+	private yuanbaoNum: eui.Label;
 
 	private money: number = 0;
 	private yuanbao: number = 0;
@@ -24,6 +25,7 @@ class payWin extends BaseEuiView {
 		this.money = param[0].money
 		this.yuanbao = param[0].yuanbao
 		this.moneyNum.text = this.money + '元'
+		this.yuanbaoNum.text = this.yuanbao + '元宝'
 		this.addTouchEvent(this.WXbtn, this.onTap);
 		this.addTouchEvent(this.ZFBbtn, this.onTap);
 		this.addTouchEvent(this.Paybtn, this.sendPay);
