@@ -1506,6 +1506,8 @@ declare class WorshipChampionSkin extends eui.Skin{
 }
 declare class playWaySkin extends eui.Skin{
 }
+declare class qianghongbaoSkin extends eui.Skin{
+}
 declare class RankItemLadderSkin extends eui.Skin{
 }
 declare class RankItemLevelSkin extends eui.Skin{

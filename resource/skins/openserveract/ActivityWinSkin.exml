@@ -41,11 +41,11 @@
 		</e:Group>
 
 		<e:Group horizontalCenter="-253" bottom="125">
-			<e:Button id="leftBtn" label="" icon="jiantouxuan" skinName="Btn0Skin" scaleX="1" scaleY="1" x="0" y="0"/>
+			<e:Button id="leftBtn" label="" icon="jiantouxuan" skinName="Btn0Skin" scaleX="1" scaleY="1" horizontalCenter="-2.5" verticalCenter="0"/>
 			<e:Image id="leftRed" x="20" y="-8" source="zjmhongdian" touchEnabled="false"/>
 		</e:Group>
 		<e:Group horizontalCenter="253.5" bottom="125">
-			<e:Button id="rightBtn" label="" icon="jiantouxuan" skinName="Btn0Skin" scaleX="-1" scaleY="1" y="0" x="39"/>
+			<e:Button id="rightBtn" label="" icon="jiantouxuan" skinName="Btn0Skin" scaleX="-1" scaleY="1" horizontalCenter="-2" verticalCenter="0"/>
 			<e:Image id="rightRed" x="19" y="-8" source="zjmhongdian" touchEnabled="false"/>
 		</e:Group>
 		<e:Scroller id="menuScroller" scrollPolicyV="off" scrollPolicyH="on" height="101" horizontalCenter="0" width="450" bottom="95">

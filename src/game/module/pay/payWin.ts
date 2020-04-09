@@ -47,7 +47,7 @@ class payWin extends BaseEuiView {
 
 	private sendPay(): void {
 		if (this.payType == 1) {
-			WarnWin.show("正在拉起支付，请稍等...\n\n(如果有提示，请放心支付。如果有疑问，请点击左下角客服按钮与我们联系）", function () { }, this,function(){},this,'sure');
+			WarnWin.show("正在拉起支付,请稍等...\n如果获取失败，或者页面没有二维码，请重新再次拉起支付 \n\n(如果有提示，请放心支付。如果有疑问，请点击左下角客服按钮与我们联系）", function () { }, this,function(){},this,'sure');
 			Pay.ins().sendPayStyte(this.money, this.payType, this.yuanbao)
 		} else {
 			WarnWin.show("微信支付目前正在调试中，请先用支付宝支付", function () { }, this);

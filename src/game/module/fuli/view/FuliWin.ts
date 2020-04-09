@@ -7,6 +7,9 @@ class FuliWin extends BaseEuiView {
 	public rightBtn: eui.Button;
 	public leftBtn: eui.Button;
 	public info: eui.Group;
+	public leftGroup: eui.Group;
+	public rightGroup: eui.Group;
+
 
 	private _datas: any[];
 	private curId: number;
@@ -14,12 +17,12 @@ class FuliWin extends BaseEuiView {
 	private arrList: eui.ArrayCollection;
 
 	private panels: any[];
-	private allPanels:any[];
+	private allPanels: any[];
 	private cruPanel: any;
 	private btnNum: number;
 	//box0~3under 背静圈
-	private index:number;
-	private initFunc:Function;
+	private index: number;
+	private initFunc: Function;
 	constructor() {
 		super();
 		this.skinName = "FuliMainSkin";
@@ -31,16 +34,41 @@ class FuliWin extends BaseEuiView {
 		super.initUI();
 		this.iconList.itemRenderer = FuliActBtnRenderer;
 		// this.panels = [CdkeyPanle, MoneyTreePanel, GameNoticePanle, MonthCardWin, NextDayLoginWin,DailyCheckInPanel];
-		this.allPanels = [DailyCheckInPanel, SevenDayLogWin, MonthCardWin, FranchiseWin,GameNoticePanle, CdkeyPanle];
+		this.allPanels = [DailyCheckInPanel, SevenDayLogWin, MonthCardWin, FranchiseWin, GameNoticePanle, CdkeyPanle, QHBPanle];
 		this.panels = [];
 		this.arrList = new eui.ArrayCollection();
 	}
-
+	private onTouchBtn(e: egret.TouchEvent): void {
+		let num: number = 92 * 5;
+		let scrollH: number = 0;
+		switch (e.target) {
+			case this.leftBtn:
+				scrollH = this.iconList.scrollH - num;
+				scrollH = Math.round(scrollH / 92) * 92;
+				if (scrollH < 0) {
+					scrollH = 0;
+				}
+				this.iconList.scrollH = scrollH;
+				break;
+			case this.rightBtn:
+				scrollH = this.iconList.scrollH + num;
+				scrollH = Math.round(scrollH / 92) * 92;
+				if (scrollH > this.iconList.contentWidth - this.listBar.width) {
+					scrollH = this.iconList.contentWidth - this.listBar.width;
+				}
+				this.iconList.scrollH = scrollH;
+				break;
+		}
+		this.onChange();
+	}
 	public open(...param: any[]): void {
 		this.addTouchEvent(this.closeBtn, this.onTap);
 		this.addTouchEvent(this.closeBtn0, this.onTap);
 		this.addChangeEvent(this.listBar, this.onChange);
 		this.addChangeEvent(this.iconList, this.onClickMenu);
+		this.addTouchEvent(this.leftBtn, this.onTouchBtn);
+		this.addTouchEvent(this.rightBtn, this.onTouchBtn);
+
 
 		this.observe(Notice.ins().postGameNotice, this.updateMenuList);
 		this.observe(DailyCheckIn.ins().postCheckInData, this.updateMenuList);
@@ -49,18 +77,18 @@ class FuliWin extends BaseEuiView {
 		this.observe(Activity.ins().postActivityIsGetAwards, this.updateMenuList);
 
 		this.index = 0;
-		if (param[0] ) {
+		if (param[0]) {
 			this.index = param[0];
-			this.initFunc = ()=>{
-				if( this.allPanels[this.index] != this.panels[this.index] ){
+			this.initFunc = () => {
+				if (this.allPanels[this.index] != this.panels[this.index]) {
 					let dif = this.allPanels.length - this.panels.length;
-					dif = dif > 0?dif:0;
+					dif = dif > 0 ? dif : 0;
 					this.index -= dif;
 				}
 			}
 		}
 
-		this.updateMenuList([true],param[1]);
+		this.updateMenuList([true], param[1]);
 	}
 
 
@@ -83,9 +111,9 @@ class FuliWin extends BaseEuiView {
 			cfg = GlobalConfig.WelfareConfig[k]
 			this._datas.push(cfg);
 		}
-		let isSuccess:boolean = true;
-		for( let i in GlobalConfig.LoginRewardsConfig ){
-			let config:LoginRewardsConfig = GlobalConfig.LoginRewardsConfig[i];
+		let isSuccess: boolean = true;
+		for (let i in GlobalConfig.LoginRewardsConfig) {
+			let config: LoginRewardsConfig = GlobalConfig.LoginRewardsConfig[i];
 			if ((Activity.ins().isAwards >> config.day & 1) == 0) {
 				//还有未领取的
 				isSuccess = false;
@@ -93,14 +121,14 @@ class FuliWin extends BaseEuiView {
 			}
 		}
 		//已经领取完 隐藏14天登陆奖励
-		if( isSuccess ){
+		if (isSuccess) {
 			this.panels = [];
-			for( let i = 0,j = 0;i < this._datas.length;j++ ){
+			for (let i = 0, j = 0; i < this._datas.length; j++) {
 				cfg = this._datas[i];
 				//14天登陆奖励id
-				if( cfg.id == 1 ){
-					this._datas.splice(i,1);
-				}else{
+				if (cfg.id == 1) {
+					this._datas.splice(i, 1);
+				} else {
 					this.panels.push(this.allPanels[j]);
 					i++
 				}
@@ -110,7 +138,7 @@ class FuliWin extends BaseEuiView {
 		// 	--this.iconList.selectedIndex;
 		// }
 		this.arrList.replaceAll(this._datas);
-		if( this.initFunc ){
+		if (this.initFunc) {
 			this.initFunc();
 			this.initFunc = null;
 		}
@@ -142,23 +170,24 @@ class FuliWin extends BaseEuiView {
 	}
 
 	private onChange(): void {
-		if (this.iconList.scrollH < 20) {
-			this.leftBtn.visible = false;
-			this.rightBtn.visible = true;
-		} else if (this.iconList.scrollH > (this.iconList.dataProvider.length - 5) * 88 + 2) {
-			this.leftBtn.visible = true;
-			this.rightBtn.visible = false;
+
+		if (this.iconList.scrollH < 46) {
+			this.leftGroup.visible = false;
+			this.rightGroup.visible = true;
+		} else if (this.iconList.scrollH >= this.iconList.contentWidth - this.iconList.width - 46) {
+			this.leftGroup.visible = true;
+			this.rightGroup.visible = false;
 		} else {
-			this.leftBtn.visible = true;
-			this.rightBtn.visible = true;
+			this.leftGroup.visible = true;
+			this.rightGroup.visible = true;
 		}
 		if (this.btnNum <= 5) {
-			this.leftBtn.visible = false;
-			this.rightBtn.visible = false;
+			this.leftGroup.visible = false;
+			this.rightGroup.visible = false;
 		}
 	}
 
-	private updateDetail(parma?:any): void {
+	private updateDetail(parma?: any): void {
 		if (this.cruPanel) {
 			DisplayUtils.removeFromParent(this.cruPanel);
 			this.cruPanel.close();

@@ -77,9 +77,16 @@ class Activity extends BaseSystem {
 		this.regNetMsg(20, this.doNextDayLoginReward);
 		this.regNetMsg(22, this.postKuaFuRank);
 
+		this.regNetMsg(24, this.test_24);
+		this.regNetMsg(23, this.test_23);
+		// this.regNetMsg(2, this.test_2);
+
 		this.regNetMsg(6, this.postEnvelopeData);
 		this.regNetMsg(8, this.postRedEnvelopeData);
 	}
+
+	
+
 
 	public static ins(): Activity {
 		return super.ins() as Activity;
@@ -163,6 +170,24 @@ class Activity extends BaseSystem {
 		this.checkActivityTimer();
 	}
 
+
+	/**
+	 * 初始化活动信息
+	 * 25-24
+	 * @param bytes
+	 */
+	private test_24(bytes: GameByteArray): void {
+		console.log(bytes)
+	}
+	private test_23(bytes: GameByteArray): void {
+		console.log(bytes)
+	}
+	private test_2(bytes: GameByteArray): void {
+		console.log(bytes)
+	}
+
+
+
 	private checkSpecials(): void {
 		if (TimerManager.ins().isExists(this.checkSpecials, this))
 			TimerManager.ins().remove(this.checkSpecials, this);
@@ -199,6 +224,10 @@ class Activity extends BaseSystem {
 	public isSuccee = false;
 
 	public postRewardResult(bytes: GameByteArray): number {
+		console.log('25-2')
+		console.log(bytes)
+		return
+
 		this.isSuccee = bytes.readBoolean();
 		let activityID = bytes.readInt();
 		if (this.doubleElevenIDs.indexOf(activityID) != -1) {
@@ -239,7 +268,7 @@ class Activity extends BaseSystem {
 	 * 类型2
 	 * 请求类型  0表示购买礼包, 非0表示领取额外奖励的索引
 	 */
-	public sendReward(actID: number, rewardID: number, param1?: any, param2 ?: any): void {
+	public sendReward(actID: number, rewardID: number, param1?: any, param2?: any): void {
 		let bytes: GameByteArray = this.getBytes(2);
 		let cfg: ActivityConfig = GlobalConfig.ActivityConfig[actID];
 		if (cfg && cfg.activityType == ActivityDataFactory.ACTIVITY_TYPE_9) {
@@ -1032,6 +1061,11 @@ class Activity extends BaseSystem {
 	 * 25-6
 	 * */
 	public postEnvelopeData(bytes: GameByteArray): void {
+
+		console.log('25-6')
+		console.log(bytes)
+		return
+
 		let id = bytes.readInt();
 		let isSuccess = bytes.readByte();
 		if (isSuccess) {

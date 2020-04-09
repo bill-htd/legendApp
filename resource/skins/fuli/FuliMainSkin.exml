@@ -22,16 +22,22 @@
 		<e:Image x="0" top="0" bottom="0" source="bantoumingkuang3" />
 		<e:Image scaleX="-1" top="0" bottom="0" source="bantoumingkuang3" right="0" />
 	</e:Group>
-	<e:Scroller id="listBar" horizontalCenter="0" height="106" bottom="126">
+	<e:Scroller id="listBar" horizontalCenter="0" height="106" bottom="126" width="464">
 		<e:List id="iconList" y="1" itemRendererSkinName="ActBtnSkin" horizontalCenter="0" height="106">
 		<e:layout>
 			<e:HorizontalLayout gap="10" paddingLeft="0"/>
 		</e:layout>
 		</e:List>
 	</e:Scroller>
-	<e:Button id="rightBtn" label="按钮" icon="jiantouxuan" skinName="Btn0Skin" bottom="150" horizontalCenter="252" scaleX="-1"/>
+	<e:Group id="rightGroup" horizontalCenter="3.5" bottom="150">
+		<e:Button id="rightBtn" label="按钮" icon="jiantouxuan" skinName="Btn0Skin" scaleX="-1" x="543" y="746"/>
+		<e:Image id="rightRed" x="525" y="740" source="zjmhongdian" touchEnabled="false" visible="false"/>
+	</e:Group>
 
-	<e:Button id="leftBtn" label="按钮" icon="jiantouxuan" skinName="Btn0Skin" bottom="150" horizontalCenter="-243"/>
+	<e:Group id="leftGroup" horizontalCenter="-252.5" bottom="150">
+		<e:Button id="leftBtn" label="按钮" icon="jiantouxuan" skinName="Btn0Skin" x="0" y="0"/>
+		<e:Image id="rightRed0" x="-8" y="-5" source="zjmhongdian" touchEnabled="false" visible="false"/>
+	</e:Group>
 	<e:Group id="info" anchorOffsetX="0" anchorOffsetY="0" top="97" left="41" bottom="246" right="40">
 	</e:Group>
 	<e:Group top="20" horizontalCenter="0" bottom="118" width="570" touchChildren="false" touchEnabled="false" visible="false">

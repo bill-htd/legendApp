@@ -48,7 +48,6 @@ var ChargeFirstWin = (function (_super) {
         this.list.addEventListener(eui.ItemTapEvent.ITEM_TAP, this.onListTap, this);
         this.barbc.reset();
         this.setView();
-        WarnWin.show('充值300以上，可以找客服拿月卡特权', function () { }, this, function () { }, this, 'sure');
     };
     ChargeFirstWin.prototype.close = function () {
         var param = [];

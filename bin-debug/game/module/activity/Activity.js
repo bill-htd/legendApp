@@ -44,6 +44,8 @@ var Activity = (function (_super) {
         _this.regNetMsg(21, _this.doNextDayLoginData);
         _this.regNetMsg(20, _this.doNextDayLoginReward);
         _this.regNetMsg(22, _this.postKuaFuRank);
+        _this.regNetMsg(24, _this.test_24);
+        _this.regNetMsg(23, _this.test_23);
         _this.regNetMsg(6, _this.postEnvelopeData);
         _this.regNetMsg(8, _this.postRedEnvelopeData);
         return _this;
@@ -107,6 +109,15 @@ var Activity = (function (_super) {
         this.checkSpecials();
         this.checkActivityTimer();
     };
+    Activity.prototype.test_24 = function (bytes) {
+        console.log(bytes);
+    };
+    Activity.prototype.test_23 = function (bytes) {
+        console.log(bytes);
+    };
+    Activity.prototype.test_2 = function (bytes) {
+        console.log(bytes);
+    };
     Activity.prototype.checkSpecials = function () {
         if (TimerManager.ins().isExists(this.checkSpecials, this))
             TimerManager.ins().remove(this.checkSpecials, this);
@@ -127,6 +138,9 @@ var Activity = (function (_super) {
     Activity.prototype.postActivityIsGetAwards = function () {
     };
     Activity.prototype.postRewardResult = function (bytes) {
+        console.log('25-2');
+        console.log(bytes);
+        return;
         this.isSuccee = bytes.readBoolean();
         var activityID = bytes.readInt();
         if (this.doubleElevenIDs.indexOf(activityID) != -1) {
@@ -752,6 +766,9 @@ var Activity = (function (_super) {
         this.sendToServer(bytes);
     };
     Activity.prototype.postEnvelopeData = function (bytes) {
+        console.log('25-6');
+        console.log(bytes);
+        return;
         var id = bytes.readInt();
         var isSuccess = bytes.readByte();
         if (isSuccess) {

@@ -52,6 +52,9 @@ class login extends eui.Component {
     private trp1: eui.Label;
     private trp2: eui.Label;
 
+    private checkxieyi: eui.CheckBox;
+    private xieyibtn: eui.Label;
+
 
     public constructor() {
         super();
@@ -74,6 +77,8 @@ class login extends eui.Component {
 
         this.notice.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
         this.gonggaoClose.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+
+        this.xieyibtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
 
         // console.log(this.loadingbar)
         this.initGonggao()
@@ -189,7 +194,7 @@ class login extends eui.Component {
                         port: list[i].server_port,
                         address: list[i].database_host,
                         isNew: false,
-                        number:list.length - i,
+                        number: list.length - i,
                     }
                     if (list[i].server_state == 4) {
                         listData.isNew = true
@@ -297,6 +302,8 @@ class login extends eui.Component {
         this.notice.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
         this.gonggaoClose.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
 
+        this.xieyibtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+
     }
 
     private onTap(e: egret.TouchEvent): void {
@@ -311,6 +318,9 @@ class login extends eui.Component {
                 break;
             case this.gonggaoClose:
                 this.gonggao.visible = false
+                break;
+            case this.xieyibtn:
+                egret.ExternalInterface.call("openURL", 'http://cq.scmyxs.com/xieyi.html');
                 break;
             case this.notice:
                 this.gonggao.visible = true
@@ -328,7 +338,12 @@ class login extends eui.Component {
 
                 break;
             case this.zhuceBtn:
-                this.loginHandle(2)
+                if(this.checkxieyi.selected){
+                    this.loginHandle(2)
+                }else{
+                    alert('请先勾选同意用户协议')
+                }
+                
                 break;
             case this.zhuceLabel:
                 this.dengluInfo.visible = false
@@ -395,80 +410,82 @@ class login extends eui.Component {
 
         // egret.ExternalInterface.call("getChannel", '');
         // egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            let msg = window['getChannel']() || 'zhousi'
+        let msg = window['getChannel']() || 'zhousi'
 
-            let channel = msg;
-            if (channel == 'lx') {
-                password = self.password.text
-            }
-            let url = ''
-            if (number == 1) {
-                url = window['get_login_address']()
-                url += '&name=' + name;
-                url += '&password=' + password;
-                url += '&serverid=' + serverid;
-                url += '&channel=' + channel;
+        let channel = msg;
+        if (channel == 'lx') {
+            password = self.password.text
+        }
+        let url = ''
+        if (number == 1) {
+            url = window['get_login_address']()
+            url += '&name=' + name;
+            url += '&password=' + password;
+            url += '&serverid=' + serverid;
+            url += '&channel=' + channel;
 
-                self.blackBg.visible = true
-                self.trpInfo.text = '登录中...'
-            } else {
-                url = window['get_register_address']()
-                url += '&name=' + name;
-                url += '&password=' + password;
-                url += '&serverid=' + serverid;
-                url += '&channel=' + channel;
-            }
+            self.blackBg.visible = true
+            self.trpInfo.text = '登录中...'
+        } else {
+            url = window['get_register_address']()
+            url += '&name=' + name;
+            url += '&password=' + password;
+            url += '&serverid=' + serverid;
+            url += '&channel=' + channel;
+        }
 
 
 
-            if (url) {
-                Http.ins().send(url, true, true, function (event: egret.Event) {
-                    var request = <egret.HttpRequest>event.currentTarget;
-                    let data = JSON.parse(request.response)
-                    self.blackBg.visible = false
-                    if (data.status == 1) {
-                        // 保存信息
+        if (url) {
+            Http.ins().send(url, true, true, function (event: egret.Event) {
+                var request = <egret.HttpRequest>event.currentTarget;
+                let data = JSON.parse(request.response)
+                self.blackBg.visible = false
+                if (data.status == 1) {
+                    // 保存信息
 
-                        egret.localStorage.setItem("account", self.account.text)
-                        egret.localStorage.setItem("password", self.password.text)
+                    egret.localStorage.setItem("account", self.account.text)
+                    egret.localStorage.setItem("password", self.password.text)
 
-                        if (number == 1) {
-                            //登录
-                            egret.ExternalInterface.call("loginStatistics", JSON.stringify(msg));
-                        } else {
-                            //注册
-                            egret.ExternalInterface.call("registerStatistics", JSON.stringify(msg));
-                        }
-
-                        if (channel == 'lx') {
-                            password = md5.hex_md5(self.password.text)
-                        }
-                        let info = {
-                            srvid: serverid,
-                            user: channel + '_' + name,
-                            serverid: serverid,
-                            spverify: password,
-                            srvaddr: address,
-                            srvport: port
-                        }
-                        window['setLoginInfo'](info)
-
-                        //  资源加载完成，删除加载界面
-                        if (StageUtils.ins().getStage().$children[2]) {
-                            StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
-                        }
-                        // self.loginView.login()
-                        self.loadingpb.visible = true
-                        self.setProgress(0, '资源加载中...')
-                        LocationProperty.init()
-                        GameApp.ins().load(self);
-
+                    if (number == 1) {
+                        //登录
+                        egret.ExternalInterface.call("loginStatistics", JSON.stringify(msg));
                     } else {
-                        alert(data.info)
+                        //注册
+                        egret.ExternalInterface.call("registerStatistics", JSON.stringify(msg));
                     }
 
-                })
-            }
+                    if (channel == 'lx') {
+                        password = md5.hex_md5(self.password.text)
+                    }else{
+                        channel = 'CQ'
+                    }
+                    let info = {
+                        srvid: serverid,
+                        user: channel + '_' + name,
+                        serverid: serverid,
+                        spverify: password,
+                        srvaddr: address,
+                        srvport: port
+                    }
+                    window['setLoginInfo'](info)
+
+                    //  资源加载完成，删除加载界面
+                    if (StageUtils.ins().getStage().$children[2]) {
+                        StageUtils.ins().getStage().removeChild(StageUtils.ins().getStage().$children[2])
+                    }
+                    // self.loginView.login()
+                    self.loadingpb.visible = true
+                    self.setProgress(0, '资源加载中...')
+                    LocationProperty.init()
+                    GameApp.ins().load(self);
+
+                } else {
+                    alert(data.info)
+                }
+
+            })
+        }
 
 
         // });

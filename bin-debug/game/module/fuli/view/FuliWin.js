@@ -22,9 +22,32 @@ var FuliWin = (function (_super) {
     FuliWin.prototype.initUI = function () {
         _super.prototype.initUI.call(this);
         this.iconList.itemRenderer = FuliActBtnRenderer;
-        this.allPanels = [DailyCheckInPanel, SevenDayLogWin, MonthCardWin, FranchiseWin, GameNoticePanle, CdkeyPanle];
+        this.allPanels = [DailyCheckInPanel, SevenDayLogWin, MonthCardWin, FranchiseWin, GameNoticePanle, CdkeyPanle, QHBPanle];
         this.panels = [];
         this.arrList = new eui.ArrayCollection();
+    };
+    FuliWin.prototype.onTouchBtn = function (e) {
+        var num = 92 * 5;
+        var scrollH = 0;
+        switch (e.target) {
+            case this.leftBtn:
+                scrollH = this.iconList.scrollH - num;
+                scrollH = Math.round(scrollH / 92) * 92;
+                if (scrollH < 0) {
+                    scrollH = 0;
+                }
+                this.iconList.scrollH = scrollH;
+                break;
+            case this.rightBtn:
+                scrollH = this.iconList.scrollH + num;
+                scrollH = Math.round(scrollH / 92) * 92;
+                if (scrollH > this.iconList.contentWidth - this.listBar.width) {
+                    scrollH = this.iconList.contentWidth - this.listBar.width;
+                }
+                this.iconList.scrollH = scrollH;
+                break;
+        }
+        this.onChange();
     };
     FuliWin.prototype.open = function () {
         var _this = this;
@@ -36,6 +59,8 @@ var FuliWin = (function (_super) {
         this.addTouchEvent(this.closeBtn0, this.onTap);
         this.addChangeEvent(this.listBar, this.onChange);
         this.addChangeEvent(this.iconList, this.onClickMenu);
+        this.addTouchEvent(this.leftBtn, this.onTouchBtn);
+        this.addTouchEvent(this.rightBtn, this.onTouchBtn);
         this.observe(Notice.ins().postGameNotice, this.updateMenuList);
         this.observe(DailyCheckIn.ins().postCheckInData, this.updateMenuList);
         this.observe(Activity.ins().postSevendayAwardCallback, this.updateMenuList);
@@ -131,21 +156,21 @@ var FuliWin = (function (_super) {
         }
     };
     FuliWin.prototype.onChange = function () {
-        if (this.iconList.scrollH < 20) {
-            this.leftBtn.visible = false;
-            this.rightBtn.visible = true;
+        if (this.iconList.scrollH < 46) {
+            this.leftGroup.visible = false;
+            this.rightGroup.visible = true;
         }
-        else if (this.iconList.scrollH > (this.iconList.dataProvider.length - 5) * 88 + 2) {
-            this.leftBtn.visible = true;
-            this.rightBtn.visible = false;
+        else if (this.iconList.scrollH >= this.iconList.contentWidth - this.iconList.width - 46) {
+            this.leftGroup.visible = true;
+            this.rightGroup.visible = false;
         }
         else {
-            this.leftBtn.visible = true;
-            this.rightBtn.visible = true;
+            this.leftGroup.visible = true;
+            this.rightGroup.visible = true;
         }
         if (this.btnNum <= 5) {
-            this.leftBtn.visible = false;
-            this.rightBtn.visible = false;
+            this.leftGroup.visible = false;
+            this.rightGroup.visible = false;
         }
     };
     FuliWin.prototype.updateDetail = function (parma) {

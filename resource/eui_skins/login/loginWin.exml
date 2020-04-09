@@ -4,8 +4,8 @@
 		<e:Image source="loginPic_json.login_block_top" y="0" x="0"/>
 		<e:Image source="loginPic_json.login_block_center" y="146" x="16" anchorOffsetY="0" height="209"/>
 		<e:Image source="loginPic_json.login_block_bottom" y="352" x="24"/>
-		<e:Image source="loginPic_json.login_account" y="110" horizontalCenter="-29.5"/>
-		<e:Image source="loginPic_json.login_password" y="178" horizontalCenter="-29.5"/>
+		<e:Image source="loginPic_json.login_account" y="88" horizontalCenter="-24.5"/>
+		<e:Image source="loginPic_json.login_password" y="156" horizontalCenter="-24.5"/>
 		<e:Group id="dengluInfo" y="22" horizontalCenter="0">
 			<e:Image source="loginPic_json.login_account_login" y="0" horizontalCenter="0"/>
 			<e:Group id="loginBtn" y="293" horizontalCenter="0">
@@ -15,19 +15,21 @@
 			<e:Label id="zhuceLabel" text="注册" x="377" y="335" size="21" verticalAlign="middle" textColor="0xdbaa5b" bold="true" visible="false"/>
 		</e:Group>
 		<e:Group id="zhuceInfo" horizontalCenter="0" y="27" visible="false">
-			<e:Group id="zhuceBtn" y="289" horizontalCenter="0">
+			<e:Group id="zhuceBtn" y="266" horizontalCenter="0.5">
 			<e:Image source="loginPic_json.login_start" y="0" x="0"/>
 			<e:Image source="loginPic_json.login_register" y="8" horizontalCenter="0"/>
 			</e:Group>
 			<e:Image source="loginPic_json.login_quick_register" y="-10" horizontalCenter="0"/>
 			<e:Image id="closeZhuce" source="loginPic_json.login_close" x="477" y="-33"/>
+			<e:CheckBox id="checkxieyi" label="" x="118" y="320" skinName="CheckBox0" anchorOffsetX="0" width="39" anchorOffsetY="0" height="33" enabled="true"/>
+			<e:Label id="xieyibtn" text="我同意《用户服务与隐私协议》" x="166" y="329" size="20" textColor="0xafaeae" bold="true"/>
 		</e:Group>
-		<e:Group id="roomChoose" x="154" y="249">
+		<e:Group id="roomChoose" x="159" y="227">
 			<e:Image source="loginPic_json.login_select" y="0" x="0"/>
 			<e:Label id="roomName" text="" x="82" y="10" size="20" textColor="0xdbaa5b"/>
 		</e:Group>
-		<e:EditableText id="account" width="213" height="31" text="" x="169" y="113" anchorOffsetY="0" anchorOffsetX="0" size="20" verticalAlign="middle"/>
-		<e:EditableText id="password" width="213" height="31" text="" x="168" y="180" anchorOffsetY="0" anchorOffsetX="0" size="20" verticalAlign="middle"/>
+		<e:EditableText id="account" width="213" height="31" text="" x="174" y="91" anchorOffsetY="0" anchorOffsetX="0" size="20" verticalAlign="middle"/>
+		<e:EditableText id="password" width="213" height="31" text="" x="173" y="158" anchorOffsetY="0" anchorOffsetX="0" size="20" verticalAlign="middle"/>
 		<e:Label id="accountTrp" text="*账号必须为6-10位字母、数字、下划线" x="163" y="154" size="13" verticalAlign="middle" visible="false"/>
 		<e:Label id="passwordTrp" text="*密码必须为8-10位字母、数字、下划线" x="162" y="222" size="13" verticalAlign="middle" visible="false"/>
 	</e:Group>
@@ -82,6 +84,7 @@
 		</e:Scroller>
 		<e:Label text="公告" textColor="0xbd600d" size="30" horizontalCenter="0" top="6" bold="true"/>
 	</e:Group>
+
 
 	<e:Group id="loadingpb" left="0" right="0" top="0" bottom="0" horizontalCenter="0" verticalCenter="0" visible="false">
 		<e:Image source="loadingbg_png" horizontalCenter="0" verticalCenter="0" left="0" right="0" top="0" bottom="0"/>

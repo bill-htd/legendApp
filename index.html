@@ -224,10 +224,10 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 			 * "retina": //Whether the canvas is based on the devicePixelRatio
 			 * }
 			 **/
+			// this.nativeType = 'native'
 			// egret.runEgret({ renderMode: "webgl", audioType: 0 });
 			// _login()
 			// return
-			console.log('down')
 			closeLoadProgress()
 			getChargePriceFromServer()
 			document.getElementById("paramIframe").style.display = 'block'
@@ -356,8 +356,6 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 					} else if (data[i].type == 2) {
 						self.monthCardPrice.push(data[i])
 					}
-					console.log(self.firChargePrice)
-					console.log(self.monthCardPrice)
 				}
 			} else {
 				alert('获取价格列表失败，请检查网络重新登录')
@@ -518,7 +516,6 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 		// if (event.data.id != "eE")
 		// 	return;
 		// this.loginData = event.data.loginData
-		console.log('111111')
 		document.getElementById("paramIframe").style.display = 'none'
 		start(event.data.urlParam);
 	});

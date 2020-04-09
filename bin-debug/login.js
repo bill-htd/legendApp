@@ -29,6 +29,7 @@ var login = (function (_super) {
         _this.sureBtn0.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
         _this.notice.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
         _this.gonggaoClose.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
+        _this.xieyibtn.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTap, _this);
         _this.initGonggao();
         _this.trp1.strokeColor = 0x000000;
         _this.trp1.stroke = 2;
@@ -218,6 +219,7 @@ var login = (function (_super) {
         this.sureBtn0.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
         this.notice.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
         this.gonggaoClose.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
+        this.xieyibtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTap, this);
     };
     login.prototype.onTap = function (e) {
         switch (e.currentTarget) {
@@ -231,6 +233,9 @@ var login = (function (_super) {
                 break;
             case this.gonggaoClose:
                 this.gonggao.visible = false;
+                break;
+            case this.xieyibtn:
+                egret.ExternalInterface.call("openURL", 'http://cq.scmyxs.com/xieyi.html');
                 break;
             case this.notice:
                 this.gonggao.visible = true;
@@ -246,7 +251,12 @@ var login = (function (_super) {
                 this.roompb.visible = false;
                 break;
             case this.zhuceBtn:
-                this.loginHandle(2);
+                if (this.checkxieyi.selected) {
+                    this.loginHandle(2);
+                }
+                else {
+                    alert('请先勾选同意用户协议');
+                }
                 break;
             case this.zhuceLabel:
                 this.dengluInfo.visible = false;
@@ -329,6 +339,9 @@ var login = (function (_super) {
                     }
                     if (channel == 'lx') {
                         password = md5.hex_md5(self.password.text);
+                    }
+                    else {
+                        channel = 'CQ';
                     }
                     var info = {
                         srvid: serverid,
