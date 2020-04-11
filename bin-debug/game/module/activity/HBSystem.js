@@ -25,6 +25,8 @@ var HBSystem = (function (_super) {
         return _super.ins.call(this);
     };
     HBSystem.prototype.updateHongBao = function () {
+        console.log('updateHongBao');
+        console.log(Activity.ins().activityTimers);
         var view = ViewManager.ins().getView(PlayFunView);
         if (!view || !view.hongbao)
             return;
@@ -34,6 +36,28 @@ var HBSystem = (function (_super) {
             var actId = Activity.ins().activityTimers[i];
             if (Activity.ins().activityData[actId]) {
                 if (Activity.ins().activityData[actId] instanceof ActivityType12Data) {
+                    var actData = Activity.ins().activityData[actId];
+                    if (!actData.envelopeData.length)
+                        continue;
+                    for (var j = actData.envelopeData.length - 1; j >= 0;) {
+                        j = actData.envelopeData.length - 1;
+                        if (!actData.envelopeData[j]) {
+                            actData.envelopeData.splice(i, 1);
+                            continue;
+                        }
+                        var eId = actData.envelopeData[j].id;
+                        if (!actData.envelopeData[j].isOverTimer()) {
+                            var item = new HongBaoShowItem();
+                            item.data = { actId: actId, eId: eId };
+                            view.hongbao.addChild(item);
+                            break;
+                        }
+                        else {
+                            actData.popEnvelope(eId);
+                        }
+                    }
+                }
+                if (Activity.ins().activityData[actId] instanceof ActivityType24Data) {
                     var actData = Activity.ins().activityData[actId];
                     if (!actData.envelopeData.length)
                         continue;
@@ -111,7 +135,7 @@ var HBSystem = (function (_super) {
             return;
         }
         if (Activity.ins().activityData[eld.id]) {
-            if (Activity.ins().activityData[eld.id] instanceof ActivityType12Data) {
+            if (Activity.ins().activityData[eld.id] instanceof ActivityType24Data) {
                 var item = new HongBaoOpenItem();
                 if (!eld.desc) {
                     eld.desc = GlobalConfig.ActivityType12Config[eld.id][eld.index].blessWord;
@@ -120,6 +144,15 @@ var HBSystem = (function (_super) {
                 view.hongbao.addChildAt(item, 1);
             }
         }
+    };
+    HBSystem.prototype.testhongbao = function (actid, hongbaoid) {
+        var view = ViewManager.ins().getView(PlayFunView);
+        view.hongbao.removeChildren();
+        var item = new HongBaoOpenItem();
+        item.inithongbaodata(actid, hongbaoid);
+        view.hongbao.addChildAt(item, 1);
+    };
+    HBSystem.prototype.closeallhongbao = function () {
     };
     return HBSystem;
 }(BaseSystem));

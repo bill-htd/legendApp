@@ -1,7 +1,8 @@
 {"file":"new_icon_btn2.png","frames":{
-"privilege_icon_png":{"x":159,"y":181,"w":63,"h":59,"offX":0,"offY":0,"sourceW":63,"sourceH":59},
-"new_icon_haifantian_png":{"x":159,"y":96,"w":68,"h":83,"offX":12,"offY":1,"sourceW":93,"sourceH":95},
-"new_icon_hefuboss_png":{"x":0,"y":0,"w":96,"h":94,"offX":0,"offY":0,"sourceW":96,"sourceH":94},
-"new_icon_xianshixunbao_png":{"x":98,"y":0,"w":93,"h":94,"offX":0,"offY":0,"sourceW":93,"sourceH":94},
-"new_icon_yuanbaozhuanpan_png":{"x":0,"y":96,"w":90,"h":94,"offX":0,"offY":0,"sourceW":90,"sourceH":94},
-"notice_png":{"x":92,"y":96,"w":65,"h":88,"offX":0,"offY":0,"sourceW":65,"sourceH":88}}}
+"privilege_icon_png":{"x":0,"y":178,"w":63,"h":59,"offX":0,"offY":0,"sourceW":63,"sourceH":59},
+"new_btn_tequanyueka_png":{"x":0,"y":0,"w":193,"h":80,"offX":0,"offY":0,"sourceW":193,"sourceH":80},
+"new_icon_haifantian_png":{"x":254,"y":96,"w":68,"h":83,"offX":12,"offY":1,"sourceW":93,"sourceH":95},
+"new_icon_hefuboss_png":{"x":195,"y":0,"w":96,"h":94,"offX":0,"offY":0,"sourceW":96,"sourceH":94},
+"new_icon_xianshixunbao_png":{"x":0,"y":82,"w":93,"h":94,"offX":0,"offY":0,"sourceW":93,"sourceH":94},
+"new_icon_yuanbaozhuanpan_png":{"x":95,"y":82,"w":90,"h":94,"offX":0,"offY":0,"sourceW":90,"sourceH":94},
+"notice_png":{"x":187,"y":96,"w":65,"h":88,"offX":0,"offY":0,"sourceW":65,"sourceH":88}}}

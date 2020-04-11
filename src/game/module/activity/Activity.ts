@@ -78,14 +78,14 @@ class Activity extends BaseSystem {
 		this.regNetMsg(22, this.postKuaFuRank);
 
 		this.regNetMsg(24, this.test_24);
-		this.regNetMsg(23, this.test_23);
+		this.regNetMsg(23, this.handlehongbaoInfo);
 		// this.regNetMsg(2, this.test_2);
 
 		this.regNetMsg(6, this.postEnvelopeData);
 		this.regNetMsg(8, this.postRedEnvelopeData);
 	}
 
-	
+
 
 
 	public static ins(): Activity {
@@ -177,12 +177,12 @@ class Activity extends BaseSystem {
 	 * @param bytes
 	 */
 	private test_24(bytes: GameByteArray): void {
+		console.log('test_24')
 		console.log(bytes)
 	}
-	private test_23(bytes: GameByteArray): void {
-		console.log(bytes)
-	}
+
 	private test_2(bytes: GameByteArray): void {
+		console.log('test_2')
 		console.log(bytes)
 	}
 
@@ -226,23 +226,45 @@ class Activity extends BaseSystem {
 	public postRewardResult(bytes: GameByteArray): number {
 		console.log('25-2')
 		console.log(bytes)
-		return
+		// return
 
 		this.isSuccee = bytes.readBoolean();
-		let activityID = bytes.readInt();
-		if (this.doubleElevenIDs.indexOf(activityID) != -1) {
-			this.getDoubleElevenDataByID(activityID).update(bytes);
+		if (this.isSuccee) {
+			console.log('领取成功')
+			let activityID = bytes.readInt();
+			let type = bytes.readShort();
+			if (type == 1) {
+				let hongbaoId = bytes.readShort()
+				let yuanbaoshu = bytes.readInt()
+				let ewai = bytes.readInt()
+				console.log('activityID,type,hongbaoId,yuanbaoshu,ewai')
+				console.log(activityID, type, hongbaoId, yuanbaoshu, ewai)
+
+			} else {
+				let ewai = bytes.readInt()
+				console.log('activityID,type,ewai')
+				console.log(activityID, type, ewai)
+			}
+		}else{
+			console.log('领取shibai')
 		}
-		else if (this.doubleTwelveRechargeIDAry.indexOf(activityID) != -1) {
-			this.doubleTwelveRechargeData[activityID].update(bytes);
-		} else if (this.doubleTwelveIDAry.indexOf(activityID) != -1) {
-			this.doubleTwelveData[activityID].update(bytes);
-		}
-		else {
-			this.getActivityDataById(activityID).update(bytes);
-		}
-		this.postActivityPanel(activityID);
-		this.postActivityIsGetAwards();
+
+
+		// let view: PlayFunView = ViewManager.ins().getView(PlayFunView) as PlayFunView;
+		// view.hongbao.removeChildren();
+		// if (this.doubleElevenIDs.indexOf(activityID) != -1) {
+		// 	this.getDoubleElevenDataByID(activityID).update(bytes);
+		// }
+		// else if (this.doubleTwelveRechargeIDAry.indexOf(activityID) != -1) {
+		// 	this.doubleTwelveRechargeData[activityID].update(bytes);
+		// } else if (this.doubleTwelveIDAry.indexOf(activityID) != -1) {
+		// 	this.doubleTwelveData[activityID].update(bytes);
+		// }
+		// else {
+		// 	this.getActivityDataById(activityID).update(bytes);
+		// }
+		// this.postActivityPanel(activityID);
+		// this.postActivityIsGetAwards();
 
 		return activityID;
 	}
@@ -315,6 +337,7 @@ class Activity extends BaseSystem {
 		else {
 			bytes.writeInt(actID);
 			bytes.writeShort(rewardID);
+			bytes.writeShort(param1);
 		}
 		this.sendToServer(bytes);
 	}
@@ -337,6 +360,12 @@ class Activity extends BaseSystem {
 		this.sendToServer(bytes);
 	}
 
+	/*请求红包活动奖励*/
+	public sendqianghongbao(actId: number): void {
+		let bytes: GameByteArray = this.getBytes(13);
+		bytes.writeInt(actId);
+		this.sendToServer(bytes);
+	}
 	/*
 	 * 合服累计登录
 	 * 25-5
@@ -1064,29 +1093,48 @@ class Activity extends BaseSystem {
 
 		console.log('25-6')
 		console.log(bytes)
-		return
+		// return
 
 		let id = bytes.readInt();
 		let isSuccess = bytes.readByte();
 		if (isSuccess) {
-			let eId = bytes.readUnsignedShort();
-			let job = bytes.readShort();
-			let sex = bytes.readShort();
-			let index = bytes.readShort();
-			let serverId = bytes.readInt();
-			let name = bytes.readString();
-			let desc = bytes.readString();
-			let eld: EnvelopeData = new EnvelopeData()
-			eld.id = id;
-			eld.eId = eId;
-			eld.job = job;
-			eld.sex = sex;
-			eld.index = index;
-			eld.serverId = serverId;
-			eld.name = name;
-			eld.desc = desc;
 
-			this.postEnvelopeDataCall(eld);
+			let eId = bytes.readUnsignedShort();
+			let endtime = bytes.readUnsignedShort();
+			let noName = bytes.readInt();
+			let Num = bytes.readShort();
+			let obj = []
+			for (let i = 0; i < Num; i++) {
+				obj[i] = {}
+				obj[i].name = bytes.readString();
+				obj[i].hongbaoid = bytes.readShort();
+				obj[i].job = bytes.readShort();
+				obj[i].sex = bytes.readShort();
+				obj[i].isSuccess = bytes.readByte();
+				obj[i].serverId = bytes.readInt();
+			}
+			console.log(obj)
+
+			HBSystem.ins().testhongbao(id, eId);
+			// this.sendReward(id, eId,1)
+			// let eId = bytes.readUnsignedShort();
+			// let job = bytes.readShort();
+			// let sex = bytes.readShort();
+			// let index = bytes.readShort();
+			// let serverId = bytes.readInt();
+			// let name = bytes.readString();
+			// let desc = bytes.readString();
+			// let eld: EnvelopeData = new EnvelopeData()
+			// eld.id = id;
+			// eld.eId = eId;
+			// eld.job = job;
+			// eld.sex = sex;
+			// eld.index = index;
+			// eld.serverId = serverId;
+			// eld.name = name;
+			// eld.desc = desc;
+
+			// this.postEnvelopeDataCall(eld);
 			return;
 		}
 		this.postEnvelopeDataCall(null);
@@ -1095,7 +1143,33 @@ class Activity extends BaseSystem {
 	public postEnvelopeDataCall(eld: EnvelopeData) {
 		return eld;
 	}
+	/**
+	 * 获取到的红包数据
+	 * 25-23
+	 * */
+	public handlehongbaoInfo(bytes: GameByteArray) {
+		// console.log(bytes)
 
+		let id = bytes.readInt();
+		if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
+			let actData = this.activityData[id] as ActivityType24Data;
+			let len = bytes.readShort();
+			if (len) {//新增的红包必定是最新时间 客户端不作每次获得红包都排序  红包多了会耗性能
+				for (let i = 0; i < len; i++) {
+					let reld: RedEnvelope = new RedEnvelope();
+					reld.id = bytes.readUnsignedShort();
+					reld.timer = bytes.readInt();
+					actData.envelopeData.push(reld);//最新的红包放最后
+				}
+
+			}
+			console.log('获取到的红包数mu')
+			console.log(actData)
+			
+			HBSystem.ins().updateHongBao();
+		}
+
+	}
 	/**
 	 * 下发红包数据
 	 * 25-8
@@ -1162,7 +1236,8 @@ class Activity extends BaseSystem {
 	private checkActivityTimer() {
 		for (let k in this.activityData) {
 			//往后如果有活动类型需要秒定时器直接用下列条件用或操作
-			if (this.activityData[k] instanceof ActivityType12Data) {
+			if (this.activityData[k] instanceof ActivityType12Data || this.activityData[k] instanceof ActivityType24Data) {
+
 				if (!TimerManager.ins().isExists(this.ActivityTimerSecond1, this))
 					TimerManager.ins().doTimer(1000, 0, this.ActivityTimerSecond1, this);
 				break;
@@ -1194,6 +1269,23 @@ class Activity extends BaseSystem {
 				}
 				if (this.activityData[id] instanceof ActivityType12Data) {
 					let actData = this.activityData[id] as ActivityType12Data;
+					// for( let s = 0; s < actData.envelopeData.length;s++ ){
+					//     actData.envelopeData[s].updateTimer();//红包时间倒计时
+					// }
+					//到达一定红包数量后要定期清理红包
+					actData.checkClear();
+				}
+				//活动结束
+				if (!this.activityData[id].isOpenActivity()) {
+					if (this.activityData[id] instanceof ActivityType24Data) {
+						let actData = this.activityData[id] as ActivityType24Data;
+						actData.clearAll();
+					}
+					this._actTimeSecond1.splice(i, 1);
+					continue;
+				}
+				if (this.activityData[id] instanceof ActivityType24Data) {
+					let actData = this.activityData[id] as ActivityType24Data;
 					// for( let s = 0; s < actData.envelopeData.length;s++ ){
 					//     actData.envelopeData[s].updateTimer();//红包时间倒计时
 					// }

@@ -82,7 +82,7 @@ class ChargeFirstWin extends BaseEuiView {
 		}
 
 		if(data.status ==1){
-			Recharge.ins().showReCharge(money, yuanbao);
+			Recharge.ins().showReCharge(money, yuanbao,0);
 		}else{
 			WarnWin.show(data.msg, function () { }, this,function(){},this,'sure');
 		}

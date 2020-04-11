@@ -25,17 +25,21 @@ var MonthCardWin = (function (_super) {
         }
         this.observe(Recharge.ins().postUpdateRecharge, this.setView);
         this.addTouchEvent(this.btn1, this.onTap);
+        this.addTouchEvent(this.btn0, this.onTap);
         if (this.feng.visible) {
             this.btn1.visible = false;
+            this.btn0.visible = false;
         }
         else {
             if (Recharge.ins().monthDay > 0) {
                 TimerManager.ins().doTimer(1000, 0, this.setTimeLbel, this);
                 this.setTimeLbel();
                 this.btn1.visible = false;
+                this.btn0.visible = false;
             }
             else {
                 this.btn1.visible = true;
+                this.btn0.visible = true;
                 TimerManager.ins().remove(this.setTimeLbel, this);
             }
             this.leftTime.visible = Recharge.ins().monthDay > 0 ? true : false;
@@ -69,18 +73,22 @@ var MonthCardWin = (function (_super) {
         }
         this.removeObserve();
         this.removeTouchEvent(this.btn1, this.onTap);
+        this.removeTouchEvent(this.btn0, this.onTap);
         TimerManager.ins().remove(this.setTimeLbel, this);
     };
     MonthCardWin.prototype.onTap = function (e) {
+        var monthCardPriceInfo = window['getmonthCardPriceInfo']();
         switch (e.currentTarget) {
             case this.btn1:
-                var monthCardPriceInfo = window['getmonthCardPriceInfo']();
                 if (monthCardPriceInfo[0].status != 1) {
                     WarnWin.show(monthCardPriceInfo[0].msg, function () { }, this, function () { }, this, 'sure');
                 }
                 else {
-                    Recharge.ins().showReCharge(28, 2800);
+                    Recharge.ins().showReCharge(28, 2800, 0);
                 }
+                break;
+            case this.btn0:
+                Recharge.ins().showReCharge(100, 1, 1);
                 break;
         }
     };

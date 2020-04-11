@@ -4,6 +4,8 @@ class MonthCardWin extends BaseView {
 	public monthGroup: eui.Group;
 
 	private btn1: eui.Button;
+	private btn0: eui.Button;
+	
 	private leftTime: eui.Label;
 	private feng: eui.Label;
 	private first: eui.Label;
@@ -15,15 +17,19 @@ class MonthCardWin extends BaseView {
 	public open(...param: any[]): void {
 		this.observe(Recharge.ins().postUpdateRecharge, this.setView);
 		this.addTouchEvent(this.btn1, this.onTap);
+		this.addTouchEvent(this.btn0, this.onTap);
 		if (this.feng.visible) {
 			this.btn1.visible = false;
+			this.btn0.visible = false;
 		} else {
 			if (Recharge.ins().monthDay > 0) {
 				TimerManager.ins().doTimer(1000, 0, this.setTimeLbel, this);
 				this.setTimeLbel();
 				this.btn1.visible = false;
+				this.btn0.visible = false;
 			} else {
 				this.btn1.visible = true;
+				this.btn0.visible = true;
 				TimerManager.ins().remove(this.setTimeLbel, this);
 			}
 			this.leftTime.visible = Recharge.ins().monthDay > 0 ? true : false;
@@ -68,21 +74,26 @@ class MonthCardWin extends BaseView {
 	public close(...param: any[]): void {
 		this.removeObserve();
 		this.removeTouchEvent(this.btn1, this.onTap);
+		this.removeTouchEvent(this.btn0, this.onTap);
 		TimerManager.ins().remove(this.setTimeLbel, this);
 	}
 
 	private onTap(e: egret.TouchEvent): void {
+		let monthCardPriceInfo = window['getmonthCardPriceInfo']()
 		switch (e.currentTarget) {
 			case this.btn1:
 
-				let monthCardPriceInfo = window['getmonthCardPriceInfo']()
 				if (monthCardPriceInfo[0].status != 1) {
 					WarnWin.show(monthCardPriceInfo[0].msg, function () { }, this, function () { }, this, 'sure');
 				} else {
-					Recharge.ins().showReCharge(28, 2800);
+					Recharge.ins().showReCharge(28, 2800,0);
 				}
 
 				// Pay.ins().sendPayStyte('28',1);
+				break;
+			case this.btn0:
+				Recharge.ins().showReCharge(100, 1,1);
+
 				break;
 		}
 	}

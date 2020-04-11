@@ -18,7 +18,7 @@
 <e:Group id="upInfo" height="110" bottom="0" horizontalCenter="0" width="560">
 	<e:Group id="costGroup" horizontalCenter="0" bottom="70">
 
-		<e:Image id="icon" x="64" width="40" height="40" verticalCenter="-3"  source="new_duanzao_jinbi"/>
+		<e:Image id="icon" x="64" width="40" height="40" verticalCenter="-3"  source="200003_png"/>
 		<e:Label id="countLabel" text="12000/100" size="20" textAlign="left" x="116" y="2" textColor="0xd1c28f" />
 		<e:layout>
 			<e:HorizontalLayout gap="0" verticalAlign="middle" />

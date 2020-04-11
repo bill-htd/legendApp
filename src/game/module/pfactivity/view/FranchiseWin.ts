@@ -92,7 +92,7 @@ class FranchiseWin extends BaseView {
 					if (monthCardPriceInfo[1].status != 1) {
 						WarnWin.show(monthCardPriceInfo[1].msg, function () { }, this, function () { }, this, 'sure');
 					} else {
-						Recharge.ins().showReCharge(88, 8800);
+						Recharge.ins().showReCharge(88, 8800,0);
 					}
 				} else{
 					Recharge.ins().sendGetFranchise();

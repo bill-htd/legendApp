@@ -23,8 +23,11 @@ var Pay = (function (_super) {
     Pay.ins = function () {
         return _super.ins.call(this);
     };
-    Pay.prototype.sendPayStyte = function (money, type, yuanbao) {
+    Pay.prototype.sendPayStyte = function (money, type, yuanbao, activityid) {
         var self = this;
+        if (!activityid) {
+            activityid = 0;
+        }
         if (!yuanbao)
             return;
         if (!type)
@@ -54,6 +57,7 @@ var Pay = (function (_super) {
         url += '&amount=' + money;
         url += '&gold=' + yuanbao;
         url += '&serverid=' + LocationProperty.serverID;
+        url += '&activityid=' + activityid;
         Http.ins().send(url, true, false, function (event) {
             self.sendNum++;
             var request = event.currentTarget;

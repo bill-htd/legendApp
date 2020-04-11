@@ -240,7 +240,7 @@ class Recharge1Win extends BaseEuiView {
 					if (e.currentTarget == this.btnArr[i]) {
 
 						if (this.btnArr[i]['status'] == 1) {
-							Recharge.ins().showReCharge(this.btnArr[i]["money"], this.btnArr[i]['yuanbao']);
+							Recharge.ins().showReCharge(this.btnArr[i]["money"], this.btnArr[i]['yuanbao'],0);
 						} else {
 							WarnWin.show(this.btnArr[i]['msg'], function () { }, this, function () { }, this, 'sure');
 						}

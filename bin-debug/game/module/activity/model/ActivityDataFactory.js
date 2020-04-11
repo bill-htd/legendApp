@@ -75,6 +75,14 @@ var ActivityDataFactory = (function () {
             case ActivityDataFactory.ACTIVITY_TYPE_22:
                 data = new ActivityType22Data(bytes);
                 break;
+            case ActivityDataFactory.ACTIVITY_TYPE_24:
+                if (!Activity.ins().activityData[id])
+                    data = new ActivityType24Data(bytes, id);
+                else {
+                    data = Activity.ins().activityData[id];
+                    data.init(bytes, id);
+                }
+                break;
             default: {
                 debug.log("错误活动类型:" + type);
                 for (var i = 0; i < len; i++) {
@@ -210,6 +218,7 @@ var ActivityDataFactory = (function () {
     ActivityDataFactory.ACTIVITY_TYPE_20 = 20;
     ActivityDataFactory.ACTIVITY_TYPE_21 = 21;
     ActivityDataFactory.ACTIVITY_TYPE_22 = 22;
+    ActivityDataFactory.ACTIVITY_TYPE_24 = 24;
     return ActivityDataFactory;
 }());
 __reflect(ActivityDataFactory.prototype, "ActivityDataFactory");

@@ -15,7 +15,7 @@
 
 		<e:Group horizontalCenter="0" bottom="70">
 
-			<e:Image x="64" width="40" height="40" verticalCenter="0" source="new_duanzao_jinbi"/>
+			<e:Image x="64" width="40" height="40" verticalCenter="0" source="200136_png"/>
 			<e:Label id="countLabel" text="120/100" size="20" textAlign="left" x="108" y="2" textColor="0xd1c28f"/>
 			<e:layout>
 				<e:HorizontalLayout gap="0" verticalAlign="middle"/>

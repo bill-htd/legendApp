@@ -22,7 +22,7 @@ class HongBaoShowItem extends BaseItemRender {
 
 	public onClick() {
 		if( !this.data || !this.data.actId || !this.data.eId )return;
-		let activityData: ActivityType12Data = Activity.ins().getActivityDataById(this.data.actId) as ActivityType12Data;
+		let activityData: ActivityType24Data = Activity.ins().getActivityDataById(this.data.actId) as ActivityType24Data;
 		if( !activityData.isOpenActivity() ){
 			UserTips.ins().showTips(`活动已结束`);
 			return;
@@ -37,6 +37,8 @@ class HongBaoShowItem extends BaseItemRender {
 				break;
 			}
 		}
+
+		// Activity.ins().sendEnvelopeData(this.data.actId,this.data.eId);
 
 		Activity.ins().sendEnvelopeData(this.data.actId,this.data.eId);
 	}

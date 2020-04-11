@@ -9,11 +9,11 @@
 	</e:Group>
 	<e:Image width="570" horizontalCenter="0" source="tongyongmianbanbg" top="44" bottom="155" scale9Grid="19,12,14,25"/>
 	<!--<e:Image x="24" y="85" source="xzhuzao_json.xduanzao_07_png"/>-->
-	<e:ViewStack id="viewStack" selectedIndex="3" top="44" bottom="155" horizontalCenter="0" width="580">
-		<ns1:BaseComponent id="boostPanel" name="强化" skinName="boostskin" left="1" right="-1" top="1" bottom="-1" className="ForgeBoostPanel"/>
+	<e:ViewStack id="viewStack" selectedIndex="2" top="44" bottom="155" horizontalCenter="0" width="580">
+		<ns1:BaseComponent id="boostPanel" name="强化" skinName="boostskin" left="1" right="-1" top="1" bottom="-1" className="ForgeBoostPanel" visible="false"/>
 
 		<ns1:BaseComponent id="gemPanel" name="精炼" skinName="castingskin" left="0" right="0" top="0" bottom="0" className="ForgeGemPanel" visible="false"/>
-		<ns1:BaseComponent id="zhulingPanel" name="铸造" skinName="refineskin" left="0" right="0" top="0" bottom="0" className="ForgeZhulingPanel" visible="false"/>
+		<ns1:BaseComponent id="zhulingPanel" name="铸造" skinName="refineskin" left="0" right="0" top="0" bottom="0" className="ForgeZhulingPanel"/>
 		<ns1:BaseComponent id="weaponsoul" name="兵魂"   left="0" right="0" top="0" bottom="0" skinName="weaponSoulSkin" className="WeaponWin" visible="false"/>
 		<!--<ns1:BaseComponent id="reinComposePanel" name="合成" skinName="ReinComposeSkin" className="ComposePanel" left="0" right="0" top="0" bottom="0" visible="false"/>-->
 	</e:ViewStack>

@@ -170,12 +170,15 @@ var Recharge = (function (_super) {
     Recharge.prototype.getAddBagFranchiseGrid = function () {
         return this.franchise > 0 ? 100 : 0;
     };
-    Recharge.prototype.showReCharge = function (money, yuanbao) {
+    Recharge.prototype.showReCharge = function (money, yuanbao, activityid) {
+        if (!activityid) {
+            activityid = 0;
+        }
         if (!OpenSystem.ins().checkSysOpen(SystemType.FIRSTCHARGE)) {
             UserTips.ins().showTips("\u5145\u503C\u5DF2\u5C4F\u853D");
             return;
         }
-        ViewManager.ins().open(payWin, { money: money, yuanbao: yuanbao });
+        ViewManager.ins().open(payWin, { money: money, yuanbao: yuanbao, activityid: activityid });
     };
     Recharge.prototype.getIsForeve = function () {
         return Recharge.ins().forevetCard == 2;

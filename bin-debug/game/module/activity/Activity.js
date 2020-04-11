@@ -45,7 +45,7 @@ var Activity = (function (_super) {
         _this.regNetMsg(20, _this.doNextDayLoginReward);
         _this.regNetMsg(22, _this.postKuaFuRank);
         _this.regNetMsg(24, _this.test_24);
-        _this.regNetMsg(23, _this.test_23);
+        _this.regNetMsg(23, _this.handlehongbaoInfo);
         _this.regNetMsg(6, _this.postEnvelopeData);
         _this.regNetMsg(8, _this.postRedEnvelopeData);
         return _this;
@@ -110,12 +110,11 @@ var Activity = (function (_super) {
         this.checkActivityTimer();
     };
     Activity.prototype.test_24 = function (bytes) {
-        console.log(bytes);
-    };
-    Activity.prototype.test_23 = function (bytes) {
+        console.log('test_24');
         console.log(bytes);
     };
     Activity.prototype.test_2 = function (bytes) {
+        console.log('test_2');
         console.log(bytes);
     };
     Activity.prototype.checkSpecials = function () {
@@ -140,23 +139,27 @@ var Activity = (function (_super) {
     Activity.prototype.postRewardResult = function (bytes) {
         console.log('25-2');
         console.log(bytes);
-        return;
         this.isSuccee = bytes.readBoolean();
-        var activityID = bytes.readInt();
-        if (this.doubleElevenIDs.indexOf(activityID) != -1) {
-            this.getDoubleElevenDataByID(activityID).update(bytes);
-        }
-        else if (this.doubleTwelveRechargeIDAry.indexOf(activityID) != -1) {
-            this.doubleTwelveRechargeData[activityID].update(bytes);
-        }
-        else if (this.doubleTwelveIDAry.indexOf(activityID) != -1) {
-            this.doubleTwelveData[activityID].update(bytes);
+        if (this.isSuccee) {
+            console.log('领取成功');
+            var activityID = bytes.readInt();
+            var type = bytes.readShort();
+            if (type == 1) {
+                var hongbaoId = bytes.readShort();
+                var yuanbaoshu = bytes.readInt();
+                var ewai = bytes.readInt();
+                console.log('activityID,type,hongbaoId,yuanbaoshu,ewai');
+                console.log(activityID, type, hongbaoId, yuanbaoshu, ewai);
+            }
+            else {
+                var ewai = bytes.readInt();
+                console.log('activityID,type,ewai');
+                console.log(activityID, type, ewai);
+            }
         }
         else {
-            this.getActivityDataById(activityID).update(bytes);
+            console.log('领取shibai');
         }
-        this.postActivityPanel(activityID);
-        this.postActivityIsGetAwards();
         return activityID;
     };
     Activity.prototype.postActivityPanel = function (activityId) {
@@ -217,10 +220,16 @@ var Activity = (function (_super) {
         else {
             bytes.writeInt(actID);
             bytes.writeShort(rewardID);
+            bytes.writeShort(param1);
         }
         this.sendToServer(bytes);
     };
     Activity.prototype.sendLianxuReward = function (actId) {
+        var bytes = this.getBytes(13);
+        bytes.writeInt(actId);
+        this.sendToServer(bytes);
+    };
+    Activity.prototype.sendqianghongbao = function (actId) {
         var bytes = this.getBytes(13);
         bytes.writeInt(actId);
         this.sendToServer(bytes);
@@ -768,33 +777,49 @@ var Activity = (function (_super) {
     Activity.prototype.postEnvelopeData = function (bytes) {
         console.log('25-6');
         console.log(bytes);
-        return;
         var id = bytes.readInt();
         var isSuccess = bytes.readByte();
         if (isSuccess) {
             var eId = bytes.readUnsignedShort();
-            var job = bytes.readShort();
-            var sex = bytes.readShort();
-            var index = bytes.readShort();
-            var serverId = bytes.readInt();
-            var name_1 = bytes.readString();
-            var desc = bytes.readString();
-            var eld = new EnvelopeData();
-            eld.id = id;
-            eld.eId = eId;
-            eld.job = job;
-            eld.sex = sex;
-            eld.index = index;
-            eld.serverId = serverId;
-            eld.name = name_1;
-            eld.desc = desc;
-            this.postEnvelopeDataCall(eld);
+            var endtime = bytes.readUnsignedShort();
+            var noName = bytes.readInt();
+            var Num = bytes.readShort();
+            var obj = [];
+            for (var i = 0; i < Num; i++) {
+                obj[i] = {};
+                obj[i].name = bytes.readString();
+                obj[i].hongbaoid = bytes.readShort();
+                obj[i].job = bytes.readShort();
+                obj[i].sex = bytes.readShort();
+                obj[i].isSuccess = bytes.readByte();
+                obj[i].serverId = bytes.readInt();
+            }
+            console.log(obj);
+            HBSystem.ins().testhongbao(id, eId);
             return;
         }
         this.postEnvelopeDataCall(null);
     };
     Activity.prototype.postEnvelopeDataCall = function (eld) {
         return eld;
+    };
+    Activity.prototype.handlehongbaoInfo = function (bytes) {
+        var id = bytes.readInt();
+        if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
+            var actData = this.activityData[id];
+            var len = bytes.readShort();
+            if (len) {
+                for (var i = 0; i < len; i++) {
+                    var reld = new RedEnvelope();
+                    reld.id = bytes.readUnsignedShort();
+                    reld.timer = bytes.readInt();
+                    actData.envelopeData.push(reld);
+                }
+            }
+            console.log('获取到的红包数mu');
+            console.log(actData);
+            HBSystem.ins().updateHongBao();
+        }
     };
     Activity.prototype.postRedEnvelopeData = function (bytes) {
         var id = bytes.readInt();
@@ -824,7 +849,7 @@ var Activity = (function (_super) {
     };
     Activity.prototype.checkActivityTimer = function () {
         for (var k in this.activityData) {
-            if (this.activityData[k] instanceof ActivityType12Data) {
+            if (this.activityData[k] instanceof ActivityType12Data || this.activityData[k] instanceof ActivityType24Data) {
                 if (!TimerManager.ins().isExists(this.ActivityTimerSecond1, this))
                     TimerManager.ins().doTimer(1000, 0, this.ActivityTimerSecond1, this);
                 break;
@@ -847,6 +872,18 @@ var Activity = (function (_super) {
                     continue;
                 }
                 if (this.activityData[id] instanceof ActivityType12Data) {
+                    var actData = this.activityData[id];
+                    actData.checkClear();
+                }
+                if (!this.activityData[id].isOpenActivity()) {
+                    if (this.activityData[id] instanceof ActivityType24Data) {
+                        var actData = this.activityData[id];
+                        actData.clearAll();
+                    }
+                    this._actTimeSecond1.splice(i, 1);
+                    continue;
+                }
+                if (this.activityData[id] instanceof ActivityType24Data) {
                     var actData = this.activityData[id];
                     actData.checkClear();
                 }

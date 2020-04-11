@@ -97,7 +97,7 @@ var FranchiseWin = (function (_super) {
                         WarnWin.show(monthCardPriceInfo[1].msg, function () { }, this, function () { }, this, 'sure');
                     }
                     else {
-                        Recharge.ins().showReCharge(88, 8800);
+                        Recharge.ins().showReCharge(88, 8800, 0);
                     }
                 }
                 else {

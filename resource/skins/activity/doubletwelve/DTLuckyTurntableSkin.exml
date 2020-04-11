@@ -85,7 +85,7 @@
 		</e:layout>
 	</e:Group>
 	<e:Label id="getkey" text="获取钥匙" size="20" right="60" textColor="0x20cb30" bottom="111" visible="false"/>
-	<e:Scroller id="barList" bounces="false" bottom="92" top="454" left="0">
+	<e:Scroller id="barList" bounces="false" bottom="92" left="0" height="74">
 		<e:List id="list" x="0" y="-2" itemRendererSkinName="HuntListRendererSkin" scaleX="0.7" scaleY="0.7">
 		</e:List>
 	</e:Scroller>

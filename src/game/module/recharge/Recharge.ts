@@ -238,12 +238,15 @@ class Recharge extends BaseSystem {
 		// return 0;
 	}
 
-	public showReCharge(money: number,yuanbao:number): void {
+	public showReCharge(money: number,yuanbao:number,activityid:number): void {
+		if(!activityid){
+			activityid = 0
+		}
 		if (!OpenSystem.ins().checkSysOpen(SystemType.FIRSTCHARGE)) {
 			UserTips.ins().showTips(`充值已屏蔽`);
 			return;
 		}
-		ViewManager.ins().open(payWin, {money:money,yuanbao:yuanbao});
+		ViewManager.ins().open(payWin, {money:money,yuanbao:yuanbao,activityid:activityid});
 	}
 
 	public getIsForeve(): boolean {

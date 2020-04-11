@@ -15,6 +15,8 @@ var HongBaoOpenItem = (function (_super) {
     __extends(HongBaoOpenItem, _super);
     function HongBaoOpenItem() {
         var _this = _super.call(this) || this;
+        _this.actid = 0;
+        _this.hongbaoid = 0;
         _this.skinName = 'hongbaoOpenSkin';
         _this.init();
         return _this;
@@ -24,9 +26,15 @@ var HongBaoOpenItem = (function (_super) {
     };
     HongBaoOpenItem.prototype.init = function () {
         this.hbbtn.addEventListener(egret.TouchEvent.TOUCH_END, this.onClick, this);
+        this.closeBtn0.addEventListener(egret.TouchEvent.TOUCH_END, this.onClick, this);
+        this.closeBtn1.addEventListener(egret.TouchEvent.TOUCH_END, this.onClick, this);
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouch, this);
         this.list.itemRenderer = HongBaoRewardsItem;
         this.closeBtn.visible = false;
+    };
+    HongBaoOpenItem.prototype.inithongbaodata = function (actid, hongbaoid) {
+        this.actid = actid;
+        this.hongbaoid = hongbaoid;
     };
     HongBaoOpenItem.prototype.onClick = function (e) {
         switch (e.currentTarget) {
@@ -39,6 +47,12 @@ var HongBaoOpenItem = (function (_super) {
                     return;
                 }
                 Activity.ins().sendReward(this.data.actId, this.data.eId, EnvelopeType.GET);
+                break;
+            case this.closeBtn0:
+                Activity.ins().sendReward(this.actid, this.hongbaoid, 2);
+                break;
+            case this.closeBtn1:
+                Activity.ins().sendReward(this.actid, this.hongbaoid, 1);
                 break;
         }
     };
@@ -90,16 +104,20 @@ var HongBaoOpenItem = (function (_super) {
         var downSr = this.downImg.scrollRect;
         var twTime = 400;
         this.list.dataProvider = new eui.ArrayCollection(arr);
-        var tw1 = egret.Tween.get(upSr, { onChange: function () {
+        var tw1 = egret.Tween.get(upSr, {
+            onChange: function () {
                 _this.topImg.scrollRect = upSr;
-            } }).to({ y: 200 }, twTime).call(function () {
+            }
+        }).to({ y: 200 }, twTime).call(function () {
             egret.Tween.removeTweens(tw1);
             self.bt1 = true;
             self.closeBtn.visible = true;
         });
-        var tw2 = egret.Tween.get(downSr, { onChange: function () {
+        var tw2 = egret.Tween.get(downSr, {
+            onChange: function () {
                 _this.downImg.scrollRect = downSr;
-            } }).to({ height: 0 }, twTime).call(function () {
+            }
+        }).to({ height: 0 }, twTime).call(function () {
             egret.Tween.removeTweens(tw2);
             self.bt2 = true;
         });

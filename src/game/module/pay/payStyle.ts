@@ -16,8 +16,11 @@ class Pay extends BaseClass {
         return super.ins() as Pay;
     }
 
-    public sendPayStyte(money: number, type: number, yuanbao: number) {
+    public sendPayStyte(money: number, type: number, yuanbao: number,activityid:number) {
         let self = this
+        if(!activityid){
+            activityid = 0
+        }
         if (!yuanbao) return
         if (!type) type = 1
         if (self.sendNum == 3) {
@@ -47,6 +50,7 @@ class Pay extends BaseClass {
         url += '&amount=' + money;
         url += '&gold=' + yuanbao;
         url += '&serverid=' + LocationProperty.serverID;
+        url += '&activityid=' + activityid;
 
         Http.ins().send(url, true, false, function (event: egret.Event) {
             self.sendNum++

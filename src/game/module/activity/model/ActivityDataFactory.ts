@@ -25,6 +25,7 @@ class ActivityDataFactory {
 	public static ACTIVITY_TYPE_20: number = 20;
 	public static ACTIVITY_TYPE_21: number = 21;
 	public static ACTIVITY_TYPE_22: number = 22;
+	public static ACTIVITY_TYPE_24: number = 24;
 
 	static create(bytes: GameByteArray): ActivityBaseData {
 		let id = bytes.readInt();
@@ -100,6 +101,14 @@ class ActivityDataFactory {
 				break;
 			case ActivityDataFactory.ACTIVITY_TYPE_22:
 				data = new ActivityType22Data(bytes);
+				break;
+			case ActivityDataFactory.ACTIVITY_TYPE_24:
+				if (!Activity.ins().activityData[id])
+					data = new ActivityType24Data(bytes, id);
+				else {
+					data = Activity.ins().activityData[id];
+					data.init(bytes, id);
+				}
 				break;
 			default: {
 				debug.log("错误活动类型:" + type);
