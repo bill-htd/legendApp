@@ -29,6 +29,8 @@ var MonthCardWin = (function (_super) {
         if (this.feng.visible) {
             this.btn1.visible = false;
             this.btn0.visible = false;
+            this.xianshi1.visible = false;
+            this.xianshi2.visible = false;
         }
         else {
             if (Recharge.ins().monthDay > 0) {
@@ -36,9 +38,10 @@ var MonthCardWin = (function (_super) {
                 this.setTimeLbel();
                 this.btn1.visible = false;
                 this.btn0.visible = false;
+                this.xianshi1.visible = false;
+                this.xianshi2.visible = false;
             }
             else {
-                this.btn1.visible = true;
                 this.btn0.visible = true;
                 TimerManager.ins().remove(this.setTimeLbel, this);
             }

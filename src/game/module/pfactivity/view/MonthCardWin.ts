@@ -9,6 +9,8 @@ class MonthCardWin extends BaseView {
 	private leftTime: eui.Label;
 	private feng: eui.Label;
 	private first: eui.Label;
+	public xianshi1: eui.Group;
+	public xianshi2: eui.Group;
 	constructor() {
 		super();
 		this.skinName = "MonthCardSkin";
@@ -21,14 +23,18 @@ class MonthCardWin extends BaseView {
 		if (this.feng.visible) {
 			this.btn1.visible = false;
 			this.btn0.visible = false;
+			this.xianshi1.visible = false;
+			this.xianshi2.visible = false;
 		} else {
 			if (Recharge.ins().monthDay > 0) {
 				TimerManager.ins().doTimer(1000, 0, this.setTimeLbel, this);
 				this.setTimeLbel();
 				this.btn1.visible = false;
 				this.btn0.visible = false;
+				this.xianshi1.visible = false;
+				this.xianshi2.visible = false;
 			} else {
-				this.btn1.visible = true;
+				// this.btn1.visible = true;
 				this.btn0.visible = true;
 				TimerManager.ins().remove(this.setTimeLbel, this);
 			}

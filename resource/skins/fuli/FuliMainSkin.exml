@@ -22,15 +22,15 @@
 		<e:Image x="0" top="0" bottom="0" source="bantoumingkuang3" />
 		<e:Image scaleX="-1" top="0" bottom="0" source="bantoumingkuang3" right="0" />
 	</e:Group>
-	<e:Scroller id="listBar" horizontalCenter="0" height="106" bottom="126" width="464">
-		<e:List id="iconList" y="1" itemRendererSkinName="ActBtnSkin" horizontalCenter="0" height="106">
+	<e:Scroller id="listBar" horizontalCenter="0.5" height="99" bottom="129" width="459" anchorOffsetX="0" anchorOffsetY="0">
+		<e:List id="iconList" y="0" itemRendererSkinName="ActBtnSkin" horizontalCenter="20.5" height="99" anchorOffsetY="0" anchorOffsetX="0" width="504">
 		<e:layout>
 			<e:HorizontalLayout gap="10" paddingLeft="0"/>
 		</e:layout>
 		</e:List>
 	</e:Scroller>
-	<e:Group id="rightGroup" horizontalCenter="3.5" bottom="150">
-		<e:Button id="rightBtn" label="按钮" icon="jiantouxuan" skinName="Btn0Skin" scaleX="-1" x="543" y="746"/>
+	<e:Group id="rightGroup" horizontalCenter="255.5" bottom="150" anchorOffsetY="0" height="48" anchorOffsetX="0" width="45">
+		<e:Button id="rightBtn" label="按钮" icon="jiantouxuan" skinName="Btn0Skin" scaleX="-1" x="49" y="0"/>
 		<e:Image id="rightRed" x="525" y="740" source="zjmhongdian" touchEnabled="false" visible="false"/>
 	</e:Group>
 

@@ -22,7 +22,7 @@ var FuliWin = (function (_super) {
     FuliWin.prototype.initUI = function () {
         _super.prototype.initUI.call(this);
         this.iconList.itemRenderer = FuliActBtnRenderer;
-        this.allPanels = [DailyCheckInPanel, SevenDayLogWin, MonthCardWin, FranchiseWin, GameNoticePanle, CdkeyPanle, QHBPanle];
+        this.allPanels = [DailyCheckInPanel, SevenDayLogWin, MonthCardWin, FranchiseWin, GameNoticePanle, CdkeyPanle];
         this.panels = [];
         this.arrList = new eui.ArrayCollection();
     };

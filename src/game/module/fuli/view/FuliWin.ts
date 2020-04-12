@@ -9,7 +9,7 @@ class FuliWin extends BaseEuiView {
 	public info: eui.Group;
 	public leftGroup: eui.Group;
 	public rightGroup: eui.Group;
-
+	
 
 	private _datas: any[];
 	private curId: number;
@@ -34,7 +34,7 @@ class FuliWin extends BaseEuiView {
 		super.initUI();
 		this.iconList.itemRenderer = FuliActBtnRenderer;
 		// this.panels = [CdkeyPanle, MoneyTreePanel, GameNoticePanle, MonthCardWin, NextDayLoginWin,DailyCheckInPanel];
-		this.allPanels = [DailyCheckInPanel, SevenDayLogWin, MonthCardWin, FranchiseWin, GameNoticePanle, CdkeyPanle, QHBPanle];
+		this.allPanels = [DailyCheckInPanel, SevenDayLogWin, MonthCardWin, FranchiseWin, GameNoticePanle, CdkeyPanle];
 		this.panels = [];
 		this.arrList = new eui.ArrayCollection();
 	}

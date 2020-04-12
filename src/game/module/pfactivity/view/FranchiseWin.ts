@@ -2,6 +2,7 @@ class FranchiseWin extends BaseView {
 	public monthGroup: eui.Group;
 	private powerPanel: PowerPanel;
 	private btn1: eui.Button;
+	private btn0: eui.Button;
 	private leftTime: eui.Label;
 	private feng: eui.Label;
 	private first: eui.Label;
@@ -9,6 +10,8 @@ class FranchiseWin extends BaseView {
 	private titleImg: eui.Image;
 	private titleMcGroup: eui.Group;
 	private depictLabel: eui.Label;
+	public xianshi1: eui.Group;
+	public xianshi2: eui.Group;
 	constructor() {
 		super();
 		this.skinName = "SpecialCardSkin";
@@ -17,8 +20,12 @@ class FranchiseWin extends BaseView {
 	public open(...param: any[]): void {
 		this.observe(Recharge.ins().postFranchiseInfo, this.setView);
 		this.addTouchEvent(this.btn1, this.onTap);
+		this.addTouchEvent(this.btn0, this.onTap);
 		if (this.feng.visible) {
 			this.btn1.visible = false;
+			this.xianshi1.visible = false;
+			this.xianshi2.visible = false;
+			this.btn0.visible = false;
 			if (this.first)
 				this.first.visible = false;
 		} else {
@@ -26,9 +33,27 @@ class FranchiseWin extends BaseView {
 				TimerManager.ins().doTimer(1000, 0, this.setTimeLbel, this);
 				this.setTimeLbel();
 				this.btn1.visible = true;
+				this.xianshi1.visible = false;
+				this.xianshi2.visible = false;
+				this.btn0.visible = false;
 				this.setView();
 			} else {
+				this.depictLabel.textFlow = TextFlowMaker.generateTextFlow1(GlobalConfig.PrivilegeData.rightDesc);
+				//颜色矩阵数组
+				var colorMatrix = [
+					0.3, 0.6, 0, 0, 0,
+					0.3, 0.6, 0, 0, 0,
+					0.3, 0.6, 0, 0, 0,
+					0, 0, 0, 1, 0
+				];
+				var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
+				let monthCardPriceInfo = window['getmonthCardPriceInfo']()
+				// this.btn1.filters = [colorFlilter];
+				if (monthCardPriceInfo[1].status != 1) {
+					// this.btn1.filters = [colorFlilter];
+				}
 				this.btn1.visible = true;
+				// this.btn0.visible = true;
 				TimerManager.ins().remove(this.setTimeLbel, this);
 				if (this.first)
 					this.first.visible = Recharge.ins().firstBuy ? true : false;
@@ -38,20 +63,7 @@ class FranchiseWin extends BaseView {
 		}
 		this.setIconEff();
 
-		this.depictLabel.textFlow = TextFlowMaker.generateTextFlow1(GlobalConfig.PrivilegeData.rightDesc);
-		//颜色矩阵数组
-		var colorMatrix = [
-			0.3, 0.6, 0, 0, 0,
-			0.3, 0.6, 0, 0, 0,
-			0.3, 0.6, 0, 0, 0,
-			0, 0, 0, 1, 0
-		];
-		var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
-		let monthCardPriceInfo = window['getmonthCardPriceInfo']()
-		// this.btn1.filters = [colorFlilter];
-		if (monthCardPriceInfo[1].status != 1) {
-			this.btn1.filters = [colorFlilter];
-		}
+		
 
 	}
 
@@ -81,6 +93,7 @@ class FranchiseWin extends BaseView {
 	public close(...param: any[]): void {
 		this.removeObserve();
 		this.removeTouchEvent(this.btn1, this.onTap);
+		this.removeTouchEvent(this.btn0, this.onTap);
 		TimerManager.ins().remove(this.setTimeLbel, this);
 	}
 
@@ -88,18 +101,23 @@ class FranchiseWin extends BaseView {
 		switch (e.currentTarget) {
 			case this.btn1:
 				if (this.btn1.label != "领取奖励") {
-					let monthCardPriceInfo = window['getmonthCardPriceInfo']()
-					if (monthCardPriceInfo[1].status != 1) {
-						WarnWin.show(monthCardPriceInfo[1].msg, function () { }, this, function () { }, this, 'sure');
-					} else {
-						Recharge.ins().showReCharge(88, 8800,0);
-					}
-				} else{
+					Recharge.ins().showReCharge(100, 1,1);
+					// let monthCardPriceInfo = window['getmonthCardPriceInfo']()
+					// if (monthCardPriceInfo[1].status != 1) {
+					// 	WarnWin.show(monthCardPriceInfo[1].msg, function () { }, this, function () { }, this, 'sure');
+					// } else {
+					// 	// Recharge.ins().showReCharge(88, 8800, 0);
+					// 	Recharge.ins().showReCharge(100, 1,1);
+					// }
+				} else {
 					Recharge.ins().sendGetFranchise();
 				}
-					
-				break;
 
+				break;
+			case this.btn0:
+				Recharge.ins().showReCharge(100, 1, 1);
+
+				break;
 
 		}
 	}
