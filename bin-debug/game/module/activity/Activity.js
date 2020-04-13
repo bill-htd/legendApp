@@ -140,26 +140,21 @@ var Activity = (function (_super) {
         console.log('25-2');
         console.log(bytes);
         this.isSuccee = bytes.readBoolean();
-        if (this.isSuccee) {
-            console.log('领取成功');
-            var activityID = bytes.readInt();
-            var type = bytes.readShort();
-            if (type == 1) {
-                var hongbaoId = bytes.readShort();
-                var yuanbaoshu = bytes.readInt();
-                var ewai = bytes.readInt();
-                console.log('activityID,type,hongbaoId,yuanbaoshu,ewai');
-                console.log(activityID, type, hongbaoId, yuanbaoshu, ewai);
-            }
-            else {
-                var ewai = bytes.readInt();
-                console.log('activityID,type,ewai');
-                console.log(activityID, type, ewai);
-            }
+        var activityID = bytes.readInt();
+        if (this.doubleElevenIDs.indexOf(activityID) != -1) {
+            this.getDoubleElevenDataByID(activityID).update(bytes);
+        }
+        else if (this.doubleTwelveRechargeIDAry.indexOf(activityID) != -1) {
+            this.doubleTwelveRechargeData[activityID].update(bytes);
+        }
+        else if (this.doubleTwelveIDAry.indexOf(activityID) != -1) {
+            this.doubleTwelveData[activityID].update(bytes);
         }
         else {
-            console.log('领取shibai');
+            this.getActivityDataById(activityID).update(bytes);
         }
+        this.postActivityPanel(activityID);
+        this.postActivityIsGetAwards();
         return activityID;
     };
     Activity.prototype.postActivityPanel = function (activityId) {
@@ -217,10 +212,14 @@ var Activity = (function (_super) {
             var p1 = param1 ? param1 : 0;
             bytes.writeShort(p1);
         }
-        else {
+        else if (actID == 2001) {
             bytes.writeInt(actID);
             bytes.writeShort(rewardID);
             bytes.writeShort(param1);
+        }
+        else {
+            bytes.writeInt(actID);
+            bytes.writeShort(rewardID);
         }
         this.sendToServer(bytes);
     };
@@ -775,14 +774,13 @@ var Activity = (function (_super) {
         this.sendToServer(bytes);
     };
     Activity.prototype.postEnvelopeData = function (bytes) {
-        console.log('25-6');
-        console.log(bytes);
         var id = bytes.readInt();
         var isSuccess = bytes.readByte();
         if (isSuccess) {
             var eId = bytes.readUnsignedShort();
             var endtime = bytes.readUnsignedShort();
             var noName = bytes.readInt();
+            var rechargeNum = bytes.readInt();
             var Num = bytes.readShort();
             var obj = [];
             for (var i = 0; i < Num; i++) {
@@ -807,15 +805,10 @@ var Activity = (function (_super) {
         var id = bytes.readInt();
         if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
             var actData = this.activityData[id];
-            var len = bytes.readShort();
-            if (len) {
-                for (var i = 0; i < len; i++) {
-                    var reld = new RedEnvelope();
-                    reld.id = bytes.readUnsignedShort();
-                    reld.timer = bytes.readInt();
-                    actData.envelopeData.push(reld);
-                }
-            }
+            var reld = new RedEnvelope();
+            reld.id = bytes.readUnsignedShort();
+            reld.startimer = bytes.readInt();
+            actData.envelopeData.push(reld);
             console.log('获取到的红包数mu');
             console.log(actData);
             HBSystem.ins().updateHongBao();

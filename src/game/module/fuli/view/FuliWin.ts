@@ -34,7 +34,7 @@ class FuliWin extends BaseEuiView {
 		super.initUI();
 		this.iconList.itemRenderer = FuliActBtnRenderer;
 		// this.panels = [CdkeyPanle, MoneyTreePanel, GameNoticePanle, MonthCardWin, NextDayLoginWin,DailyCheckInPanel];
-		this.allPanels = [DailyCheckInPanel, SevenDayLogWin, MonthCardWin, FranchiseWin, GameNoticePanle, CdkeyPanle];
+		this.allPanels = [DailyCheckInPanel, SevenDayLogWin, MonthCardWin, FranchiseWin, GameNoticePanle, CdkeyPanle,QHBPanle];
 		this.panels = [];
 		this.arrList = new eui.ArrayCollection();
 	}

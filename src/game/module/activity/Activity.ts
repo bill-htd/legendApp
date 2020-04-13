@@ -229,42 +229,20 @@ class Activity extends BaseSystem {
 		// return
 
 		this.isSuccee = bytes.readBoolean();
-		if (this.isSuccee) {
-			console.log('领取成功')
-			let activityID = bytes.readInt();
-			let type = bytes.readShort();
-			if (type == 1) {
-				let hongbaoId = bytes.readShort()
-				let yuanbaoshu = bytes.readInt()
-				let ewai = bytes.readInt()
-				console.log('activityID,type,hongbaoId,yuanbaoshu,ewai')
-				console.log(activityID, type, hongbaoId, yuanbaoshu, ewai)
-
-			} else {
-				let ewai = bytes.readInt()
-				console.log('activityID,type,ewai')
-				console.log(activityID, type, ewai)
-			}
-		}else{
-			console.log('领取shibai')
+		let activityID = bytes.readInt();
+		if (this.doubleElevenIDs.indexOf(activityID) != -1) {
+			this.getDoubleElevenDataByID(activityID).update(bytes);
 		}
-
-
-		// let view: PlayFunView = ViewManager.ins().getView(PlayFunView) as PlayFunView;
-		// view.hongbao.removeChildren();
-		// if (this.doubleElevenIDs.indexOf(activityID) != -1) {
-		// 	this.getDoubleElevenDataByID(activityID).update(bytes);
-		// }
-		// else if (this.doubleTwelveRechargeIDAry.indexOf(activityID) != -1) {
-		// 	this.doubleTwelveRechargeData[activityID].update(bytes);
-		// } else if (this.doubleTwelveIDAry.indexOf(activityID) != -1) {
-		// 	this.doubleTwelveData[activityID].update(bytes);
-		// }
-		// else {
-		// 	this.getActivityDataById(activityID).update(bytes);
-		// }
-		// this.postActivityPanel(activityID);
-		// this.postActivityIsGetAwards();
+		else if (this.doubleTwelveRechargeIDAry.indexOf(activityID) != -1) {
+			this.doubleTwelveRechargeData[activityID].update(bytes);
+		} else if (this.doubleTwelveIDAry.indexOf(activityID) != -1) {
+			this.doubleTwelveData[activityID].update(bytes);
+		}
+		else {
+			this.getActivityDataById(activityID).update(bytes);
+		}
+		this.postActivityPanel(activityID);
+		this.postActivityIsGetAwards();
 
 		return activityID;
 	}
@@ -290,6 +268,7 @@ class Activity extends BaseSystem {
 	 * 类型2
 	 * 请求类型  0表示购买礼包, 非0表示领取额外奖励的索引
 	 */
+
 	public sendReward(actID: number, rewardID: number, param1?: any, param2?: any): void {
 		let bytes: GameByteArray = this.getBytes(2);
 		let cfg: ActivityConfig = GlobalConfig.ActivityConfig[actID];
@@ -333,11 +312,15 @@ class Activity extends BaseSystem {
 			bytes.writeShort(rewardID);
 			let p1 = param1 ? param1 : 0;
 			bytes.writeShort(p1);
+		} else if (actID == 2001) {
+			bytes.writeInt(actID);
+			bytes.writeShort(rewardID);
+			bytes.writeShort(param1);
 		}
 		else {
 			bytes.writeInt(actID);
 			bytes.writeShort(rewardID);
-			bytes.writeShort(param1);
+			// bytes.writeShort(param1);
 		}
 		this.sendToServer(bytes);
 	}
@@ -1090,11 +1073,6 @@ class Activity extends BaseSystem {
 	 * 25-6
 	 * */
 	public postEnvelopeData(bytes: GameByteArray): void {
-
-		console.log('25-6')
-		console.log(bytes)
-		// return
-
 		let id = bytes.readInt();
 		let isSuccess = bytes.readByte();
 		if (isSuccess) {
@@ -1102,6 +1080,9 @@ class Activity extends BaseSystem {
 			let eId = bytes.readUnsignedShort();
 			let endtime = bytes.readUnsignedShort();
 			let noName = bytes.readInt();
+
+			// let hongbaoNum = bytes.readShort();
+			let rechargeNum = bytes.readInt();
 			let Num = bytes.readShort();
 			let obj = []
 			for (let i = 0; i < Num; i++) {
@@ -1153,19 +1134,12 @@ class Activity extends BaseSystem {
 		let id = bytes.readInt();
 		if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
 			let actData = this.activityData[id] as ActivityType24Data;
-			let len = bytes.readShort();
-			if (len) {//新增的红包必定是最新时间 客户端不作每次获得红包都排序  红包多了会耗性能
-				for (let i = 0; i < len; i++) {
-					let reld: RedEnvelope = new RedEnvelope();
-					reld.id = bytes.readUnsignedShort();
-					reld.timer = bytes.readInt();
-					actData.envelopeData.push(reld);//最新的红包放最后
-				}
-
-			}
+			let reld: RedEnvelope = new RedEnvelope();
+			reld.id = bytes.readUnsignedShort();
+			reld.startimer = bytes.readInt();
+			actData.envelopeData.push(reld);//最新的红包放最后
 			console.log('获取到的红包数mu')
 			console.log(actData)
-			
 			HBSystem.ins().updateHongBao();
 		}
 

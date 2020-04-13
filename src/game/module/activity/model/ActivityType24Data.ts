@@ -10,7 +10,8 @@ class ActivityType24Data extends ActivityBaseData {
 	}
 	public init(bytes: GameByteArray, id: number) {
 
-		// let num1 = bytes.readInt();
+		// let hongbaoNum = bytes.readShort();
+		let rechargeNum = bytes.readInt();
 		let num = bytes.readShort();
 		for(let i =0;i<num;i++){
 			let name = bytes.readString();
@@ -21,41 +22,47 @@ class ActivityType24Data extends ActivityBaseData {
 			let num2_ewai = bytes.readByte();
 			let num3 = bytes.readInt();
 		}
-		
-
-
-
-		// this.score = bytes.readInt();
-		// let len = bytes.readShort();
-		// this.logs = [];
-		// for( let i = 0;i < len;i++ ){
-		//     let index = bytes.readShort();
-		//     let name = bytes.readString();
-		//     let serverId = bytes.readInt();
-		//     this.logs.push({name:name,serverId:serverId,index:index});
-		// }
-		//检测是否放入了检测区
 		if( Activity.ins().activityTimers.indexOf(id) == -1 )
 		    Activity.ins().activityTimers.push(id);
 	}
 
 	public update(bytes: GameByteArray): void {
-		let eId = bytes.readUnsignedShort();//红包id
-		let yb = bytes.readInt();//元宝
-		let gold = bytes.readInt();//金币
-		let len = bytes.readShort();
-		let arr = [];
-		let role: Role = SubRoles.ins().getSubRoleByIndex(0);
-		arr.push({ job: role.job, sex: role.sex, name: Actor.myName, yb: yb, gold: gold });
-		for (let i = 0; i < len; i++) {
-			let job = bytes.readShort();
-			let sex = bytes.readShort();
-			let otherName = bytes.readString();
-			let otherYB = bytes.readInt();
-			if (Actor.myName != otherName)
-				arr.push({ job: job, sex: sex, name: otherName, yb: otherYB, gold: 0 });
+
+		if ( Activity.ins().isSuccee) {
+			console.log('领取成功')
+			
+			let type = bytes.readShort();
+			if (type == 1) {
+				let hongbaoId = bytes.readShort()
+				let yuanbaoshu = bytes.readInt()
+				let ewai = bytes.readInt()
+
+			} else {
+				let ewai = bytes.readInt()
+			}
+		}else{
+			console.log('领取shibai')
 		}
-		Activity.ins().postGetRedEnvelope(this.id, eId, yb, gold, arr);//派发红包奖励情况
+
+
+
+
+		// let eId = bytes.readUnsignedShort();//红包id
+		// let yb = bytes.readInt();//元宝
+		// let gold = bytes.readInt();//金币
+		// let len = bytes.readShort();
+		// let arr = [];
+		// let role: Role = SubRoles.ins().getSubRoleByIndex(0);
+		// arr.push({ job: role.job, sex: role.sex, name: Actor.myName, yb: yb, gold: gold });
+		// for (let i = 0; i < len; i++) {
+		// 	let job = bytes.readShort();
+		// 	let sex = bytes.readShort();
+		// 	let otherName = bytes.readString();
+		// 	let otherYB = bytes.readInt();
+		// 	if (Actor.myName != otherName)
+		// 		arr.push({ job: job, sex: sex, name: otherName, yb: otherYB, gold: 0 });
+		// }
+		// Activity.ins().postGetRedEnvelope(this.id, eId, yb, gold, arr);//派发红包奖励情况
 	}
 	public get envelopeData(): RedEnvelope[] {
 		this._envelopeData = this._envelopeData ? this._envelopeData : [];

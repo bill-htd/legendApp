@@ -154,6 +154,9 @@ var RedEnvelope = (function () {
         var endedTime = Math.floor((DateUtils.formatMiniDateTime(this.timer) - GameServer.serverTime) / 1000);
         return endedTime <= 0 ? true : false;
     };
+    RedEnvelope.prototype.canStartTimer = function () {
+        return GameServer.serverTime / 1000 >= (DateUtils.formatMiniDateTime(this.startimer)) ? true : false;
+    };
     return RedEnvelope;
 }());
 __reflect(RedEnvelope.prototype, "RedEnvelope");

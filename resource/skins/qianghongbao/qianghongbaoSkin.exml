@@ -1,25 +1,45 @@
 <?xml version='1.0' encoding='utf-8'?>
 <e:Skin class="qianghongbaoSkin" width="405" height="510" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*"  >
 
-	<e:Image source="hongbao_under_png" width="363" height="506" y="3" horizontalCenter="0"/>
 
-	<e:Scroller y="174" anchorOffsetY="0" height="324" horizontalCenter="0">
-		<e:List id="list" itemRendererSkinName="hongbaoRewardItem"/>
-	</e:Scroller>
-	<e:Image id="topImg" source="hongbao_top_png" height="373" y="2" horizontalCenter="0"/>
-	<e:Image id="downImg" source="hongbao_bottom_png" y="322" height="187" horizontalCenter="0"/>
-	<e:Button id="closeBtn" label="按钮" skinName="Btn0Skin" icon="chatclose" y="3" scaleX="0.8" scaleY="0.8" horizontalCenter="160" visible="false"/>
-	<e:Group y="62" horizontalCenter="0">
-		<e:Image y="0" x="0" width="80" height="80" source="touxiangkuang0" scale9Grid="6,6,1,1"/>
-		<e:Image id="myFace" x="4" y="4" width="72" height="72" source="head_10"/>
+
+
+
+
+
+
+
+
+
+
+
+	<e:Group horizontalCenter="0" verticalCenter="1" visible="false">
+		<e:Image id="topImg" source="hongbao_top_png" height="373" y="2" horizontalCenter="0"/>
+		<e:Image id="downImg" source="hongbao_bottom_png" y="322" height="187" horizontalCenter="0"/>
+		<e:Button id="hbbtn" label="Button" y="299" skinName="Btn0Skin" icon="hongbaobtn_png" x="118"/>
+		<e:Image id="hhbtnlabel" y="351" source="qianghongbao" touchEnabled="false" x="130"/>
+		<e:Image source="new_icon_btn2_json.qianghongbao_img_png" x="12" y="207" anchorOffsetX="0" width="345" anchorOffsetY="0" height="76"/>
 	</e:Group>
-	<e:Image width="180" height="25" y="144" source="bantoutiaobg2" scale9Grid="11,2,70,17" horizontalCenter="0"/>
-	<e:Label id="playerName" text="玩家名字六字" y="146" size="20" textColor="0xffd93f" bold="true" horizontalCenter="0"/>
-	<e:Image id="speakbg" width="280" y="179" source="xn_hongbaoUnder" anchorOffsetY="0" scale9Grid="3,0,6,141" height="114" horizontalCenter="0"/>
-	<e:Label id="speaktxt" text="恭祝大家在新的一年里，欧气十足，天天爆红装" y="184" size="22" anchorOffsetX="0" width="268" anchorOffsetY="0" height="104" bold="true" textColor="0xd1c28f" horizontalCenter="0"/>
-	<e:Button id="hbbtn" label="Button" y="302" skinName="Btn0Skin" icon="hongbaobtn_png" horizontalCenter="0"/>
-	<e:Image id="hhbtnlabel" y="354" source="qianghongbao" touchEnabled="false" horizontalCenter="0"/>
-	<e:Image id="title" source="hongbao_title1000" y="16" horizontalCenter="0"/>
+	<e:Group horizontalCenter="0" verticalCenter="0" left="0" right="0" top="0" bottom="0">
+		<e:Image source="hongbao_under_png" left="0" right="0" top="0" bottom="0"/>
+		<e:Image id="speakbg" width="280" y="359" source="xn_hongbaoUnder" anchorOffsetY="0" scale9Grid="3,0,6,141" height="142" x="43"/>
+	
+		<e:Button id="btn1" label="额外领取" skinName="Btn16Skin" x="103" y="294"/>
+		<e:Label text="本次红包领取" size="17" textAlign="left" x="129" y="22" textColor="0xf7b922" bold="true"/>
+		<e:Label text="1000" size="31" textAlign="right" y="64" bold="true" textColor="0xf2cea2" x="127"/>
+		<e:Label text="元宝" size="17" textAlign="left" x="202" y="73" bold="true" textColor="0xf7e2a5"/>
+		<e:Label text="任意充值可额外领取" size="17" textColor="0xF7B922" textAlign="left" x="108" y="198" bold="true"/>
+		<e:Label text="1000" size="31" textAlign="right" y="238" bold="true" textColor="0x5df702" x="127"/>
+		<e:Label text="元宝" size="17" textColor="0xF7E2A5" textAlign="left" x="207" y="247" bold="true"/>
+		<e:Scroller id="scroller" width="275" horizontalCenter="2" bottom="9" height="135" anchorOffsetX="0" anchorOffsetY="0">
+			<e:List id="list" x="1" y="3" itemRendererSkinName="CreateRolItemSkin" anchorOffsetX="0" width="276">
+			<e:layout>
+				<e:VerticalLayout gap="5" paddingTop="2"/>
+			</e:layout>
+			</e:List>
+		</e:Scroller>
+	</e:Group>
+
 
 
 

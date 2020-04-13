@@ -128,10 +128,12 @@ var ActivityWin = (function (_super) {
             }
             if (Activity.ins().getActivityDataById(+k).isOpenActivity()) {
                 var data = Activity.ins().getbtnInfo(k);
-                if (data.activityType && data.activityType == ActivityType.Nesting)
-                    continue;
-                if (!ErrorLog.Assert(data, "ActivityWin  data   " + k))
-                    this._datas.push(data);
+                if (data) {
+                    if (data.activityType && data.activityType == ActivityType.Nesting)
+                        continue;
+                    if (!ErrorLog.Assert(data, "ActivityWin  data   " + k))
+                        this._datas.push(data);
+                }
             }
         }
         for (var k in PActivity.ins().activityData) {

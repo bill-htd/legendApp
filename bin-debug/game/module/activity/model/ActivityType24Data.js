@@ -21,6 +21,7 @@ var ActivityType24Data = (function (_super) {
         return _this;
     }
     ActivityType24Data.prototype.init = function (bytes, id) {
+        var rechargeNum = bytes.readInt();
         var num = bytes.readShort();
         for (var i = 0; i < num; i++) {
             var name_1 = bytes.readString();
@@ -34,22 +35,21 @@ var ActivityType24Data = (function (_super) {
             Activity.ins().activityTimers.push(id);
     };
     ActivityType24Data.prototype.update = function (bytes) {
-        var eId = bytes.readUnsignedShort();
-        var yb = bytes.readInt();
-        var gold = bytes.readInt();
-        var len = bytes.readShort();
-        var arr = [];
-        var role = SubRoles.ins().getSubRoleByIndex(0);
-        arr.push({ job: role.job, sex: role.sex, name: Actor.myName, yb: yb, gold: gold });
-        for (var i = 0; i < len; i++) {
-            var job = bytes.readShort();
-            var sex = bytes.readShort();
-            var otherName = bytes.readString();
-            var otherYB = bytes.readInt();
-            if (Actor.myName != otherName)
-                arr.push({ job: job, sex: sex, name: otherName, yb: otherYB, gold: 0 });
+        if (Activity.ins().isSuccee) {
+            console.log('领取成功');
+            var type = bytes.readShort();
+            if (type == 1) {
+                var hongbaoId = bytes.readShort();
+                var yuanbaoshu = bytes.readInt();
+                var ewai = bytes.readInt();
+            }
+            else {
+                var ewai = bytes.readInt();
+            }
         }
-        Activity.ins().postGetRedEnvelope(this.id, eId, yb, gold, arr);
+        else {
+            console.log('领取shibai');
+        }
     };
     Object.defineProperty(ActivityType24Data.prototype, "envelopeData", {
         get: function () {

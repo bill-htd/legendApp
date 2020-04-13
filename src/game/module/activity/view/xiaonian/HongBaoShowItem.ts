@@ -27,16 +27,16 @@ class HongBaoShowItem extends BaseItemRender {
 			UserTips.ins().showTips(`活动已结束`);
 			return;
 		}
-		for( let i = activityData.envelopeData.length-1;i >= 0 ;i-- ){
-			if( !activityData.envelopeData[i] || activityData.envelopeData[i].id == this.data.eId ){
-				if( activityData.envelopeData[i].isOverTimer() ){
-					UserTips.ins().showTips(`|C:0xff0000&T:红包已过期`);
-					Activity.ins().postEnvelopeDataCall(null);
-					return;
-				}
-				break;
-			}
-		}
+		// for( let i = activityData.envelopeData.length-1;i >= 0 ;i-- ){
+		// 	if( !activityData.envelopeData[i] || activityData.envelopeData[i].id == this.data.eId ){
+		// 		if( activityData.envelopeData[i].isOverTimer() ){
+		// 			UserTips.ins().showTips(`|C:0xff0000&T:红包已过期`);
+		// 			Activity.ins().postEnvelopeDataCall(null);
+		// 			return;
+		// 		}
+		// 		break;
+		// 	}
+		// }
 
 		// Activity.ins().sendEnvelopeData(this.data.actId,this.data.eId);
 

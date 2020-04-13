@@ -152,16 +152,19 @@ class ActivityWin extends BaseEuiView {
 			}
 			if (Activity.ins().getActivityDataById(+k).isOpenActivity()) {
 				let data: ActivityBtnConfig = Activity.ins().getbtnInfo(k);
-				if( data.activityType && data.activityType == ActivityType.Nesting )continue;//过滤嵌套活动
-				if (!ErrorLog.Assert(data, "ActivityWin  data   " + k))
-					this._datas.push(data);
+				if (data) {
+					if (data.activityType && data.activityType == ActivityType.Nesting) continue;//过滤嵌套活动
+					if (!ErrorLog.Assert(data, "ActivityWin  data   " + k))
+						this._datas.push(data);
+				}
+
 			}
 		}
 		//个人活动
 		for (let k in PActivity.ins().activityData) {
 			if (PActivity.ins().getActivityDataById(+k).isOpenActivity()) {
 				let data: PActivityBtnConfig = PActivity.ins().getbtnInfo(k);
-				if( data.activityType && data.activityType == ActivityType.Nesting )continue;//过滤嵌套活动
+				if (data.activityType && data.activityType == ActivityType.Nesting) continue;//过滤嵌套活动
 				if (!ErrorLog.Assert(data, "PActivityWin  data   " + k))
 					this._datas.push(data);
 			}
@@ -244,7 +247,7 @@ class ActivityWin extends BaseEuiView {
 	private onClick(e: egret.TouchEvent): void {
 		switch (e.currentTarget) {
 			case this.closeBtn:
-			// case this.closeBtn0:
+				// case this.closeBtn0:
 				ViewManager.ins().close(this);
 				break;
 		}

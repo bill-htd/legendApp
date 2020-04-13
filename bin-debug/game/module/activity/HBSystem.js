@@ -25,8 +25,6 @@ var HBSystem = (function (_super) {
         return _super.ins.call(this);
     };
     HBSystem.prototype.updateHongBao = function () {
-        console.log('updateHongBao');
-        console.log(Activity.ins().activityTimers);
         var view = ViewManager.ins().getView(PlayFunView);
         if (!view || !view.hongbao)
             return;
@@ -68,14 +66,14 @@ var HBSystem = (function (_super) {
                             continue;
                         }
                         var eId = actData.envelopeData[j].id;
-                        if (!actData.envelopeData[j].isOverTimer()) {
+                        if (!actData.envelopeData[j].canStartTimer()) {
                             var item = new HongBaoShowItem();
                             item.data = { actId: actId, eId: eId };
                             view.hongbao.addChild(item);
                             break;
                         }
                         else {
-                            actData.popEnvelope(eId);
+                            console.log('没到领取时间');
                         }
                     }
                 }
