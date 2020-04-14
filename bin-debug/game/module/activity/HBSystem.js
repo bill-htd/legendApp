@@ -146,9 +146,7 @@ var HBSystem = (function (_super) {
     HBSystem.prototype.testhongbao = function (actid, hongbaoid) {
         var view = ViewManager.ins().getView(PlayFunView);
         view.hongbao.removeChildren();
-        var item = new HongBaoOpenItem();
-        item.inithongbaodata(actid, hongbaoid);
-        view.hongbao.addChildAt(item, 1);
+        ViewManager.ins().open(FuliWin, 5);
     };
     HBSystem.prototype.closeallhongbao = function () {
     };

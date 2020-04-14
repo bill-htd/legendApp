@@ -58,8 +58,7 @@ var FranchiseWin = (function (_super) {
                 }
                 this.btn1.visible = true;
                 TimerManager.ins().remove(this.setTimeLbel, this);
-                if (this.first)
-                    this.first.visible = Recharge.ins().firstBuy ? true : false;
+                this.first.visible = true;
             }
             this.leftTime.visible = Recharge.ins().franchise > 0 ? true : false;
         }

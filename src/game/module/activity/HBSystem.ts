@@ -13,9 +13,6 @@ class HBSystem extends BaseSystem {
 
         //增加抢红包活动管理
 
-
-
-
     }
 
     public static ins(): HBSystem {
@@ -154,14 +151,10 @@ class HBSystem extends BaseSystem {
 
     }
     public testhongbao(actid,hongbaoid) {
-        
         let view: PlayFunView = ViewManager.ins().getView(PlayFunView) as PlayFunView;
         view.hongbao.removeChildren();
-        // let actData:ActivityType12Data = Activity.ins().activityData[eld.id] as ActivityType12Data;
-        let item: HongBaoOpenItem = new HongBaoOpenItem();
-        item.inithongbaodata(actid,hongbaoid)
-        view.hongbao.addChildAt(item, 1);
-
+        ViewManager.ins().open(FuliWin, 5);
+        
     }
     public closeallhongbao() {
         

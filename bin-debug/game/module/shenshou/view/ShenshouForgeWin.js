@@ -180,7 +180,17 @@ var ShenshouForgeWin = (function (_super) {
                     UserTips.ins().showCenterTips("\u5F53\u524D\u6CA1\u6709\u53EF\u5206\u89E3\u7684\u88C5\u5907");
                     return;
                 }
-                ShenshouSys.ins().sendDepartEquip(this.nowList);
+                var cutNowList = [];
+                for (var i = 0; i < this.nowList.length; i++) {
+                    cutNowList.push(this.nowList[i]);
+                    if (cutNowList.length >= 30) {
+                        ShenshouSys.ins().sendDepartEquip(cutNowList);
+                        cutNowList = [];
+                    }
+                }
+                if (cutNowList.length > 0) {
+                    ShenshouSys.ins().sendDepartEquip(this.nowList);
+                }
                 break;
         }
     };

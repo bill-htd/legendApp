@@ -21,6 +21,8 @@ class RankItemRenderer extends BaseItemRender {
 
 	public dataChanged(): void {
 		if (this.data != null) {
+
+
 			for (let key in this.data) {
 				let component: any = this[key] as eui.Component;
 				if (component)

@@ -8,6 +8,6 @@
 	<e:Label id="pos" text="100" size="28" textAlign="center" verticalCenter="0" italic="true" textColor="0xf8b141" bold="true" horizontalCenter="-196"/>
 	<e:Label id="player" text="战力排行名字" size="24" x="136" textColor="0xd1c28f" verticalCenter="0"/>
 	<e:Image id="t1" x="26" y="0" source="paihang2" visible="false"/>
-	<e:Image id="t10" rotation="0" source="phb_9" right="50" verticalCenter="0"/>
+	<e:Image id="t10" rotation="0" source="phb_9" right="0" verticalCenter="0"/>
 	<e:Image id="vip" x="96" source="xvip_v2_png" verticalCenter="0"/>
 </e:Skin>

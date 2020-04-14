@@ -24,12 +24,14 @@ var ActivityType24Data = (function (_super) {
         var rechargeNum = bytes.readInt();
         var num = bytes.readShort();
         for (var i = 0; i < num; i++) {
-            var name_1 = bytes.readString();
-            var hongbaoid = bytes.readShort();
-            var job = bytes.readShort();
-            var sex = bytes.readShort();
-            var num2_ewai = bytes.readByte();
-            var num3 = bytes.readInt();
+            var Qinfo = new QenvelopeData;
+            Qinfo.name = bytes.readString();
+            Qinfo.eId = bytes.readShort();
+            Qinfo.job = bytes.readShort();
+            Qinfo.sex = bytes.readShort();
+            Qinfo.isEwai = bytes.readByte();
+            Qinfo.yuanbao = bytes.readInt();
+            this.QenvelopeData.push(Qinfo);
         }
         if (Activity.ins().activityTimers.indexOf(id) == -1)
             Activity.ins().activityTimers.push(id);
@@ -39,9 +41,15 @@ var ActivityType24Data = (function (_super) {
             console.log('领取成功');
             var type = bytes.readShort();
             if (type == 1) {
-                var hongbaoId = bytes.readShort();
-                var yuanbaoshu = bytes.readInt();
                 var ewai = bytes.readInt();
+                var Qinfo = new QenvelopeData;
+                Qinfo.name = '我自己';
+                Qinfo.eId = bytes.readShort();
+                Qinfo.job = 0;
+                Qinfo.sex = 0;
+                Qinfo.isEwai = 1;
+                Qinfo.yuanbao = bytes.readInt();
+                this.QenvelopeData.push(Qinfo);
             }
             else {
                 var ewai = bytes.readInt();
@@ -140,4 +148,16 @@ var ActivityType24Data = (function (_super) {
     return ActivityType24Data;
 }(ActivityBaseData));
 __reflect(ActivityType24Data.prototype, "ActivityType24Data");
+var QenvelopeData = (function () {
+    function QenvelopeData() {
+        this.eId = 0;
+        this.job = 0;
+        this.sex = 0;
+        this.yuanbao = 0;
+        this.name = "";
+        this.isEwai = 0;
+    }
+    return QenvelopeData;
+}());
+__reflect(QenvelopeData.prototype, "QenvelopeData");
 //# sourceMappingURL=ActivityType24Data.js.map

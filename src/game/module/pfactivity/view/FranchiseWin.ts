@@ -55,15 +55,16 @@ class FranchiseWin extends BaseView {
 				this.btn1.visible = true;
 				// this.btn0.visible = true;
 				TimerManager.ins().remove(this.setTimeLbel, this);
-				if (this.first)
-					this.first.visible = Recharge.ins().firstBuy ? true : false;
+				this.first.visible = true;
+				// if (this.first)
+				// 	this.first.visible = Recharge.ins().firstBuy ? true : false;
 			}
 			this.leftTime.visible = Recharge.ins().franchise > 0 ? true : false;
 			// this.setView();
 		}
 		this.setIconEff();
 
-		
+
 
 	}
 
@@ -101,7 +102,7 @@ class FranchiseWin extends BaseView {
 		switch (e.currentTarget) {
 			case this.btn1:
 				if (this.btn1.label != "领取奖励") {
-					Recharge.ins().showReCharge(100, 1,1);
+					Recharge.ins().showReCharge(100, 1, 1);
 					// let monthCardPriceInfo = window['getmonthCardPriceInfo']()
 					// if (monthCardPriceInfo[1].status != 1) {
 					// 	WarnWin.show(monthCardPriceInfo[1].msg, function () { }, this, function () { }, this, 'sure');

@@ -61,7 +61,6 @@ var MonthCardWin = (function (_super) {
         }
     };
     MonthCardWin.prototype.setView = function () {
-        this.first.visible = !Setting.ins().getValue(ClientSet.firstMonthCard);
     };
     MonthCardWin.prototype.setTimeLbel = function () {
         var endedTime = Recharge.ins().monthDay;

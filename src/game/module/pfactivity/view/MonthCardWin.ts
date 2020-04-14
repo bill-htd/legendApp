@@ -66,7 +66,7 @@ class MonthCardWin extends BaseView {
 	}
 
 	private setView(): void {
-		this.first.visible = !Setting.ins().getValue(ClientSet.firstMonthCard);
+		// this.first.visible = !Setting.ins().getValue(ClientSet.firstMonthCard);
 	}
 
 	private setTimeLbel(): void {

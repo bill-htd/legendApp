@@ -779,6 +779,12 @@ var Activity = (function (_super) {
         if (isSuccess) {
             var eId = bytes.readUnsignedShort();
             var endtime = bytes.readUnsignedShort();
+            if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
+                var actData = this.activityData[id];
+                var reld = new RedEnvelope();
+                reld.id = bytes.readUnsignedShort();
+                reld.timer = bytes.readInt();
+            }
             var noName = bytes.readInt();
             var rechargeNum = bytes.readInt();
             var Num = bytes.readShort();
@@ -794,9 +800,9 @@ var Activity = (function (_super) {
             }
             console.log(obj);
             HBSystem.ins().testhongbao(id, eId);
-            return;
         }
         this.postEnvelopeDataCall(null);
+        return null;
     };
     Activity.prototype.postEnvelopeDataCall = function (eld) {
         return eld;

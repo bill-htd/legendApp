@@ -216,7 +216,18 @@ class ShenshouForgeWin extends BaseEuiView {
 					UserTips.ins().showCenterTips(`当前没有可分解的装备`);
 					return;
 				}
-				ShenshouSys.ins().sendDepartEquip(this.nowList);
+
+				let cutNowList = []
+				for (let i = 0; i < this.nowList.length; i++) {
+					cutNowList.push(this.nowList[i])
+					if(cutNowList.length >=30){
+						ShenshouSys.ins().sendDepartEquip(cutNowList);
+						cutNowList = []
+					}
+				}
+				if(cutNowList.length > 0){
+					ShenshouSys.ins().sendDepartEquip(this.nowList);
+				}
 				break;
 		}
 	}

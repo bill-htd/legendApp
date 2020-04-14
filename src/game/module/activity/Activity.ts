@@ -1072,13 +1072,25 @@ class Activity extends BaseSystem {
 	 * 返回红包数据
 	 * 25-6
 	 * */
-	public postEnvelopeData(bytes: GameByteArray): void {
+	public postEnvelopeData(bytes: GameByteArray){
 		let id = bytes.readInt();
 		let isSuccess = bytes.readByte();
 		if (isSuccess) {
-
 			let eId = bytes.readUnsignedShort();
 			let endtime = bytes.readUnsignedShort();
+
+			if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
+				let actData = this.activityData[id] as ActivityType24Data;
+				let reld: RedEnvelope = new RedEnvelope();
+				reld.id = bytes.readUnsignedShort();
+				reld.timer = bytes.readInt();
+
+				// actData.envelopeData.push(reld);//最新的红包放最后
+				// console.log('获取到的红包数mu')
+				// console.log(actData)
+				// HBSystem.ins().updateHongBao();
+			}
+
 			let noName = bytes.readInt();
 
 			// let hongbaoNum = bytes.readShort();
@@ -1116,9 +1128,10 @@ class Activity extends BaseSystem {
 			// eld.desc = desc;
 
 			// this.postEnvelopeDataCall(eld);
-			return;
 		}
+		
 		this.postEnvelopeDataCall(null);
+		return null;
 	}
 
 	public postEnvelopeDataCall(eld: EnvelopeData) {

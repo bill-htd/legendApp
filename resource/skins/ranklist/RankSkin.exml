@@ -77,13 +77,13 @@
 		<e:Button id="praiseBtn" label="按钮" skinName="Btn0Skin" icon="xphb_json.phb_2" horizontalCenter="0" y="-64"/>
 	</e:Group>
 	<e:Label id="state" text="暂时无人上榜" y="395" bold="true" horizontalCenter="0" textColor="0xd1c28f" size="24" visible="false"/>
-	<e:Group id="firstGroup" y="371" height="60" width="420" horizontalCenter="0" visible="false">
+	<e:Group id="firstGroup" y="371" height="60" width="499" horizontalCenter="8.5" anchorOffsetX="0" visible="false">
 		<e:Image left="0" right="0" top="0" bottom="0" source="waifaguang" scale9Grid="11,11,10,8" visible="false"/>
 		<e:Image left="6" right="6" top="6" bottom="6" source="tongyongtip3" scale9Grid="11,11,10,8" alpha="0.8"/>
 		<e:Image left="10" right="10" top="10" bottom="8" alpha="0.8" scale9Grid="10,0,10,54" source="quali3"/>
 		<e:Image x="9" y="6" source="paihang1"/>
-		<e:Image id="vip" x="80" source="xvip_v2_png" verticalCenter="0"/>
-		<e:Label id="firstNameTxt" text="玩家名屌炸天" textColor="0xf8b141" size="22" verticalCenter="0" horizontalCenter="-21"/>
+		<e:Image id="vip" x="64" source="xvip_v2_png" verticalCenter="0.5"/>
+		<e:Label id="firstNameTxt" text="常山赵子龙  战力:10000000000" textColor="0xf8b141" size="22" verticalCenter="0" left="110"/>
 		<e:Label id="firstLevelTxt" text="100级" size="22" verticalCenter="0" textColor="0x9f946d" right="25"/>
 		<e:Image id="weiwang" rotation="0" right="6" source="prestige_title_8" verticalCenter="0" visible="false"/>
 	</e:Group>

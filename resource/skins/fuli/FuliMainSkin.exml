@@ -22,8 +22,8 @@
 		<e:Image x="0" top="0" bottom="0" source="bantoumingkuang3" />
 		<e:Image scaleX="-1" top="0" bottom="0" source="bantoumingkuang3" right="0" />
 	</e:Group>
-	<e:Scroller id="listBar" horizontalCenter="0.5" height="99" bottom="129" width="459" anchorOffsetX="0" anchorOffsetY="0">
-		<e:List id="iconList" y="0" itemRendererSkinName="ActBtnSkin" horizontalCenter="20.5" height="99" anchorOffsetY="0" anchorOffsetX="0" width="504">
+	<e:Scroller id="listBar" horizontalCenter="0.5" height="106" bottom="121" width="459" anchorOffsetX="0" anchorOffsetY="0">
+		<e:List id="iconList" y="1" itemRendererSkinName="ActBtnSkin" horizontalCenter="0" height="106" anchorOffsetY="0" anchorOffsetX="0" width="504">
 		<e:layout>
 			<e:HorizontalLayout gap="10" paddingLeft="0"/>
 		</e:layout>

@@ -37,12 +37,13 @@
 		<e:Image y="116" source="bantoutiaoboss" scaleX="-1" width="244" horizontalCenter="146"/>
 		<e:Label text="购买月卡不计入VIP和首充" y="120" size="18" textColor="0x916625" bold="true" horizontalCenter="161.5"/>
 		<e:Label id="feng" text="封测期间不开放月卡功能" size="24" horizontalCenter="0" bottom="20" textColor="0x9f946d" visible="false"/>
-		<e:Label id="first" text="28元的元宝月卡 + 88元的特权月卡，原价116，现价只要100元\n并且有相应元宝赠送哦" size="18" horizontalCenter="1" bold="true" textAlign="center" textColor="0x20cb30" verticalCenter="226"/>
+
 		<e:Group id="xianshi1" horizontalCenter="29.5" verticalCenter="293.5">
 			<e:Image source="new_pay2_json.new_paybtnbg_png" x="3" y="1.5" anchorOffsetY="0" height="93" anchorOffsetX="0" width="230" visible="false"/>
-			<e:Label text="原价116元" y="36" size="20" bold="true" x="213" textColor="0xfcd802"/>
-			<e:Image source="boolRed_png" x="226" y="46" width="69"/>
-			<e:Label id="first0" text="如果已经有月卡，将会自动延长月卡时间。" size="15" textAlign="center" textColor="0x20CB30" bold="true" y="76" x="-18"/>
+			<e:Label text="原价116元" y="86" size="20" bold="true" x="339" textColor="0xfcd802"/>
+			<e:Image source="boolRed_png" x="352" y="96" width="69"/>
+			<e:Label id="first0" text="如果已经有月卡，将会自动延长月卡时间。" size="15" textAlign="center" textColor="0x20CB30" bold="true" y="119" x="106"/>
+			<e:Label id="first" text="28元的元宝月卡 + 88元的特权月卡，原价116，现价只要100元\n并且有相应元宝赠送哦" size="18" horizontalCenter="-36" bold="true" textAlign="center" textColor="0x20cb30" verticalCenter="-72" x="-128" y="-38" scaleX="1" scaleY="1"/>
 		</e:Group>
 
 		<e:Button id="btn1" label="28元抢购" skinName="Btn1Skin" horizontalCenter="0" verticalCenter="302" visible="false"/>

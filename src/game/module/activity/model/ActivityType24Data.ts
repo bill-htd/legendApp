@@ -4,6 +4,9 @@ class ActivityType24Data extends ActivityBaseData {
 	public score: number;//积分
 	// public logs:{name:string,serverId:number,index:number}[];
 	private _envelopeData: RedEnvelope[];//红包数据 红包id 红包cd
+	public QenvelopeData: QenvelopeData[];  // 所有抢红包的人的数据
+	public MyQenvelopeData: MyQenvelopeData[];  // 所有抢红包的人的数据
+
 	constructor(bytes: GameByteArray, id: number) {
 		super(bytes);
 		this.init(bytes, id);
@@ -12,35 +15,63 @@ class ActivityType24Data extends ActivityBaseData {
 
 		// let hongbaoNum = bytes.readShort();
 		let rechargeNum = bytes.readInt();
-		let num = bytes.readShort();
-		for(let i =0;i<num;i++){
-			let name = bytes.readString();
-			let hongbaoid = bytes.readShort();
-			let job = bytes.readShort();
-			let sex = bytes.readShort();
-
-			let num2_ewai = bytes.readByte();
-			let num3 = bytes.readInt();
+		let eWaiYBNum = bytes.readInt();
+		let len = bytes.readShort();
+		let _MyQenvelopeData = []
+		for(let i = 0; i< len;i++){
+			let MyQinfo:MyQenvelopeData = new MyQenvelopeData;
+			MyQinfo.eId = bytes.readShort();
+			MyQinfo.yuanbao = bytes.readInt();
+			MyQinfo.Ewai_yuanbao = bytes.readInt();
+			_MyQenvelopeData.push(MyQinfo)
 		}
-		if( Activity.ins().activityTimers.indexOf(id) == -1 )
-		    Activity.ins().activityTimers.push(id);
+		this.update_MyQenvelopeData(_MyQenvelopeData)
+		
+		let num = bytes.readShort();
+		for (let i = 0; i < num; i++) {
+			let Qinfo: QenvelopeData = new QenvelopeData;
+			Qinfo.name = bytes.readString();
+			Qinfo.eId = bytes.readShort();
+			Qinfo.job = bytes.readShort();
+			Qinfo.sex = bytes.readShort();
+			Qinfo.isEwai = bytes.readByte();
+			Qinfo.yuanbao = bytes.readInt();
+			this.QenvelopeData.push(Qinfo)
+		}
+
+		if (Activity.ins().activityTimers.indexOf(id) == -1)
+			Activity.ins().activityTimers.push(id);
+	}
+
+	// 更新已抢红包数据
+	public update_MyQenvelopeData(data:any):void{
+		this.MyQenvelopeData = [];
+		for(let i = 0; i<data.length;i++){
+			this.MyQenvelopeData.push(data[i])
+		}
 	}
 
 	public update(bytes: GameByteArray): void {
 
-		if ( Activity.ins().isSuccee) {
+		if (Activity.ins().isSuccee) {
 			console.log('领取成功')
-			
+
 			let type = bytes.readShort();
 			if (type == 1) {
-				let hongbaoId = bytes.readShort()
-				let yuanbaoshu = bytes.readInt()
 				let ewai = bytes.readInt()
+				let Qinfo: QenvelopeData = new QenvelopeData;
+				Qinfo.name ='我自己';
+				Qinfo.eId = bytes.readShort();
+				Qinfo.job = 0;
+				Qinfo.sex = 0;
+				Qinfo.isEwai = 1;  //不是额外红包
+				Qinfo.yuanbao = bytes.readInt();
+				this.QenvelopeData.push(Qinfo)
 
 			} else {
 				let ewai = bytes.readInt()
 			}
-		}else{
+		} else {
 			console.log('领取shibai')
 		}
 
@@ -190,27 +221,28 @@ class ActivityType24Data extends ActivityBaseData {
 //     //     }
 //     // }
 // }
-// /**红包具体数据*/
-// class EnvelopeData{
-//     public id:number;//活动id
-//     public eId:number;//红包id
-//     public job:number//战法道123
-//     public sex:number;//男女01
-//     public index:number;//活动序号
-//     public serverId:number;//服务器id
-//     public name:string;//名字
-//     public desc:string;//祝福语
-//     public constructor(){
-//         this.id = 0;
-//         this.eId = 0;
-//         this.job = 0;
-//         this.sex = 0;
-//         this.index = 0;
-//         this.serverId = 0;
-//         this.name = "";
-//         this.desc = "";
-//     }
-// }
+/**红包具体数据*/
+class QenvelopeData {
+	public name: string;
+	public eId: number;
+	public job: number;
+	public sex: number;
+	public isEwai: number;
+	public yuanbao: number;
+	public constructor() {
+		this.eId = 0;
+		this.job = 0;
+		this.sex = 0;
+		this.yuanbao = 0;
+		this.name = "";
+		this.isEwai = 0;
+	}
+}
+class MyQenvelopeData {
+	public eId: number;
+	public Ewai_yuanbao: number;
+	public yuanbao: number;
+}
 // /**25-2协议类型*/
 // enum EnvelopeType{
 //     SEND = 1,//发红包(25-2发送参数: 活动id, 活动序号index, EnvelopeType.SEND, 祝福语? )

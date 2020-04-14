@@ -175,6 +175,12 @@ class RankingWin extends BaseEuiView {
 
 		this.selfPos.text = 0 < rankModel.selfPos && rankModel.selfPos <= 1000 ? rankModel.selfPos + '' : `未上榜`;
 		let arr = rankModel.getDataList();
+		if(rankModel.type == 0){
+			//战力排行版加上战力
+			// for(let i = 0; i <arr.length;i++){
+			// 	arr[i].player = arr[i].player + '  战力:'+arr[i].power;
+			// }
+		}
 		this.list.dataProvider = new eui.ArrayCollection(arr.slice(1));
 
 		this.refushMoBaiStatu();
