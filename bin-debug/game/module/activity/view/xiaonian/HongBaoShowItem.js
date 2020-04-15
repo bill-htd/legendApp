@@ -35,7 +35,7 @@ var HongBaoShowItem = (function (_super) {
             UserTips.ins().showTips("\u6D3B\u52A8\u5DF2\u7ED3\u675F");
             return;
         }
-        Activity.ins().sendEnvelopeData(this.data.actId, this.data.eId);
+        HBSystem.ins().testhongbao();
     };
     HongBaoShowItem.prototype.dataChanged = function () {
         if (!this.data)

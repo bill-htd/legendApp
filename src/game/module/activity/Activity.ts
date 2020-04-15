@@ -77,9 +77,7 @@ class Activity extends BaseSystem {
 		this.regNetMsg(20, this.doNextDayLoginReward);
 		this.regNetMsg(22, this.postKuaFuRank);
 
-		this.regNetMsg(24, this.test_24);
 		this.regNetMsg(23, this.handlehongbaoInfo);
-		// this.regNetMsg(2, this.test_2);
 
 		this.regNetMsg(6, this.postEnvelopeData);
 		this.regNetMsg(8, this.postRedEnvelopeData);
@@ -171,22 +169,6 @@ class Activity extends BaseSystem {
 	}
 
 
-	/**
-	 * 初始化活动信息
-	 * 25-24
-	 * @param bytes
-	 */
-	private test_24(bytes: GameByteArray): void {
-		console.log('test_24')
-		console.log(bytes)
-	}
-
-	private test_2(bytes: GameByteArray): void {
-		console.log('test_2')
-		console.log(bytes)
-	}
-
-
 
 	private checkSpecials(): void {
 		if (TimerManager.ins().isExists(this.checkSpecials, this))
@@ -239,7 +221,9 @@ class Activity extends BaseSystem {
 			this.doubleTwelveData[activityID].update(bytes);
 		}
 		else {
+
 			this.getActivityDataById(activityID).update(bytes);
+			
 		}
 		this.postActivityPanel(activityID);
 		this.postActivityIsGetAwards();
@@ -1051,7 +1035,6 @@ class Activity extends BaseSystem {
 					return obj[key2];
 			}
 		}
-
 		return null;
 	}
 
@@ -1073,65 +1056,68 @@ class Activity extends BaseSystem {
 	 * 25-6
 	 * */
 	public postEnvelopeData(bytes: GameByteArray){
-		let id = bytes.readInt();
-		let isSuccess = bytes.readByte();
-		if (isSuccess) {
-			let eId = bytes.readUnsignedShort();
-			let endtime = bytes.readUnsignedShort();
 
-			if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
-				let actData = this.activityData[id] as ActivityType24Data;
-				let reld: RedEnvelope = new RedEnvelope();
-				reld.id = bytes.readUnsignedShort();
-				reld.timer = bytes.readInt();
+		return bytes;
 
-				// actData.envelopeData.push(reld);//最新的红包放最后
-				// console.log('获取到的红包数mu')
-				// console.log(actData)
-				// HBSystem.ins().updateHongBao();
-			}
+		// let id = bytes.readInt();
+		// let isSuccess = bytes.readByte();
+		// if (isSuccess) {
+		// 	let eId = bytes.readUnsignedShort();
+		// 	let endtime = bytes.readUnsignedShort();
 
-			let noName = bytes.readInt();
+		// 	if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
+		// 		let actData = this.activityData[id] as ActivityType24Data;
+		// 		let reld: RedEnvelope = new RedEnvelope();
+		// 		reld.id = bytes.readUnsignedShort();
+		// 		reld.timer = bytes.readInt();
 
-			// let hongbaoNum = bytes.readShort();
-			let rechargeNum = bytes.readInt();
-			let Num = bytes.readShort();
-			let obj = []
-			for (let i = 0; i < Num; i++) {
-				obj[i] = {}
-				obj[i].name = bytes.readString();
-				obj[i].hongbaoid = bytes.readShort();
-				obj[i].job = bytes.readShort();
-				obj[i].sex = bytes.readShort();
-				obj[i].isSuccess = bytes.readByte();
-				obj[i].serverId = bytes.readInt();
-			}
-			console.log(obj)
+		// 		// actData.envelopeData.push(reld);//最新的红包放最后
+		// 		// console.log('获取到的红包数mu')
+		// 		// console.log(actData)
+		// 		// HBSystem.ins().updateHongBao();
+		// 	}
 
-			HBSystem.ins().testhongbao(id, eId);
-			// this.sendReward(id, eId,1)
-			// let eId = bytes.readUnsignedShort();
-			// let job = bytes.readShort();
-			// let sex = bytes.readShort();
-			// let index = bytes.readShort();
-			// let serverId = bytes.readInt();
-			// let name = bytes.readString();
-			// let desc = bytes.readString();
-			// let eld: EnvelopeData = new EnvelopeData()
-			// eld.id = id;
-			// eld.eId = eId;
-			// eld.job = job;
-			// eld.sex = sex;
-			// eld.index = index;
-			// eld.serverId = serverId;
-			// eld.name = name;
-			// eld.desc = desc;
+		// 	let noName = bytes.readInt();
 
-			// this.postEnvelopeDataCall(eld);
-		}
+		// 	// let hongbaoNum = bytes.readShort();
+		// 	let rechargeNum = bytes.readInt();
+		// 	let Num = bytes.readShort();
+		// 	let obj = []
+		// 	for (let i = 0; i < Num; i++) {
+		// 		obj[i] = {}
+		// 		obj[i].name = bytes.readString();
+		// 		obj[i].hongbaoid = bytes.readShort();
+		// 		obj[i].job = bytes.readShort();
+		// 		obj[i].sex = bytes.readShort();
+		// 		obj[i].isSuccess = bytes.readByte();
+		// 		obj[i].serverId = bytes.readInt();
+		// 	}
+		// 	console.log(obj)
+
+			
+		// 	// this.sendReward(id, eId,1)
+		// 	// let eId = bytes.readUnsignedShort();
+		// 	// let job = bytes.readShort();
+		// 	// let sex = bytes.readShort();
+		// 	// let index = bytes.readShort();
+		// 	// let serverId = bytes.readInt();
+		// 	// let name = bytes.readString();
+		// 	// let desc = bytes.readString();
+		// 	// let eld: EnvelopeData = new EnvelopeData()
+		// 	// eld.id = id;
+		// 	// eld.eId = eId;
+		// 	// eld.job = job;
+		// 	// eld.sex = sex;
+		// 	// eld.index = index;
+		// 	// eld.serverId = serverId;
+		// 	// eld.name = name;
+		// 	// eld.desc = desc;
+
+		// 	// this.postEnvelopeDataCall(eld);
+		// }
 		
-		this.postEnvelopeDataCall(null);
-		return null;
+		// this.postEnvelopeDataCall(null);
+		// return null;
 	}
 
 	public postEnvelopeDataCall(eld: EnvelopeData) {
@@ -1143,10 +1129,11 @@ class Activity extends BaseSystem {
 	 * */
 	public handlehongbaoInfo(bytes: GameByteArray) {
 		// console.log(bytes)
-
+		console.log('25-23')
 		let id = bytes.readInt();
 		if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
 			let actData = this.activityData[id] as ActivityType24Data;
+			actData.envelopeData = []
 			let reld: RedEnvelope = new RedEnvelope();
 			reld.id = bytes.readUnsignedShort();
 			reld.startimer = bytes.readInt();

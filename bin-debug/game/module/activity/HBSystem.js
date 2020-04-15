@@ -143,10 +143,10 @@ var HBSystem = (function (_super) {
             }
         }
     };
-    HBSystem.prototype.testhongbao = function (actid, hongbaoid) {
+    HBSystem.prototype.testhongbao = function () {
         var view = ViewManager.ins().getView(PlayFunView);
         view.hongbao.removeChildren();
-        ViewManager.ins().open(FuliWin, 5);
+        ViewManager.ins().open(FuliWin, 6);
     };
     HBSystem.prototype.closeallhongbao = function () {
     };

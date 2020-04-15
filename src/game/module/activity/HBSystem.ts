@@ -150,11 +150,10 @@ class HBSystem extends BaseSystem {
         }
 
     }
-    public testhongbao(actid,hongbaoid) {
+    public testhongbao() {
         let view: PlayFunView = ViewManager.ins().getView(PlayFunView) as PlayFunView;
         view.hongbao.removeChildren();
-        ViewManager.ins().open(FuliWin, 5);
-        
+        ViewManager.ins().open(FuliWin, 6);
     }
     public closeallhongbao() {
         

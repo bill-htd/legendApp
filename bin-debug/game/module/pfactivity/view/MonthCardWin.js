@@ -42,7 +42,7 @@ var MonthCardWin = (function (_super) {
                 this.xianshi2.visible = false;
             }
             else {
-                this.btn0.visible = true;
+                this.btn1.visible = true;
                 TimerManager.ins().remove(this.setTimeLbel, this);
             }
             this.leftTime.visible = Recharge.ins().monthDay > 0 ? true : false;
@@ -61,6 +61,7 @@ var MonthCardWin = (function (_super) {
         }
     };
     MonthCardWin.prototype.setView = function () {
+        this.first1.visible = !Setting.ins().getValue(ClientSet.firstMonthCard);
     };
     MonthCardWin.prototype.setTimeLbel = function () {
         var endedTime = Recharge.ins().monthDay;

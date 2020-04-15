@@ -17,12 +17,18 @@ class QHBPanle extends BaseView {
 	private eid: number;
 	private hbbtn: eui.Button;
 
+	private yuanbao1: eui.Label;
+	private yuanbao2: eui.Label;
+	private btn1: eui.Button;
+
 
 	constructor() {
 		super();
 		this.skinName = "qianghongbaoSkin";
 		this.hbbtn.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouch, this);
+		this.btn1.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouch, this);
 		this.observe(Activity.ins().postEnvelopeData, this.initHongbaoInfo);//下发新红包
+		this.observe(Activity.ins().postRewardResult, this.initShowHongBao);//下发新红包
 	}
 
 
@@ -36,19 +42,21 @@ class QHBPanle extends BaseView {
 		console.log(param[0])
 
 		let bytes = param[0]
-		let reld: RedEnvelope = new RedEnvelope();
-		reld.id = bytes.readUnsignedShort();
-		reld.timer = bytes.readInt();
-		if (reld.isOverTimer()) {
-			// 
-			console.log('红包已过时')
-		} else {
+		let id = bytes.readInt();
+		let isSuccess = bytes.readByte();
+		if (isSuccess) {
+			let reld: RedEnvelope = new RedEnvelope();
+			reld.id = bytes.readUnsignedShort();
+			reld.timer = bytes.readInt();
 			console.log('可以领取')
 			this.initQhongbaoInfo(reld.id)
+		} else {
+			console.log('没有红包可以领取')
 		}
 
+
+
 		let noName = bytes.readInt();
-		// let hongbaoNum = bytes.readShort();
 		let rechargeNum = bytes.readInt();
 
 		let eWaiYBNum = bytes.readInt();
@@ -64,38 +72,75 @@ class QHBPanle extends BaseView {
 		let Num = bytes.readShort();
 		let obj = []
 		for (let i = 0; i < Num; i++) {
-			obj[i] = {}
-			obj[i].name = bytes.readString();
-			obj[i].hongbaoid = bytes.readShort();
-			obj[i].job = bytes.readShort();
-			obj[i].sex = bytes.readShort();
-			obj[i].isSuccess = bytes.readByte();
-			obj[i].serverId = bytes.readInt();
+			let Qinfo: QenvelopeData = new QenvelopeData;
+			Qinfo.name = bytes.readString();
+			Qinfo.eId = bytes.readShort();
+			Qinfo.job = bytes.readShort();
+			Qinfo.sex = bytes.readShort();
+			Qinfo.isEwai = bytes.readByte();
+			Qinfo.yuanbao = bytes.readInt();
+			obj.push(Qinfo)
 		}
 
 		if (Activity.ins().activityData[2001] as ActivityType24Data) {
 			let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
 			actData.update_MyQenvelopeData(_MyQenvelopeData)
+			actData.update_QenvelopeData(obj)
 		}
 	}
 
+	// private showHongBaoInfo() {
+	// 	console.log('显示抢红包面板')
+	// }
 	private initQhongbaoInfo(eid): void {
 		this.qianghongbao.visible = true;
 		this.showhongbao.visible = false;
 		this.eid = eid
 	}
-	private initShowHongBao(QenvelopeData): void {
-		this.qianghongbao.visible = false;
-		this.showhongbao.visible = true;
-		console.log('这里显示抢完的红包信息 ：')
-		console.log(QenvelopeData)
-		for (let i = 0; i < QenvelopeData.length; i++) {
+	private initShowHongBao(): void {
+		if (Activity.ins().activityData[2001] as ActivityType24Data) {
+			let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
+			let eWaiYuanBao = actData.eWaiYuanBao;
+			let MyQenvelope = actData.getMax_hongbao();
+			let QenvelopeData = actData.QenvelopeData;
+
+
+			this.qianghongbao.visible = false;
+			this.showhongbao.visible = true;
+			console.log('这里显示抢完的红包信息 ：')
+			console.log(QenvelopeData)
+			let arrName = []
+			for (let i = 0; i < QenvelopeData.length; i++) {
+				let str = QenvelopeData[i].name + '抢到了' + QenvelopeData[i].yuanbao + ' 元宝'
+				arrName.push(str)
+			}
+			this.list.dataProvider = new eui.ArrayCollection(arrName);
+			this.scroller.touchChildren = false;
+			this.scroller.touchEnabled = false;
+
+			this.listH = this.list.height - 200;
+			this.scroller.viewport.scrollV = 0;
+			let t = egret.Tween.get(this.scroller.viewport);
+			t.to({ scrollV: this.listH }, 40 * this.listH).call(this.loopT, this);
+			// 拿出最大红包
+			console.log('拿出最大红包')
+			console.log(MyQenvelope)
+			this.yuanbao1.text = MyQenvelope.yuanbao.toString()
+
+			this.btn1.visible = true;
+			if (eWaiYuanBao) {
+				this.yuanbao2.text = eWaiYuanBao.toString();
+			} else {
+				this.yuanbao2.text = MyQenvelope.Ewai_yuanbao.toString()
+			}
 
 		}
+
+
 	}
 
 	public init(): void {
-
+		Activity.ins().sendChangePage(2001)
 		// 先判断有没有红包没有领取如果有就
 		if (Activity.ins().activityData[2001] as ActivityType24Data) {
 			let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
@@ -103,33 +148,15 @@ class QHBPanle extends BaseView {
 				Activity.ins().sendEnvelopeData(2001, actData.envelopeData[0].id)
 			} else {
 				//没有红包
-				this.initShowHongBao(actData.QenvelopeData)
+				this.initShowHongBao()
 			}
 		}
 
-
-
-
-
-
 		this.list.itemRenderer = CreateRoleViewItem;
 
-		let arrName: string[] = ["", "", "", ""];
-		let addName = ["紫廖渔歌", "半瓶矿泉水", "暖风", "繁华过后", "念迩成习", "逆丶美丽",
-			"握不住的美", "隔岸觀火", "残喘的笑", "何时苏醒", "湮丶燃尽了", "年少无知≈", "卸不掉的盔甲", "″温瞳渐远≈",
-			"男人/吥乖", "走遍四方", "我已无力说爱", "繁华沧桑", "卡尺", "往事随风", "剑胆琴心", "心如止水", "风伤依旧",
-			"一直很低调", "遥忘而立", "忧郁的萨克斯", "哥比彩钻还炫", "烈日追风", "本人、已昏", "全橙相伴", "残月孤生"];
-		for (let i = 0; i < 3; i++) {
-			arrName = arrName.concat(addName);
-		}
-		this.list.dataProvider = new eui.ArrayCollection(arrName);
-		this.scroller.touchChildren = false;
-		this.scroller.touchEnabled = false;
+		
 
-		this.listH = this.list.height - 200;
-		this.scroller.viewport.scrollV = 0;
-		let t = egret.Tween.get(this.scroller.viewport);
-		t.to({ scrollV: this.listH }, 40 * this.listH).call(this.loopT, this);
+
 	}
 
 	private loopT() {
@@ -144,6 +171,7 @@ class QHBPanle extends BaseView {
 	public close(...param: any[]): void {
 		this.removeObserve();
 		this.hbbtn.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouch, this);
+		this.btn1.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouch, this);
 		this.removeTouchEvent(this, this.onTouch);
 	}
 
@@ -151,6 +179,18 @@ class QHBPanle extends BaseView {
 		switch (e.target) {
 			case this.hbbtn:
 				Activity.ins().sendReward(2001, this.eid, 1);
+				break;
+			case this.btn1:
+				if (Activity.ins().activityData[2001] as ActivityType24Data) {
+					let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
+					let rechargeNum = actData.rechargeNum;
+					if(rechargeNum > 0){
+						Activity.ins().sendReward(2001, this.eid, 2);
+					}else{
+						alert('没有充值');
+					}
+				}
+				
 				break;
 		}
 	}

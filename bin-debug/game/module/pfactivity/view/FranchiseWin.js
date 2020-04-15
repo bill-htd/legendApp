@@ -54,11 +54,15 @@ var FranchiseWin = (function (_super) {
                 ];
                 var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
                 var monthCardPriceInfo = window['getmonthCardPriceInfo']();
+                this.btn1.filters = [colorFlilter];
                 if (monthCardPriceInfo[1].status != 1) {
+                    this.btn1.filters = [colorFlilter];
                 }
                 this.btn1.visible = true;
                 TimerManager.ins().remove(this.setTimeLbel, this);
                 this.first.visible = true;
+                if (this.first)
+                    this.first.visible = Recharge.ins().firstBuy ? true : false;
             }
             this.leftTime.visible = Recharge.ins().franchise > 0 ? true : false;
         }
@@ -98,7 +102,13 @@ var FranchiseWin = (function (_super) {
         switch (e.currentTarget) {
             case this.btn1:
                 if (this.btn1.label != "领取奖励") {
-                    Recharge.ins().showReCharge(100, 1, 1);
+                    var monthCardPriceInfo = window['getmonthCardPriceInfo']();
+                    if (monthCardPriceInfo[1].status != 1) {
+                        WarnWin.show(monthCardPriceInfo[1].msg, function () { }, this, function () { }, this, 'sure');
+                    }
+                    else {
+                        Recharge.ins().showReCharge(88, 8800, 0);
+                    }
                 }
                 else {
                     Recharge.ins().sendGetFranchise();

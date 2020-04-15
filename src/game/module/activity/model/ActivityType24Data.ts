@@ -6,6 +6,8 @@ class ActivityType24Data extends ActivityBaseData {
 	private _envelopeData: RedEnvelope[];//红包数据 红包id 红包cd
 	public QenvelopeData: QenvelopeData[];  // 所有抢红包的人的数据
 	public MyQenvelopeData: MyQenvelopeData[];  // 所有抢红包的人的数据
+	public eWaiYuanBao: number;
+	public rechargeNum: number;
 
 	constructor(bytes: GameByteArray, id: number) {
 		super(bytes);
@@ -14,19 +16,23 @@ class ActivityType24Data extends ActivityBaseData {
 	public init(bytes: GameByteArray, id: number) {
 
 		// let hongbaoNum = bytes.readShort();
-		let rechargeNum = bytes.readInt();
-		let eWaiYBNum = bytes.readInt();
+		console.log('初始化信息 ：')
+		// 今日充值数
+		this.rechargeNum = bytes.readInt();
+		// 额外元宝
+		this.eWaiYuanBao = bytes.readInt();
 		let len = bytes.readShort();
 		let _MyQenvelopeData = []
-		for(let i = 0; i< len;i++){
-			let MyQinfo:MyQenvelopeData = new MyQenvelopeData;
+		for (let i = 0; i < len; i++) {
+			let MyQinfo: MyQenvelopeData = new MyQenvelopeData;
 			MyQinfo.eId = bytes.readShort();
 			MyQinfo.yuanbao = bytes.readInt();
 			MyQinfo.Ewai_yuanbao = bytes.readInt();
 			_MyQenvelopeData.push(MyQinfo)
 		}
 		this.update_MyQenvelopeData(_MyQenvelopeData)
-		
+
+		let _QenvelopeData = []
 		let num = bytes.readShort();
 		for (let i = 0; i < num; i++) {
 			let Qinfo: QenvelopeData = new QenvelopeData;
@@ -36,19 +42,46 @@ class ActivityType24Data extends ActivityBaseData {
 			Qinfo.sex = bytes.readShort();
 			Qinfo.isEwai = bytes.readByte();
 			Qinfo.yuanbao = bytes.readInt();
-			this.QenvelopeData.push(Qinfo)
+			_QenvelopeData.push(Qinfo)
 		}
+		this.update_QenvelopeData(_QenvelopeData)
+
 
 		if (Activity.ins().activityTimers.indexOf(id) == -1)
 			Activity.ins().activityTimers.push(id);
 	}
 
 	// 更新已抢红包数据
-	public update_MyQenvelopeData(data:any):void{
+	public update_MyQenvelopeData(data: any): void {
 		this.MyQenvelopeData = [];
-		for(let i = 0; i<data.length;i++){
+		for (let i = 0; i < data.length; i++) {
 			this.MyQenvelopeData.push(data[i])
 		}
+	}
+	// 更新已抢红包数据
+	public update_QenvelopeData(data: any): void {
+		this.QenvelopeData = [];
+		for (let i = 0; i < data.length; i++) {
+			this.QenvelopeData.push(data[i])
+		}
+	}
+
+	public getMax_hongbao() {
+		let maxid = 0;
+		for (let i = 0; i < this.MyQenvelopeData.length; i++) {
+			if (this.MyQenvelopeData[i].eId > maxid) {
+				// 拿出最大红包
+				maxid = this.MyQenvelopeData[i].eId
+			}
+		}
+		for (let i = 0; i < this.MyQenvelopeData.length; i++) {
+			if (this.MyQenvelopeData[i].eId == maxid) {
+				// 拿出最大红包
+				console.log(this.MyQenvelopeData[i])
+				return this.MyQenvelopeData[i];
+			}
+		}
+		return null
 	}
 
 	public update(bytes: GameByteArray): void {
@@ -58,43 +91,49 @@ class ActivityType24Data extends ActivityBaseData {
 
 			let type = bytes.readShort();
 			if (type == 1) {
-				let ewai = bytes.readInt()
-				let Qinfo: QenvelopeData = new QenvelopeData;
-				Qinfo.name ='我自己';
-				Qinfo.eId = bytes.readShort();
-				Qinfo.job = 0;
-				Qinfo.sex = 0;
-				Qinfo.isEwai = 1;  //不是额外红包
-				Qinfo.yuanbao = bytes.readInt();
-				this.QenvelopeData.push(Qinfo)
-
+				let MyQinfo: MyQenvelopeData = new MyQenvelopeData;
+				MyQinfo.eId = bytes.readShort();
+				MyQinfo.yuanbao = bytes.readInt();
+				MyQinfo.Ewai_yuanbao = bytes.readInt();
+				this.MyQenvelopeData.push(MyQinfo)
 			} else {
+
+				console.log('额外元宝： ' + this.eWaiYuanBao)
 				let ewai = bytes.readInt()
+				console.log('领取到的元宝： ' + ewai)
+				this.eWaiYuanBao = 0;
+
+				let MaxHongbaoInfo =  this.getMax_hongbao()
+				MaxHongbaoInfo.Ewai_yuanbao = ewai
+				console.log(MaxHongbaoInfo)
 			}
+
+
 		} else {
-			console.log('领取shibai')
+			console.log('领取失败')
 		}
 
 
-
-
-		// let eId = bytes.readUnsignedShort();//红包id
-		// let yb = bytes.readInt();//元宝
-		// let gold = bytes.readInt();//金币
-		// let len = bytes.readShort();
-		// let arr = [];
-		// let role: Role = SubRoles.ins().getSubRoleByIndex(0);
-		// arr.push({ job: role.job, sex: role.sex, name: Actor.myName, yb: yb, gold: gold });
-		// for (let i = 0; i < len; i++) {
-		// 	let job = bytes.readShort();
-		// 	let sex = bytes.readShort();
-		// 	let otherName = bytes.readString();
-		// 	let otherYB = bytes.readInt();
-		// 	if (Actor.myName != otherName)
-		// 		arr.push({ job: job, sex: sex, name: otherName, yb: otherYB, gold: 0 });
-		// }
-		// Activity.ins().postGetRedEnvelope(this.id, eId, yb, gold, arr);//派发红包奖励情况
+		console.log('处理抢红包结果')
 	}
+
+	// let eId = bytes.readUnsignedShort();//红包id
+	// let yb = bytes.readInt();//元宝
+	// let gold = bytes.readInt();//金币
+	// let len = bytes.readShort();
+	// let arr = [];
+	// let role: Role = SubRoles.ins().getSubRoleByIndex(0);
+	// arr.push({ job: role.job, sex: role.sex, name: Actor.myName, yb: yb, gold: gold });
+	// for (let i = 0; i < len; i++) {
+	// 	let job = bytes.readShort();
+	// 	let sex = bytes.readShort();
+	// 	let otherName = bytes.readString();
+	// 	let otherYB = bytes.readInt();
+	// 	if (Actor.myName != otherName)
+	// 		arr.push({ job: job, sex: sex, name: otherName, yb: otherYB, gold: 0 });
+	// }
+	// Activity.ins().postGetRedEnvelope(this.id, eId, yb, gold, arr);//派发红包奖励情况
+
 	public get envelopeData(): RedEnvelope[] {
 		this._envelopeData = this._envelopeData ? this._envelopeData : [];
 		return this._envelopeData;

@@ -39,8 +39,8 @@ class HongBaoShowItem extends BaseItemRender {
 		// }
 
 		// Activity.ins().sendEnvelopeData(this.data.actId,this.data.eId);
-
-		Activity.ins().sendEnvelopeData(this.data.actId,this.data.eId);
+		HBSystem.ins().testhongbao();
+		// Activity.ins().sendEnvelopeData(this.data.actId,this.data.eId);
 	}
 
 	protected dataChanged(): void {

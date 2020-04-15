@@ -8,7 +8,7 @@ class MonthCardWin extends BaseView {
 	
 	private leftTime: eui.Label;
 	private feng: eui.Label;
-	private first: eui.Label;
+	private first1: eui.Label;
 	public xianshi1: eui.Group;
 	public xianshi2: eui.Group;
 	constructor() {
@@ -34,8 +34,8 @@ class MonthCardWin extends BaseView {
 				this.xianshi1.visible = false;
 				this.xianshi2.visible = false;
 			} else {
-				// this.btn1.visible = true;
-				this.btn0.visible = true;
+				this.btn1.visible = true;
+				// this.btn0.visible = true;
 				TimerManager.ins().remove(this.setTimeLbel, this);
 			}
 			this.leftTime.visible = Recharge.ins().monthDay > 0 ? true : false;
@@ -66,7 +66,7 @@ class MonthCardWin extends BaseView {
 	}
 
 	private setView(): void {
-		// this.first.visible = !Setting.ins().getValue(ClientSet.firstMonthCard);
+		this.first1.visible = !Setting.ins().getValue(ClientSet.firstMonthCard);
 	}
 
 	private setTimeLbel(): void {

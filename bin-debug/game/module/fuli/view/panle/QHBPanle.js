@@ -17,6 +17,9 @@ var QHBPanle = (function (_super) {
         var _this = _super.call(this) || this;
         _this.skinName = "qianghongbaoSkin";
         _this.hbbtn.addEventListener(egret.TouchEvent.TOUCH_END, _this.onTouch, _this);
+        _this.btn1.addEventListener(egret.TouchEvent.TOUCH_END, _this.onTouch, _this);
+        _this.observe(Activity.ins().postEnvelopeData, _this.initHongbaoInfo);
+        _this.observe(Activity.ins().postRewardResult, _this.initShowHongBao);
         return _this;
     }
     QHBPanle.prototype.open = function () {
@@ -34,70 +37,99 @@ var QHBPanle = (function (_super) {
         }
         console.log(param[0]);
         var bytes = param[0];
-        var reld = new RedEnvelope();
-        reld.id = bytes.readUnsignedShort();
-        reld.timer = bytes.readInt();
-        if (reld.isOverTimer()) {
-            console.log('红包已过时');
-        }
-        else {
+        var id = bytes.readInt();
+        var isSuccess = bytes.readByte();
+        if (isSuccess) {
+            var reld = new RedEnvelope();
+            reld.id = bytes.readUnsignedShort();
+            reld.timer = bytes.readInt();
             console.log('可以领取');
             this.initQhongbaoInfo(reld.id);
         }
+        else {
+            console.log('没有红包可以领取');
+        }
         var noName = bytes.readInt();
         var rechargeNum = bytes.readInt();
+        var eWaiYBNum = bytes.readInt();
+        var len = bytes.readShort();
+        var _MyQenvelopeData = [];
+        for (var i = 0; i < len; i++) {
+            var MyQinfo = new MyQenvelopeData;
+            MyQinfo.eId = bytes.readShort();
+            MyQinfo.yuanbao = bytes.readInt();
+            MyQinfo.Ewai_yuanbao = bytes.readInt();
+            _MyQenvelopeData.push(MyQinfo);
+        }
         var Num = bytes.readShort();
         var obj = [];
         for (var i = 0; i < Num; i++) {
-            obj[i] = {};
-            obj[i].name = bytes.readString();
-            obj[i].hongbaoid = bytes.readShort();
-            obj[i].job = bytes.readShort();
-            obj[i].sex = bytes.readShort();
-            obj[i].isSuccess = bytes.readByte();
-            obj[i].serverId = bytes.readInt();
+            var Qinfo = new QenvelopeData;
+            Qinfo.name = bytes.readString();
+            Qinfo.eId = bytes.readShort();
+            Qinfo.job = bytes.readShort();
+            Qinfo.sex = bytes.readShort();
+            Qinfo.isEwai = bytes.readByte();
+            Qinfo.yuanbao = bytes.readInt();
+            obj.push(Qinfo);
         }
-        console.log(obj);
+        if (Activity.ins().activityData[2001]) {
+            var actData = Activity.ins().activityData[2001];
+            actData.update_MyQenvelopeData(_MyQenvelopeData);
+            actData.update_QenvelopeData(obj);
+        }
     };
     QHBPanle.prototype.initQhongbaoInfo = function (eid) {
         this.qianghongbao.visible = true;
         this.showhongbao.visible = false;
         this.eid = eid;
     };
-    QHBPanle.prototype.initShowHongBao = function (QenvelopeData) {
-        this.qianghongbao.visible = false;
-        this.showhongbao.visible = true;
-        console.log('这里显示抢完的红包信息 ：');
-        console.log(QenvelopeData);
-        for (var i = 0; i < QenvelopeData.length; i++) {
+    QHBPanle.prototype.initShowHongBao = function () {
+        if (Activity.ins().activityData[2001]) {
+            var actData = Activity.ins().activityData[2001];
+            var eWaiYuanBao = actData.eWaiYuanBao;
+            var MyQenvelope = actData.getMax_hongbao();
+            var QenvelopeData_1 = actData.QenvelopeData;
+            this.qianghongbao.visible = false;
+            this.showhongbao.visible = true;
+            console.log('这里显示抢完的红包信息 ：');
+            console.log(QenvelopeData_1);
+            var arrName = [];
+            for (var i = 0; i < QenvelopeData_1.length; i++) {
+                var str = QenvelopeData_1[i].name + '抢到了' + QenvelopeData_1[i].yuanbao + ' 元宝';
+                arrName.push(str);
+            }
+            this.list.dataProvider = new eui.ArrayCollection(arrName);
+            this.scroller.touchChildren = false;
+            this.scroller.touchEnabled = false;
+            this.listH = this.list.height - 200;
+            this.scroller.viewport.scrollV = 0;
+            var t = egret.Tween.get(this.scroller.viewport);
+            t.to({ scrollV: this.listH }, 40 * this.listH).call(this.loopT, this);
+            console.log('拿出最大红包');
+            console.log(MyQenvelope);
+            this.yuanbao1.text = MyQenvelope.yuanbao.toString();
+            this.btn1.visible = true;
+            if (eWaiYuanBao) {
+                this.yuanbao2.text = eWaiYuanBao.toString();
+            }
+            else {
+                this.yuanbao2.text = MyQenvelope.Ewai_yuanbao.toString();
+            }
         }
     };
     QHBPanle.prototype.init = function () {
+        Activity.ins().sendChangePage(2001);
         if (Activity.ins().activityData[2001]) {
             var actData = Activity.ins().activityData[2001];
             if (actData.envelopeData.length > 0) {
                 Activity.ins().sendEnvelopeData(2001, actData.envelopeData[0].id);
             }
             else {
-                this.initShowHongBao(actData.QenvelopeData);
+                this.initShowHongBao();
             }
         }
         this.list.itemRenderer = CreateRoleViewItem;
-        var arrName = ["", "", "", ""];
-        var addName = ["紫廖渔歌", "半瓶矿泉水", "暖风", "繁华过后", "念迩成习", "逆丶美丽",
-            "握不住的美", "隔岸觀火", "残喘的笑", "何时苏醒", "湮丶燃尽了", "年少无知≈", "卸不掉的盔甲", "″温瞳渐远≈",
-            "男人/吥乖", "走遍四方", "我已无力说爱", "繁华沧桑", "卡尺", "往事随风", "剑胆琴心", "心如止水", "风伤依旧",
-            "一直很低调", "遥忘而立", "忧郁的萨克斯", "哥比彩钻还炫", "烈日追风", "本人、已昏", "全橙相伴", "残月孤生"];
-        for (var i = 0; i < 3; i++) {
-            arrName = arrName.concat(addName);
-        }
-        this.list.dataProvider = new eui.ArrayCollection(arrName);
-        this.scroller.touchChildren = false;
-        this.scroller.touchEnabled = false;
-        this.listH = this.list.height - 200;
-        this.scroller.viewport.scrollV = 0;
-        var t = egret.Tween.get(this.scroller.viewport);
-        t.to({ scrollV: this.listH }, 40 * this.listH).call(this.loopT, this);
     };
     QHBPanle.prototype.loopT = function () {
         this.scroller.viewport.scrollV = 200;
@@ -113,12 +145,25 @@ var QHBPanle = (function (_super) {
         }
         this.removeObserve();
         this.hbbtn.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouch, this);
+        this.btn1.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouch, this);
         this.removeTouchEvent(this, this.onTouch);
     };
     QHBPanle.prototype.onTouch = function (e) {
         switch (e.target) {
             case this.hbbtn:
                 Activity.ins().sendReward(2001, this.eid, 1);
+                break;
+            case this.btn1:
+                if (Activity.ins().activityData[2001]) {
+                    var actData = Activity.ins().activityData[2001];
+                    var rechargeNum = actData.rechargeNum;
+                    if (rechargeNum > 0) {
+                        Activity.ins().sendReward(2001, this.eid, 2);
+                    }
+                    else {
+                        alert('没有充值');
+                    }
+                }
                 break;
         }
     };

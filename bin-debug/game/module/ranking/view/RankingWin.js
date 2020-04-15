@@ -103,9 +103,6 @@ var RankingWin = (function (_super) {
         this.selfPos.text = 0 < rankModel.selfPos && rankModel.selfPos <= 1000 ? rankModel.selfPos + '' : "\u672A\u4E0A\u699C";
         var arr = rankModel.getDataList();
         if (rankModel.type == 0) {
-            for (var i = 0; i < arr.length; i++) {
-                arr[i].player = arr[i].player + '  战力:' + arr[i].power;
-            }
         }
         this.list.dataProvider = new eui.ArrayCollection(arr.slice(1));
         this.refushMoBaiStatu();

@@ -44,7 +44,6 @@ var Activity = (function (_super) {
         _this.regNetMsg(21, _this.doNextDayLoginData);
         _this.regNetMsg(20, _this.doNextDayLoginReward);
         _this.regNetMsg(22, _this.postKuaFuRank);
-        _this.regNetMsg(24, _this.test_24);
         _this.regNetMsg(23, _this.handlehongbaoInfo);
         _this.regNetMsg(6, _this.postEnvelopeData);
         _this.regNetMsg(8, _this.postRedEnvelopeData);
@@ -108,14 +107,6 @@ var Activity = (function (_super) {
         ActivityDataFactory.createEx();
         this.checkSpecials();
         this.checkActivityTimer();
-    };
-    Activity.prototype.test_24 = function (bytes) {
-        console.log('test_24');
-        console.log(bytes);
-    };
-    Activity.prototype.test_2 = function (bytes) {
-        console.log('test_2');
-        console.log(bytes);
     };
     Activity.prototype.checkSpecials = function () {
         if (TimerManager.ins().isExists(this.checkSpecials, this))
@@ -774,43 +765,17 @@ var Activity = (function (_super) {
         this.sendToServer(bytes);
     };
     Activity.prototype.postEnvelopeData = function (bytes) {
-        var id = bytes.readInt();
-        var isSuccess = bytes.readByte();
-        if (isSuccess) {
-            var eId = bytes.readUnsignedShort();
-            var endtime = bytes.readUnsignedShort();
-            if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
-                var actData = this.activityData[id];
-                var reld = new RedEnvelope();
-                reld.id = bytes.readUnsignedShort();
-                reld.timer = bytes.readInt();
-            }
-            var noName = bytes.readInt();
-            var rechargeNum = bytes.readInt();
-            var Num = bytes.readShort();
-            var obj = [];
-            for (var i = 0; i < Num; i++) {
-                obj[i] = {};
-                obj[i].name = bytes.readString();
-                obj[i].hongbaoid = bytes.readShort();
-                obj[i].job = bytes.readShort();
-                obj[i].sex = bytes.readShort();
-                obj[i].isSuccess = bytes.readByte();
-                obj[i].serverId = bytes.readInt();
-            }
-            console.log(obj);
-            HBSystem.ins().testhongbao(id, eId);
-        }
-        this.postEnvelopeDataCall(null);
-        return null;
+        return bytes;
     };
     Activity.prototype.postEnvelopeDataCall = function (eld) {
         return eld;
     };
     Activity.prototype.handlehongbaoInfo = function (bytes) {
+        console.log('25-23');
         var id = bytes.readInt();
         if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
             var actData = this.activityData[id];
+            actData.envelopeData = [];
             var reld = new RedEnvelope();
             reld.id = bytes.readUnsignedShort();
             reld.startimer = bytes.readInt();
