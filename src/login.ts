@@ -94,9 +94,9 @@ class login extends eui.Component {
         this.dengluInfo.visible = true
         this.zhuceInfo.visible = false
         let self = this
-        egret.ExternalInterface.call("getChannel", '');
-        egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            // var msg = 'lx';
+        // egret.ExternalInterface.call("getChannel", '');
+        // egret.ExternalInterface.addCallback("backChannel", function (msg) {
+            var msg = 'lx';
             if (msg) {
                 window['setChannel'](msg)
                 window['statistics']() // 统计
@@ -123,7 +123,7 @@ class login extends eui.Component {
             if (msg != 'lx') {
                 self.zhuceLabel.visible = true
             }
-        })
+        // })
     }
 
 	/*
@@ -195,6 +195,7 @@ class login extends eui.Component {
                         address: list[i].database_host,
                         isNew: false,
                         number: list.length - i,
+                        serverStatic:list[i].server_state,
                     }
                     if (list[i].server_state == 4) {
                         listData.isNew = true
@@ -355,6 +356,7 @@ class login extends eui.Component {
                 this.zhuceInfo.visible = false
                 break;
             case this.lastServerBtn:
+                if(e.target.currentState == 'disable')return;
                 let roomList = window['getRoomList']()
                 for (let i = 0; i < roomList.length; i++) {
                     if (roomList[i].name == this.lastServerBtn.label) {
@@ -510,6 +512,9 @@ class login extends eui.Component {
         for (let i = 0; i < roomList.length; i++) {
             if (roomList[i].number == data) {
                 this.lastServerBtn.label = roomList[i].name
+                if(roomList[i].serverStatic == 1){
+                    this.lastServerBtn.currentState = 'disable'
+                }
             }
         }
 
@@ -531,6 +536,9 @@ class login extends eui.Component {
             } else {
                 btn.icon_hot.visible = true
             }
+            if(roomList[i].serverStatic == 1){
+                btn.currentState = "disable"
+            }
             this.scrollerGroup.addChild(btn)
         }
     }
@@ -547,6 +555,9 @@ class login extends eui.Component {
     }
 
     private onBtnTouch(event) {
+        if( event.target.currentState == 'disable'){
+            return;
+        }
         for (let i = 0; i < this.scrollerGroup.$children.length; i++) {
             this.scrollerGroup.$children[i].currentState = 'normal'
         }

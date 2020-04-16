@@ -312,7 +312,7 @@ class PlayFunView extends BaseEuiView {
 		this.updateRules();
 		this.upDataWillBoss(Encounter.ins().willBossID);
 		this.updateHeadRedPoint();
-		HBSystem.ins().updateHongBao();
+		// HBSystem.ins().updateHongBao();
 		this.flameMC.playFile(RES_DIR_EFF + "zhanduolibeijing", -1);
 	}
 

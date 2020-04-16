@@ -9,7 +9,7 @@ class HBSystem extends BaseSystem {
         this.observe(Activity.ins().postGetRedEnvelope, this.showHongBaoTips);//开红包返回元宝/金币弹出tips
         this.observe(Activity.ins().postRewardResult, this.ActRewardResult);//领取红包返回
         this.observe(Activity.ins().postEnvelopeDataCall, this.showEnvelope);//打开红包展示红包信息
-        this.observe(Activity.ins().postRedEnvelopeData, this.updateHongBao);//下发新红包
+        // this.observe(Activity.ins().postRedEnvelopeData, this.updateHongBao);//下发新红包
 
         //增加抢红包活动管理
 
@@ -21,61 +21,57 @@ class HBSystem extends BaseSystem {
 
 
 
-
-
-    public updateHongBao() {
+    public handleHongbao(){
         let view: PlayFunView = ViewManager.ins().getView(PlayFunView) as PlayFunView;
         if (!view || !view.hongbao) return;
         if (view.hongbao.numElements > 0) return;
-        for (let i = 0; i < Activity.ins().activityTimers.length; i++) {
-            let actId = Activity.ins().activityTimers[i];
-            if (Activity.ins().activityData[actId]) {
-                if (Activity.ins().activityData[actId] instanceof ActivityType12Data) {
-                    let actData: ActivityType12Data = Activity.ins().activityData[actId] as ActivityType12Data;
-                    if (!actData.envelopeData.length) continue;
-                    for (let j = actData.envelopeData.length - 1; j >= 0;) {
-                        j = actData.envelopeData.length - 1;
-                        if (!actData.envelopeData[j]) {//找不到红包类对象
-                            actData.envelopeData.splice(i, 1);//移除领过的红包
-                            continue;
-                        }
-                        let eId = actData.envelopeData[j].id;//最新的红包id
-                        if (!actData.envelopeData[j].isOverTimer()) {//红包是否过时
-                            let item: HongBaoShowItem = new HongBaoShowItem();
-                            item.data = { actId: actId, eId: eId };
-                            view.hongbao.addChild(item);
-                            break;
-                        } else {
-                            //过时就扔了
-                            actData.popEnvelope(eId);
-                        }
-                    }
+        // 增加抢红包类型
+        if (Activity.ins().activityData[2001] instanceof ActivityType24Data) {
+            let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
+            for (let j = actData.envelopeData.length - 1; j >= 0;) {
+                j = actData.envelopeData.length - 1;
+                let eId = actData.envelopeData[j].id;//最新的红包id
+                if (actData.envelopeData[j].canStartTimer()) {//红包是否过时
+                    let item: HongBaoShowItem = new HongBaoShowItem();
+                    item.data = { actId: 2001, eId: eId };
+                    view.hongbao.addChild(item);
+                    break;
+                } else {
+                    console.log('没到领取时间')
+                    TimerManager.ins().remove(this.updateHBTime, this); // 防止多次启动定时器
+                    TimerManager.ins().doTimer(1000, 0, this.updateHBTime, this);
+                    break;
                 }
-                // 增加抢红包类型
-                if (Activity.ins().activityData[actId] instanceof ActivityType24Data) {
-                    let actData: ActivityType24Data = Activity.ins().activityData[actId] as ActivityType24Data;
-                    if (!actData.envelopeData.length) continue;
-                    for (let j = actData.envelopeData.length - 1; j >= 0;) {
-                        j = actData.envelopeData.length - 1;
-                        if (!actData.envelopeData[j]) {//找不到红包类对象
-                            actData.envelopeData.splice(i, 1);//移除领过的红包
-                            continue;
-                        }
-                        let eId = actData.envelopeData[j].id;//最新的红包id
-                        if (!actData.envelopeData[j].canStartTimer()) {//红包是否过时
-                            let item: HongBaoShowItem = new HongBaoShowItem();
-                            item.data = { actId: actId, eId: eId };
-                            view.hongbao.addChild(item);
-                            break;
-                        }else{
-                            console.log('没到领取时间')
-                        }
-                    }
-                }
-
             }
         }
     }
+
+    public updateHongBao() {
+        TimerManager.ins().doTimer(1000, 1, this.handleHongbao, this);
+    }
+
+    private updateHBTime() {
+        let view: PlayFunView = ViewManager.ins().getView(PlayFunView) as PlayFunView;
+        if (Activity.ins().activityData[2001] instanceof ActivityType24Data) {
+            let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
+            for (let j = actData.envelopeData.length - 1; j >= 0;) {
+                j = actData.envelopeData.length - 1;
+                let eId = actData.envelopeData[j].id; //最新的红包id
+                if (actData.envelopeData[j].canStartTimer()) {//红包是否过时
+                    console.log('可以领取了')
+                    TimerManager.ins().remove(this.updateHBTime, this);
+                    let item: HongBaoShowItem = new HongBaoShowItem();
+                    item.data = { actId: 2001, eId: eId };
+                    view.hongbao.addChild(item);
+                    break;
+                } else {
+                    // console.log('没到领取时间')
+                    break;
+                }
+            }
+        }
+    }
+
     //派发红包显示提示
     //actId:number,eId:number,yb:number,gold:number
     private showHongBaoTips(param: any) {
@@ -156,7 +152,7 @@ class HBSystem extends BaseSystem {
         ViewManager.ins().open(FuliWin, 6);
     }
     public closeallhongbao() {
-        
+
 
 
     }

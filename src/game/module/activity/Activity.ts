@@ -1044,10 +1044,11 @@ class Activity extends BaseSystem {
 	 * @param 活动id
 	 * @param 红包id
 	 * */
-	public sendEnvelopeData(id: number, eid: number) {
+	public sendEnvelopeData(id: number, eid: number,record:number) {
 		let bytes: GameByteArray = this.getBytes(6);
 		bytes.writeInt(id);
 		bytes.writeUnsignedShort(eid);
+		bytes.writeInt(record);
 		this.sendToServer(bytes);
 	}
 
@@ -1056,6 +1057,7 @@ class Activity extends BaseSystem {
 	 * 25-6
 	 * */
 	public postEnvelopeData(bytes: GameByteArray){
+		// 需要刷新活动
 
 		return bytes;
 
@@ -1138,9 +1140,14 @@ class Activity extends BaseSystem {
 			reld.id = bytes.readUnsignedShort();
 			reld.startimer = bytes.readInt();
 			actData.envelopeData.push(reld);//最新的红包放最后
-			console.log('获取到的红包数mu')
-			console.log(actData)
-			HBSystem.ins().updateHongBao();
+			
+			
+			if(actData.envelopeData.length > 0){
+				console.log('有红包')
+				console.log(reld)
+				HBSystem.ins().updateHongBao();
+			}
+			
 		}
 
 	}

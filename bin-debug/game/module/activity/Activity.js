@@ -758,10 +758,11 @@ var Activity = (function (_super) {
         }
         return null;
     };
-    Activity.prototype.sendEnvelopeData = function (id, eid) {
+    Activity.prototype.sendEnvelopeData = function (id, eid, record) {
         var bytes = this.getBytes(6);
         bytes.writeInt(id);
         bytes.writeUnsignedShort(eid);
+        bytes.writeInt(record);
         this.sendToServer(bytes);
     };
     Activity.prototype.postEnvelopeData = function (bytes) {
@@ -780,9 +781,11 @@ var Activity = (function (_super) {
             reld.id = bytes.readUnsignedShort();
             reld.startimer = bytes.readInt();
             actData.envelopeData.push(reld);
-            console.log('获取到的红包数mu');
-            console.log(actData);
-            HBSystem.ins().updateHongBao();
+            if (actData.envelopeData.length > 0) {
+                console.log('有红包');
+                console.log(reld);
+                HBSystem.ins().updateHongBao();
+            }
         }
     };
     Activity.prototype.postRedEnvelopeData = function (bytes) {

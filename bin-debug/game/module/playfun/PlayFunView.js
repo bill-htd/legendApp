@@ -189,7 +189,6 @@ var PlayFunView = (function (_super) {
         this.updateRules();
         this.upDataWillBoss(Encounter.ins().willBossID);
         this.updateHeadRedPoint();
-        HBSystem.ins().updateHongBao();
         this.flameMC.playFile(RES_DIR_EFF + "zhanduolibeijing", -1);
     };
     PlayFunView.prototype.close = function () {

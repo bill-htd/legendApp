@@ -18,64 +18,56 @@ var HBSystem = (function (_super) {
         _this.observe(Activity.ins().postGetRedEnvelope, _this.showHongBaoTips);
         _this.observe(Activity.ins().postRewardResult, _this.ActRewardResult);
         _this.observe(Activity.ins().postEnvelopeDataCall, _this.showEnvelope);
-        _this.observe(Activity.ins().postRedEnvelopeData, _this.updateHongBao);
         return _this;
     }
     HBSystem.ins = function () {
         return _super.ins.call(this);
     };
-    HBSystem.prototype.updateHongBao = function () {
+    HBSystem.prototype.handleHongbao = function () {
         var view = ViewManager.ins().getView(PlayFunView);
         if (!view || !view.hongbao)
             return;
         if (view.hongbao.numElements > 0)
             return;
-        for (var i = 0; i < Activity.ins().activityTimers.length; i++) {
-            var actId = Activity.ins().activityTimers[i];
-            if (Activity.ins().activityData[actId]) {
-                if (Activity.ins().activityData[actId] instanceof ActivityType12Data) {
-                    var actData = Activity.ins().activityData[actId];
-                    if (!actData.envelopeData.length)
-                        continue;
-                    for (var j = actData.envelopeData.length - 1; j >= 0;) {
-                        j = actData.envelopeData.length - 1;
-                        if (!actData.envelopeData[j]) {
-                            actData.envelopeData.splice(i, 1);
-                            continue;
-                        }
-                        var eId = actData.envelopeData[j].id;
-                        if (!actData.envelopeData[j].isOverTimer()) {
-                            var item = new HongBaoShowItem();
-                            item.data = { actId: actId, eId: eId };
-                            view.hongbao.addChild(item);
-                            break;
-                        }
-                        else {
-                            actData.popEnvelope(eId);
-                        }
-                    }
+        if (Activity.ins().activityData[2001] instanceof ActivityType24Data) {
+            var actData = Activity.ins().activityData[2001];
+            for (var j = actData.envelopeData.length - 1; j >= 0;) {
+                j = actData.envelopeData.length - 1;
+                var eId = actData.envelopeData[j].id;
+                if (actData.envelopeData[j].canStartTimer()) {
+                    var item = new HongBaoShowItem();
+                    item.data = { actId: 2001, eId: eId };
+                    view.hongbao.addChild(item);
+                    break;
                 }
-                if (Activity.ins().activityData[actId] instanceof ActivityType24Data) {
-                    var actData = Activity.ins().activityData[actId];
-                    if (!actData.envelopeData.length)
-                        continue;
-                    for (var j = actData.envelopeData.length - 1; j >= 0;) {
-                        j = actData.envelopeData.length - 1;
-                        if (!actData.envelopeData[j]) {
-                            actData.envelopeData.splice(i, 1);
-                            continue;
-                        }
-                        var eId = actData.envelopeData[j].id;
-                        if (!actData.envelopeData[j].canStartTimer()) {
-                            var item = new HongBaoShowItem();
-                            item.data = { actId: actId, eId: eId };
-                            view.hongbao.addChild(item);
-                            break;
-                        }
-                        else {
-                            console.log('没到领取时间');
-                        }
-                    }
+                else {
+                    console.log('没到领取时间');
+                    TimerManager.ins().doTimer(1000, 0, this.updateHBTime, this);
+                    break;
+                }
+            }
+        }
+    };
+    HBSystem.prototype.updateHongBao = function () {
+        TimerManager.ins().doTimer(1000, 1, this.handleHongbao, this);
+    };
+    HBSystem.prototype.updateHBTime = function () {
+        var view = ViewManager.ins().getView(PlayFunView);
+        if (Activity.ins().activityData[2001] instanceof ActivityType24Data) {
+            var actData = Activity.ins().activityData[2001];
+            for (var j = actData.envelopeData.length - 1; j >= 0;) {
+                j = actData.envelopeData.length - 1;
+                var eId = actData.envelopeData[j].id;
+                if (actData.envelopeData[j].canStartTimer()) {
+                    console.log('可以领取了');
+                    TimerManager.ins().remove(this.updateHBTime, this);
+                    var item = new HongBaoShowItem();
+                    item.data = { actId: 2001, eId: eId };
+                    view.hongbao.addChild(item);
+                    break;
+                }
+                else {
+                    break;
                 }
             }
         }

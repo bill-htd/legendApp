@@ -5,23 +5,27 @@ class ActivityType24Data extends ActivityBaseData {
 	// public logs:{name:string,serverId:number,index:number}[];
 	private _envelopeData: RedEnvelope[];//红包数据 红包id 红包cd
 	public QenvelopeData: QenvelopeData[];  // 所有抢红包的人的数据
-	public MyQenvelopeData: MyQenvelopeData[];  // 所有抢红包的人的数据
+	public MyQenvelopeData: MyQenvelopeData[];  // wo de 红包数据
 	public eWaiYuanBao: number;
 	public rechargeNum: number;
+	public isSuccess:boolean = true;
+	public shengYuKeLingHongBao:number = 5;
+	public recordMax:number = 100;
+	public maxRecord:number = 0;
+
 
 	constructor(bytes: GameByteArray, id: number) {
 		super(bytes);
 		this.init(bytes, id);
 	}
 	public init(bytes: GameByteArray, id: number) {
-
-		// let hongbaoNum = bytes.readShort();
 		console.log('初始化信息 ：')
 		// 今日充值数
 		this.rechargeNum = bytes.readInt();
 		// 额外元宝
 		this.eWaiYuanBao = bytes.readInt();
 		let len = bytes.readShort();
+		this.shengYuKeLingHongBao = 5 - len
 		let _MyQenvelopeData = []
 		for (let i = 0; i < len; i++) {
 			let MyQinfo: MyQenvelopeData = new MyQenvelopeData;
@@ -34,8 +38,10 @@ class ActivityType24Data extends ActivityBaseData {
 
 		let _QenvelopeData = []
 		let num = bytes.readShort();
+
 		for (let i = 0; i < num; i++) {
 			let Qinfo: QenvelopeData = new QenvelopeData;
+			Qinfo.recordId = bytes.readInt();
 			Qinfo.name = bytes.readString();
 			Qinfo.eId = bytes.readShort();
 			Qinfo.job = bytes.readShort();
@@ -43,6 +49,9 @@ class ActivityType24Data extends ActivityBaseData {
 			Qinfo.isEwai = bytes.readByte();
 			Qinfo.yuanbao = bytes.readInt();
 			_QenvelopeData.push(Qinfo)
+			if(Qinfo.recordId > this.maxRecord){
+				this.maxRecord = Qinfo.recordId
+			}
 		}
 		this.update_QenvelopeData(_QenvelopeData)
 
@@ -88,7 +97,7 @@ class ActivityType24Data extends ActivityBaseData {
 
 		if (Activity.ins().isSuccee) {
 			console.log('领取成功')
-
+			this.isSuccess = true
 			let type = bytes.readShort();
 			if (type == 1) {
 				let MyQinfo: MyQenvelopeData = new MyQenvelopeData;
@@ -96,58 +105,31 @@ class ActivityType24Data extends ActivityBaseData {
 				MyQinfo.yuanbao = bytes.readInt();
 				MyQinfo.Ewai_yuanbao = bytes.readInt();
 				this.MyQenvelopeData.push(MyQinfo)
+				this.eWaiYuanBao = MyQinfo.Ewai_yuanbao;
 			} else {
-
 				console.log('额外元宝： ' + this.eWaiYuanBao)
 				let ewai = bytes.readInt()
 				console.log('领取到的元宝： ' + ewai)
 				this.eWaiYuanBao = 0;
-
 				let MaxHongbaoInfo =  this.getMax_hongbao()
 				MaxHongbaoInfo.Ewai_yuanbao = ewai
 				console.log(MaxHongbaoInfo)
 			}
-
-
 		} else {
 			console.log('领取失败')
+			this.isSuccess = false
 		}
 
 
 		console.log('处理抢红包结果')
 	}
 
-	// let eId = bytes.readUnsignedShort();//红包id
-	// let yb = bytes.readInt();//元宝
-	// let gold = bytes.readInt();//金币
-	// let len = bytes.readShort();
-	// let arr = [];
-	// let role: Role = SubRoles.ins().getSubRoleByIndex(0);
-	// arr.push({ job: role.job, sex: role.sex, name: Actor.myName, yb: yb, gold: gold });
-	// for (let i = 0; i < len; i++) {
-	// 	let job = bytes.readShort();
-	// 	let sex = bytes.readShort();
-	// 	let otherName = bytes.readString();
-	// 	let otherYB = bytes.readInt();
-	// 	if (Actor.myName != otherName)
-	// 		arr.push({ job: job, sex: sex, name: otherName, yb: otherYB, gold: 0 });
-	// }
-	// Activity.ins().postGetRedEnvelope(this.id, eId, yb, gold, arr);//派发红包奖励情况
-
 	public get envelopeData(): RedEnvelope[] {
 		this._envelopeData = this._envelopeData ? this._envelopeData : [];
 		return this._envelopeData;
 	}
 	public set envelopeData(value: RedEnvelope[]) {
-		value.sort(this.sortTimer);
 		this._envelopeData = value;
-	}
-	//排序
-	private sortTimer(a: RedEnvelope, b: RedEnvelope) {
-		if (a.timer < b.timer)
-			return -1;
-		else
-			return 1;
 	}
     /**
      * 清理红包数量
@@ -179,28 +161,11 @@ class ActivityType24Data extends ActivityBaseData {
 	}
 	//清理过期红包
 	public clearEnvelopeData() {
-		//前面的红包是旧的  后面是新的
-		for (let i = 0; i < this.envelopeData.length;) {
-			if (!this.envelopeData[i] || this.envelopeData[i].isOverTimer()) {//已过期
-				this.envelopeData.splice(i, 1);
-			}
-			i++;
-		}
 	}
 	public clearAll() {
-		this.envelopeData = [];
-		this.envelopeSum = ActivityType24Data.maxEnvelope;
 	}
 	//移除红包
 	public popEnvelope(eId: number) {
-		//遍历移除的原因是由于不能保证这个红包是最尾  可能此时有别的红包插入列表尾
-		for (let i = 0; i < this.envelopeData.length;) {
-			if (!this.envelopeData[i] || this.envelopeData[i].id == eId) {
-				this.envelopeData.splice(i, 1);//移除领过的红包
-				break;
-			}
-			i++
-		}
 	}
 	public canReward(): boolean {
 		return this.checkRedPoint();
@@ -262,6 +227,7 @@ class ActivityType24Data extends ActivityBaseData {
 // }
 /**红包具体数据*/
 class QenvelopeData {
+	public recordId:number;
 	public name: string;
 	public eId: number;
 	public job: number;
@@ -269,6 +235,7 @@ class QenvelopeData {
 	public isEwai: number;
 	public yuanbao: number;
 	public constructor() {
+		this.recordId = 0;
 		this.eId = 0;
 		this.job = 0;
 		this.sex = 0;

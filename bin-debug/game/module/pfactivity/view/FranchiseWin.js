@@ -54,7 +54,6 @@ var FranchiseWin = (function (_super) {
                 ];
                 var colorFlilter = new egret.ColorMatrixFilter(colorMatrix);
                 var monthCardPriceInfo = window['getmonthCardPriceInfo']();
-                this.btn1.filters = [colorFlilter];
                 if (monthCardPriceInfo[1].status != 1) {
                     this.btn1.filters = [colorFlilter];
                 }

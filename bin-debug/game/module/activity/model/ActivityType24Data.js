@@ -15,6 +15,10 @@ var ActivityType24Data = (function (_super) {
     __extends(ActivityType24Data, _super);
     function ActivityType24Data(bytes, id) {
         var _this = _super.call(this, bytes) || this;
+        _this.isSuccess = true;
+        _this.shengYuKeLingHongBao = 5;
+        _this.recordMax = 100;
+        _this.maxRecord = 0;
         _this.envelopeSum = ActivityType24Data.maxEnvelope;
         _this.SecondCount = 0;
         _this.init(bytes, id);
@@ -25,6 +29,7 @@ var ActivityType24Data = (function (_super) {
         this.rechargeNum = bytes.readInt();
         this.eWaiYuanBao = bytes.readInt();
         var len = bytes.readShort();
+        this.shengYuKeLingHongBao = 5 - len;
         var _MyQenvelopeData = [];
         for (var i = 0; i < len; i++) {
             var MyQinfo = new MyQenvelopeData;
@@ -38,6 +43,7 @@ var ActivityType24Data = (function (_super) {
         var num = bytes.readShort();
         for (var i = 0; i < num; i++) {
             var Qinfo = new QenvelopeData;
+            Qinfo.recordId = bytes.readInt();
             Qinfo.name = bytes.readString();
             Qinfo.eId = bytes.readShort();
             Qinfo.job = bytes.readShort();
@@ -45,6 +51,9 @@ var ActivityType24Data = (function (_super) {
             Qinfo.isEwai = bytes.readByte();
             Qinfo.yuanbao = bytes.readInt();
             _QenvelopeData.push(Qinfo);
+            if (Qinfo.recordId > this.maxRecord) {
+                this.maxRecord = Qinfo.recordId;
+            }
         }
         this.update_QenvelopeData(_QenvelopeData);
         if (Activity.ins().activityTimers.indexOf(id) == -1)
@@ -80,6 +89,7 @@ var ActivityType24Data = (function (_super) {
     ActivityType24Data.prototype.update = function (bytes) {
         if (Activity.ins().isSuccee) {
             console.log('领取成功');
+            this.isSuccess = true;
             var type = bytes.readShort();
             if (type == 1) {
                 var MyQinfo = new MyQenvelopeData;
@@ -87,6 +97,7 @@ var ActivityType24Data = (function (_super) {
                 MyQinfo.yuanbao = bytes.readInt();
                 MyQinfo.Ewai_yuanbao = bytes.readInt();
                 this.MyQenvelopeData.push(MyQinfo);
+                this.eWaiYuanBao = MyQinfo.Ewai_yuanbao;
             }
             else {
                 console.log('额外元宝： ' + this.eWaiYuanBao);
@@ -100,6 +111,7 @@ var ActivityType24Data = (function (_super) {
         }
         else {
             console.log('领取失败');
+            this.isSuccess = false;
         }
         console.log('处理抢红包结果');
     };
@@ -140,25 +152,10 @@ var ActivityType24Data = (function (_super) {
         this.SecondCount++;
     };
     ActivityType24Data.prototype.clearEnvelopeData = function () {
-        for (var i = 0; i < this.envelopeData.length;) {
-            if (!this.envelopeData[i] || this.envelopeData[i].isOverTimer()) {
-                this.envelopeData.splice(i, 1);
-            }
-            i++;
-        }
     };
     ActivityType24Data.prototype.clearAll = function () {
-        this.envelopeData = [];
-        this.envelopeSum = ActivityType24Data.maxEnvelope;
     };
     ActivityType24Data.prototype.popEnvelope = function (eId) {
-        for (var i = 0; i < this.envelopeData.length;) {
-            if (!this.envelopeData[i] || this.envelopeData[i].id == eId) {
-                this.envelopeData.splice(i, 1);
-                break;
-            }
-            i++;
-        }
     };
     ActivityType24Data.prototype.canReward = function () {
         return this.checkRedPoint();
@@ -194,6 +191,7 @@ var ActivityType24Data = (function (_super) {
 __reflect(ActivityType24Data.prototype, "ActivityType24Data");
 var QenvelopeData = (function () {
     function QenvelopeData() {
+        this.recordId = 0;
         this.eId = 0;
         this.job = 0;
         this.sex = 0;

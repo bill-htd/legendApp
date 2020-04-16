@@ -164,8 +164,16 @@ class RedEnvelope {
     }
 
     public canStartTimer() {
-
-        return GameServer.serverTime/1000  >= (DateUtils.formatMiniDateTime(this.startimer)) ? true : false;
+        console.log('服务器时间 ： '+GameServer.serverTime)
+        console.log('红包开始时间：  ' + (DateUtils.formatMiniDateTime(this.startimer)) )
+        // console.log(GameServer.serverTime  >= (DateUtils.formatMiniDateTime(this.startimer)) ? true : false)
+        // console.log(GameServer.serverTime/1000   >= (DateUtils.formatMiniDateTime(this.startimer)) ? true : false)
+        let str = DateUtils.getFormatBySecond((DateUtils.formatMiniDateTime(this.startimer))/1000 - GameServer.serverTime/1000,10)
+        console.log(str)
+        return GameServer.serverTime  >= (DateUtils.formatMiniDateTime(this.startimer)) ? true : false;
+    }
+    public getStartTimer(){
+        return (DateUtils.formatMiniDateTime(this.startimer))/1000 - GameServer.serverTime/1000
     }
     // public updateTimer(){
     //     if( this.id && this.timer > 0 ){

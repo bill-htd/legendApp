@@ -40,36 +40,34 @@ var login = (function (_super) {
         _this.dengluInfo.visible = true;
         _this.zhuceInfo.visible = false;
         var self = _this;
-        egret.ExternalInterface.call("getChannel", '');
-        egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            if (msg) {
-                window['setChannel'](msg);
-                window['statistics']();
-                var url = window['get_AppInfo_address']();
-                url += '&channel=' + msg;
-                Http.ins().send(url, true, true, function (event) {
-                    var request = event.currentTarget;
-                    var data = JSON.parse(request.response);
-                    if (data.code == 0) {
-                        var info = data.data;
-                        if (info.appVer != Version.AppVersion) {
-                            self.resUrl = info.resUrl;
-                            self.warnGroup.visible = true;
-                        }
-                        else {
-                            self.getRoomList();
-                            self.trpInfo.text = '获取服务器列表中...';
-                        }
+        var msg = 'lx';
+        if (msg) {
+            window['setChannel'](msg);
+            window['statistics']();
+            var url = window['get_AppInfo_address']();
+            url += '&channel=' + msg;
+            Http.ins().send(url, true, true, function (event) {
+                var request = event.currentTarget;
+                var data = JSON.parse(request.response);
+                if (data.code == 0) {
+                    var info = data.data;
+                    if (info.appVer != Version.AppVersion) {
+                        self.resUrl = info.resUrl;
+                        self.warnGroup.visible = true;
                     }
                     else {
-                        alert('获取版本号失败，请重启游戏');
+                        self.getRoomList();
+                        self.trpInfo.text = '获取服务器列表中...';
                     }
-                });
-            }
-            if (msg != 'lx') {
-                self.zhuceLabel.visible = true;
-            }
-        });
+                }
+                else {
+                    alert('获取版本号失败，请重启游戏');
+                }
+            });
+        }
+        if (msg != 'lx') {
+            self.zhuceLabel.visible = true;
+        }
         return _this;
     }
     login.prototype.initGonggao = function () {
@@ -123,6 +121,7 @@ var login = (function (_super) {
                         address: list[i].database_host,
                         isNew: false,
                         number: list.length - i,
+                        serverStatic: list[i].server_state,
                     };
                     if (list[i].server_state == 4) {
                         listData.isNew = true;
@@ -267,6 +266,8 @@ var login = (function (_super) {
                 this.zhuceInfo.visible = false;
                 break;
             case this.lastServerBtn:
+                if (e.target.currentState == 'disable')
+                    return;
                 var roomList = window['getRoomList']();
                 for (var i = 0; i < roomList.length; i++) {
                     if (roomList[i].name == this.lastServerBtn.label) {
@@ -380,6 +381,9 @@ var login = (function (_super) {
         for (var i = 0; i < roomList.length; i++) {
             if (roomList[i].number == data) {
                 this.lastServerBtn.label = roomList[i].name;
+                if (roomList[i].serverStatic == 1) {
+                    this.lastServerBtn.currentState = 'disable';
+                }
             }
         }
         if (this._updateRoomList) {
@@ -400,6 +404,9 @@ var login = (function (_super) {
             else {
                 btn.icon_hot.visible = true;
             }
+            if (roomList[i].serverStatic == 1) {
+                btn.currentState = "disable";
+            }
             this.scrollerGroup.addChild(btn);
         }
     };
@@ -412,6 +419,9 @@ var login = (function (_super) {
         return btn;
     };
     login.prototype.onBtnTouch = function (event) {
+        if (event.target.currentState == 'disable') {
+            return;
+        }
         for (var i = 0; i < this.scrollerGroup.$children.length; i++) {
             this.scrollerGroup.$children[i].currentState = 'normal';
         }

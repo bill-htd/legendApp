@@ -139,7 +139,7 @@ class SmeltEquipNormalPanel extends BaseComponent {
 					WarnWin.show("开通特权月卡立即享受一键熔炼功能，是否前往查看", function () { 
 						// ViewManager.ins().close(SmeltEquipNormalPanel)
 						ViewManager.ins().close(SmeltEquipTotalWin)
-						ViewManager.ins().open(FuliWin, 3);
+						ViewManager.ins().open(FuliWin, 4);
 					}, this);
 				}
 				break;
