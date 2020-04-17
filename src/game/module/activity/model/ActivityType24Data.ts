@@ -9,7 +9,7 @@ class ActivityType24Data extends ActivityBaseData {
 	public eWaiYuanBao: number;
 	public rechargeNum: number;
 	public isSuccess:boolean = true;
-	public shengYuKeLingHongBao:number = 5;
+	public shengYuKeLingHongBao:number;
 	public recordMax:number = 100;
 	public maxRecord:number = 0;
 
@@ -19,7 +19,6 @@ class ActivityType24Data extends ActivityBaseData {
 		this.init(bytes, id);
 	}
 	public init(bytes: GameByteArray, id: number) {
-		console.log('初始化信息 ：')
 		// 今日充值数
 		this.rechargeNum = bytes.readInt();
 		// 额外元宝
@@ -86,7 +85,6 @@ class ActivityType24Data extends ActivityBaseData {
 		for (let i = 0; i < this.MyQenvelopeData.length; i++) {
 			if (this.MyQenvelopeData[i].eId == maxid) {
 				// 拿出最大红包
-				console.log(this.MyQenvelopeData[i])
 				return this.MyQenvelopeData[i];
 			}
 		}
@@ -96,10 +94,10 @@ class ActivityType24Data extends ActivityBaseData {
 	public update(bytes: GameByteArray): void {
 
 		if (Activity.ins().isSuccee) {
-			console.log('领取成功')
 			this.isSuccess = true
 			let type = bytes.readShort();
 			if (type == 1) {
+				this.shengYuKeLingHongBao -= 1;
 				let MyQinfo: MyQenvelopeData = new MyQenvelopeData;
 				MyQinfo.eId = bytes.readShort();
 				MyQinfo.yuanbao = bytes.readInt();
@@ -107,21 +105,17 @@ class ActivityType24Data extends ActivityBaseData {
 				this.MyQenvelopeData.push(MyQinfo)
 				this.eWaiYuanBao = MyQinfo.Ewai_yuanbao;
 			} else {
-				console.log('额外元宝： ' + this.eWaiYuanBao)
 				let ewai = bytes.readInt()
-				console.log('领取到的元宝： ' + ewai)
 				this.eWaiYuanBao = 0;
 				let MaxHongbaoInfo =  this.getMax_hongbao()
 				MaxHongbaoInfo.Ewai_yuanbao = ewai
-				console.log(MaxHongbaoInfo)
 			}
 		} else {
 			console.log('领取失败')
 			this.isSuccess = false
 		}
 
-
-		console.log('处理抢红包结果')
+		HBSystem.ins().removeHongbao();
 	}
 
 	public get envelopeData(): RedEnvelope[] {

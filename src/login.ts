@@ -94,9 +94,9 @@ class login extends eui.Component {
         this.dengluInfo.visible = true
         this.zhuceInfo.visible = false
         let self = this
-        // egret.ExternalInterface.call("getChannel", '');
-        // egret.ExternalInterface.addCallback("backChannel", function (msg) {
-            var msg = 'lx';
+        egret.ExternalInterface.call("getChannel", '');
+        egret.ExternalInterface.addCallback("backChannel", function (msg) {
+            // var msg = 'lx';
             if (msg) {
                 window['setChannel'](msg)
                 window['statistics']() // 统计
@@ -123,7 +123,7 @@ class login extends eui.Component {
             if (msg != 'lx') {
                 self.zhuceLabel.visible = true
             }
-        // })
+        })
     }
 
 	/*

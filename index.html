@@ -228,10 +228,18 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 			// egret.runEgret({ renderMode: "webgl", audioType: 0 });
 			// _login()
 			// return
-			closeLoadProgress()
-			getChargePriceFromServer()
-			document.getElementById("paramIframe").style.display = 'block'
-			this.nativeType = 'web'
+			// closeLoadProgress()
+			// getChargePriceFromServer()
+			// document.getElementById("paramIframe").style.display = 'block'
+			// this.nativeType = 'web'
+			if (window.location.search) {
+				_login()
+				this.nativeType = 'web'
+			} else {
+				closeLoadProgress()
+				egret.runEgret({ renderMode: "webgl", audioType: 0 });
+				this.nativeType = 'native'
+			}
 		});
 	});
 	xhr.send(null);

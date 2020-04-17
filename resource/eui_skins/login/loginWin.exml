@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="loginWin" width="580" height="930" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Group id="loginpb" horizontalCenter="0" verticalCenter="-134" visible="false">
+	<e:Group id="loginpb" horizontalCenter="0" verticalCenter="-134">
 		<e:Image source="loginPic_json.login_block_top" y="0" x="0"/>
 		<e:Image source="loginPic_json.login_block_center" y="146" x="16" anchorOffsetY="0" height="209"/>
 		<e:Image source="loginPic_json.login_block_bottom" y="352" x="24"/>
@@ -33,7 +33,7 @@
 		<e:Label id="accountTrp" text="*账号必须为6-10位字母、数字、下划线" x="163" y="154" size="13" verticalAlign="middle" visible="false"/>
 		<e:Label id="passwordTrp" text="*密码必须为8-10位字母、数字、下划线" x="162" y="222" size="13" verticalAlign="middle" visible="false"/>
 	</e:Group>
-	<e:Group id="roompb" horizontalCenter="0" verticalCenter="0">
+	<e:Group id="roompb" horizontalCenter="0" verticalCenter="0" visible="false">
 		<e:Image source="login_room_list_png" x="0" y="0"/>
 		<e:Image id="roomClose" source="loginPic_json.login_close" x="474" y="0"/>
 		<e:Image source="loginPic_json.login_group_light" x="11" y="90"/>

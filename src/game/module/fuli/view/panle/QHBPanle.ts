@@ -27,7 +27,10 @@ class QHBPanle extends BaseView {
 	private hongbaoNum: eui.Label;
 	private kqTime: eui.Label;
 
+	private scrollLength: number;
 
+	private hasHongbao: eui.Group;
+	private noHongbao: eui.Label;
 
 	constructor() {
 		super();
@@ -40,16 +43,14 @@ class QHBPanle extends BaseView {
 
 
 	public open(...param: any[]): void {
-		console.log(this.skin)
 		this.init()
 	}
 
 	//只要没过时就可以领取
 	public initHongbaoInfo(...param: any[]): void {
-		console.log(param[0])
 		let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
 
-		
+
 		let bytes = param[0]
 		let id = bytes.readInt();
 		let isSuccess = bytes.readByte();
@@ -57,9 +58,9 @@ class QHBPanle extends BaseView {
 			let reld: RedEnvelope = new RedEnvelope();
 			reld.id = bytes.readUnsignedShort();
 			reld.timer = bytes.readInt();
-			console.log('可以领取')
 			this.initQhongbaoInfo(reld.id)
 		} else {
+			this.initShowHongBao()
 			console.log('没有红包可以领取')
 		}
 
@@ -96,31 +97,30 @@ class QHBPanle extends BaseView {
 		}
 		actData.update_MyQenvelopeData(_MyQenvelopeData)
 		actData.update_QenvelopeData(obj)
-		
+
 	}
 
-	// private showHongBaoInfo() {
-	// 	console.log('显示抢红包面板')
-	// }
 	private initQhongbaoInfo(eid): void {
 		this.qianghongbao.visible = true;
 		this.showhongbao.visible = false;
 		this.eid = eid
 	}
-	public updateNextHongBaoTime(){
-		
+	public updateNextHongBaoTime() {
+
 		let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
-		if(actData.envelopeData.length > 0){
-			let str = DateUtils.getFormatBySecond(actData.envelopeData[0].getStartTimer(),10)
+		if (actData.envelopeData.length > 0) {
+			let str = DateUtils.getFormatBySecond(actData.envelopeData[0].getStartTimer(), 10)
 			this.kqTime.text = str
-			if(actData.envelopeData[0].getStartTimer() <=0){
+			if (actData.envelopeData[0].getStartTimer() <= 0) {
+				this.kqTime.text = '0';
 				TimerManager.ins().remove(this.updateNextHongBaoTime, this);
+				this.init()
 			}
-		}else{
+		} else {
 			this.kqTime.text = '无可领取'
 			TimerManager.ins().remove(this.updateNextHongBaoTime, this);
 		}
-		
+
 	}
 	private initShowHongBao(): void {
 		if (Activity.ins().activityData[2001] as ActivityType24Data) {
@@ -133,12 +133,15 @@ class QHBPanle extends BaseView {
 				this.qianghongbao.visible = false;
 				this.showhongbao.visible = true;
 
+				if (actData.shengYuKeLingHongBao < 0) {
+					this.hongbaoNum.text = '0';
+				} else {
+					this.hongbaoNum.text = actData.shengYuKeLingHongBao.toString();
+				}
 
-				this.hongbaoNum.text = actData.shengYuKeLingHongBao.toString()
-
+				// 防止重复定时器
+				TimerManager.ins().remove(this.updateNextHongBaoTime, this);
 				TimerManager.ins().doTimer(1000, 0, this.updateNextHongBaoTime, this);
-				
-				
 
 
 				let arrName = []
@@ -146,40 +149,47 @@ class QHBPanle extends BaseView {
 					let str = QenvelopeData[i].name + '抢到了' + QenvelopeData[i].yuanbao + ' 元宝'
 					arrName.push(str)
 				}
+				this.scrollLength = arrName.length;
 				this.list.dataProvider = new eui.ArrayCollection(arrName);
 				this.scroller.touchChildren = false;
 				this.scroller.touchEnabled = false;
-
-				this.listH = this.list.height - 200;
-				this.scroller.viewport.scrollV = 0;
-				let t = egret.Tween.get(this.scroller.viewport);
-				t.to({ scrollV: this.listH }, 40 * this.listH).call(this.loopT, this);
-
+				if (arrName.length * this.listH > 135) {
+					this.listH = this.list.height;
+					this.scroller.viewport.scrollV = 0;
+					let t = egret.Tween.get(this.scroller.viewport);
+					t.to({ scrollV: this.listH }, arrName.length * this.listH).call(this.loopT, this);
+				}
 
 				// 拿出最大红包
-				this.yuanbao1.text = MyQenvelope.yuanbao.toString()
-				if (eWaiYuanBao) {
-					this.btn1.visible = true;
+				if (MyQenvelope) {
+					this.hasHongbao.visible = true
+					this.noHongbao.visible = false
+
+					this.yuanbao1.text = MyQenvelope.yuanbao.toString()
+					if (eWaiYuanBao) {
+						this.yuanbao2.text = eWaiYuanBao.toString();
+						this.btn1.visible = true;
+					} else {
+						this.yuanbao2.text = MyQenvelope.Ewai_yuanbao.toString();
+						this.btn1.visible = false;
+					}
 				} else {
-					this.btn1.visible = false;
+					this.hasHongbao.visible = false
+					this.noHongbao.visible = true
 				}
-				this.yuanbao2.text = eWaiYuanBao.toString();
+
 			} else {
 				alert('领取失败')
 			}
-
 		}
-
-
 	}
-
 	public init(): void {
 		Activity.ins().sendChangePage(2001)
 		// 先判断有没有红包没有领取如果有就
 		if (Activity.ins().activityData[2001] as ActivityType24Data) {
 			let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
 			if (actData.envelopeData.length > 0 && actData.envelopeData[0].canStartTimer()) {
-				Activity.ins().sendEnvelopeData(2001, actData.envelopeData[0].id,actData.maxRecord)
+				Activity.ins().sendEnvelopeData(2001, actData.envelopeData[0].id, actData.maxRecord)
 			} else {
 				//没有红包
 				this.initShowHongBao()
@@ -188,15 +198,12 @@ class QHBPanle extends BaseView {
 
 		this.list.itemRenderer = QHBItem;
 
-
-
-
 	}
 
 	private loopT() {
-		this.scroller.viewport.scrollV = 200;
+		this.scroller.viewport.scrollV = 0;
 		let t = egret.Tween.get(this.scroller.viewport);
-		t.to({ scrollV: this.listH }, 40 * this.listH).call(this.loopT, this);
+		t.to({ scrollV: this.listH }, this.scrollLength * this.listH).call(this.loopT, this);
 	}
 	private update(): void {
 
@@ -221,7 +228,13 @@ class QHBPanle extends BaseView {
 					if (rechargeNum > 0) {
 						Activity.ins().sendReward(2001, this.eid, 2);
 					} else {
-						alert('没有充值');
+						//
+						WarnWin.show("充值任意金额才能领取红包", function () {
+							ViewManager.ins().close(FuliWin);
+							RechargeData.checkOpenWin();
+						}, this, function () {
+						}, this);
+
 					}
 				}
 

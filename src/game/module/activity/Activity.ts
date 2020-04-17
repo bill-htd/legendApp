@@ -206,9 +206,6 @@ class Activity extends BaseSystem {
 	public isSuccee = false;
 
 	public postRewardResult(bytes: GameByteArray): number {
-		console.log('25-2')
-		console.log(bytes)
-		// return
 
 		this.isSuccee = bytes.readBoolean();
 		let activityID = bytes.readInt();
@@ -1130,8 +1127,6 @@ class Activity extends BaseSystem {
 	 * 25-23
 	 * */
 	public handlehongbaoInfo(bytes: GameByteArray) {
-		// console.log(bytes)
-		console.log('25-23')
 		let id = bytes.readInt();
 		if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
 			let actData = this.activityData[id] as ActivityType24Data;
@@ -1139,15 +1134,12 @@ class Activity extends BaseSystem {
 			let reld: RedEnvelope = new RedEnvelope();
 			reld.id = bytes.readUnsignedShort();
 			reld.startimer = bytes.readInt();
-			actData.envelopeData.push(reld);//最新的红包放最后
-			
-			
-			if(actData.envelopeData.length > 0){
-				console.log('有红包')
-				console.log(reld)
-				HBSystem.ins().updateHongBao();
+			if(reld.id != 0){
+				actData.envelopeData.push(reld);//最新的红包放最后
+				if(actData.envelopeData.length > 0){
+					HBSystem.ins().updateHongBao();
+				}
 			}
-			
 		}
 
 	}

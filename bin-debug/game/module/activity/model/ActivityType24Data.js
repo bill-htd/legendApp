@@ -16,7 +16,6 @@ var ActivityType24Data = (function (_super) {
     function ActivityType24Data(bytes, id) {
         var _this = _super.call(this, bytes) || this;
         _this.isSuccess = true;
-        _this.shengYuKeLingHongBao = 5;
         _this.recordMax = 100;
         _this.maxRecord = 0;
         _this.envelopeSum = ActivityType24Data.maxEnvelope;
@@ -25,7 +24,6 @@ var ActivityType24Data = (function (_super) {
         return _this;
     }
     ActivityType24Data.prototype.init = function (bytes, id) {
-        console.log('初始化信息 ：');
         this.rechargeNum = bytes.readInt();
         this.eWaiYuanBao = bytes.readInt();
         var len = bytes.readShort();
@@ -80,7 +78,6 @@ var ActivityType24Data = (function (_super) {
         }
         for (var i = 0; i < this.MyQenvelopeData.length; i++) {
             if (this.MyQenvelopeData[i].eId == maxid) {
-                console.log(this.MyQenvelopeData[i]);
                 return this.MyQenvelopeData[i];
             }
         }
@@ -88,10 +85,10 @@ var ActivityType24Data = (function (_super) {
     };
     ActivityType24Data.prototype.update = function (bytes) {
         if (Activity.ins().isSuccee) {
-            console.log('领取成功');
             this.isSuccess = true;
             var type = bytes.readShort();
             if (type == 1) {
+                this.shengYuKeLingHongBao -= 1;
                 var MyQinfo = new MyQenvelopeData;
                 MyQinfo.eId = bytes.readShort();
                 MyQinfo.yuanbao = bytes.readInt();
@@ -100,20 +97,17 @@ var ActivityType24Data = (function (_super) {
                 this.eWaiYuanBao = MyQinfo.Ewai_yuanbao;
             }
             else {
-                console.log('额外元宝： ' + this.eWaiYuanBao);
                 var ewai = bytes.readInt();
-                console.log('领取到的元宝： ' + ewai);
                 this.eWaiYuanBao = 0;
                 var MaxHongbaoInfo = this.getMax_hongbao();
                 MaxHongbaoInfo.Ewai_yuanbao = ewai;
-                console.log(MaxHongbaoInfo);
             }
         }
         else {
             console.log('领取失败');
             this.isSuccess = false;
         }
-        console.log('处理抢红包结果');
+        HBSystem.ins().removeHongbao();
     };
     Object.defineProperty(ActivityType24Data.prototype, "envelopeData", {
         get: function () {
@@ -121,18 +115,11 @@ var ActivityType24Data = (function (_super) {
             return this._envelopeData;
         },
         set: function (value) {
-            value.sort(this.sortTimer);
             this._envelopeData = value;
         },
         enumerable: true,
         configurable: true
     });
-    ActivityType24Data.prototype.sortTimer = function (a, b) {
-        if (a.timer < b.timer)
-            return -1;
-        else
-            return 1;
-    };
     ActivityType24Data.prototype.checkClear = function () {
         if (this.envelopeData.length >= this.envelopeSum) {
             this.SecondCount = 0;

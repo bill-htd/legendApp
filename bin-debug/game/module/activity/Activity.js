@@ -128,8 +128,6 @@ var Activity = (function (_super) {
     Activity.prototype.postActivityIsGetAwards = function () {
     };
     Activity.prototype.postRewardResult = function (bytes) {
-        console.log('25-2');
-        console.log(bytes);
         this.isSuccee = bytes.readBoolean();
         var activityID = bytes.readInt();
         if (this.doubleElevenIDs.indexOf(activityID) != -1) {
@@ -772,7 +770,6 @@ var Activity = (function (_super) {
         return eld;
     };
     Activity.prototype.handlehongbaoInfo = function (bytes) {
-        console.log('25-23');
         var id = bytes.readInt();
         if (this.activityData[id] && this.activityData[id] instanceof ActivityType24Data) {
             var actData = this.activityData[id];
@@ -780,11 +777,11 @@ var Activity = (function (_super) {
             var reld = new RedEnvelope();
             reld.id = bytes.readUnsignedShort();
             reld.startimer = bytes.readInt();
-            actData.envelopeData.push(reld);
-            if (actData.envelopeData.length > 0) {
-                console.log('有红包');
-                console.log(reld);
-                HBSystem.ins().updateHongBao();
+            if (reld.id != 0) {
+                actData.envelopeData.push(reld);
+                if (actData.envelopeData.length > 0) {
+                    HBSystem.ins().updateHongBao();
+                }
             }
         }
     };

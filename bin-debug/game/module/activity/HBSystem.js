@@ -41,7 +41,7 @@ var HBSystem = (function (_super) {
                     break;
                 }
                 else {
-                    console.log('没到领取时间');
+                    TimerManager.ins().remove(this.updateHBTime, this);
                     TimerManager.ins().doTimer(1000, 0, this.updateHBTime, this);
                     break;
                 }
@@ -59,7 +59,6 @@ var HBSystem = (function (_super) {
                 j = actData.envelopeData.length - 1;
                 var eId = actData.envelopeData[j].id;
                 if (actData.envelopeData[j].canStartTimer()) {
-                    console.log('可以领取了');
                     TimerManager.ins().remove(this.updateHBTime, this);
                     var item = new HongBaoShowItem();
                     item.data = { actId: 2001, eId: eId };
@@ -139,6 +138,10 @@ var HBSystem = (function (_super) {
         var view = ViewManager.ins().getView(PlayFunView);
         view.hongbao.removeChildren();
         ViewManager.ins().open(FuliWin, 6);
+    };
+    HBSystem.prototype.removeHongbao = function () {
+        var view = ViewManager.ins().getView(PlayFunView);
+        view.hongbao.removeChildren();
     };
     HBSystem.prototype.closeallhongbao = function () {
     };

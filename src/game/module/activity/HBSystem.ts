@@ -21,7 +21,7 @@ class HBSystem extends BaseSystem {
 
 
 
-    public handleHongbao(){
+    public handleHongbao() {
         let view: PlayFunView = ViewManager.ins().getView(PlayFunView) as PlayFunView;
         if (!view || !view.hongbao) return;
         if (view.hongbao.numElements > 0) return;
@@ -37,7 +37,6 @@ class HBSystem extends BaseSystem {
                     view.hongbao.addChild(item);
                     break;
                 } else {
-                    console.log('没到领取时间')
                     TimerManager.ins().remove(this.updateHBTime, this); // 防止多次启动定时器
                     TimerManager.ins().doTimer(1000, 0, this.updateHBTime, this);
                     break;
@@ -58,7 +57,6 @@ class HBSystem extends BaseSystem {
                 j = actData.envelopeData.length - 1;
                 let eId = actData.envelopeData[j].id; //最新的红包id
                 if (actData.envelopeData[j].canStartTimer()) {//红包是否过时
-                    console.log('可以领取了')
                     TimerManager.ins().remove(this.updateHBTime, this);
                     let item: HongBaoShowItem = new HongBaoShowItem();
                     item.data = { actId: 2001, eId: eId };
@@ -150,6 +148,10 @@ class HBSystem extends BaseSystem {
         let view: PlayFunView = ViewManager.ins().getView(PlayFunView) as PlayFunView;
         view.hongbao.removeChildren();
         ViewManager.ins().open(FuliWin, 6);
+    }
+    public removeHongbao() {
+        let view: PlayFunView = ViewManager.ins().getView(PlayFunView) as PlayFunView;
+        view.hongbao.removeChildren();
     }
     public closeallhongbao() {
 
