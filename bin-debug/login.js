@@ -40,34 +40,36 @@ var login = (function (_super) {
         _this.dengluInfo.visible = true;
         _this.zhuceInfo.visible = false;
         var self = _this;
-        var msg = 'lx';
-        if (msg) {
-            window['setChannel'](msg);
-            window['statistics']();
-            var url = window['get_AppInfo_address']();
-            url += '&channel=' + msg;
-            Http.ins().send(url, true, true, function (event) {
-                var request = event.currentTarget;
-                var data = JSON.parse(request.response);
-                if (data.code == 0) {
-                    var info = data.data;
-                    if (info.appVer != Version.AppVersion) {
-                        self.resUrl = info.resUrl;
-                        self.warnGroup.visible = true;
+        egret.ExternalInterface.call("getChannel", '');
+        egret.ExternalInterface.addCallback("backChannel", function (msg) {
+            if (msg) {
+                window['setChannel'](msg);
+                window['statistics']();
+                var url = window['get_AppInfo_address']();
+                url += '&channel=' + msg;
+                Http.ins().send(url, true, true, function (event) {
+                    var request = event.currentTarget;
+                    var data = JSON.parse(request.response);
+                    if (data.code == 0) {
+                        var info = data.data;
+                        if (info.appVer != Version.AppVersion) {
+                            self.resUrl = info.resUrl;
+                            self.warnGroup.visible = true;
+                        }
+                        else {
+                            self.getRoomList();
+                            self.trpInfo.text = '获取服务器列表中...';
+                        }
                     }
                     else {
-                        self.getRoomList();
-                        self.trpInfo.text = '获取服务器列表中...';
+                        alert('获取版本号失败，请重启游戏');
                     }
-                }
-                else {
-                    alert('获取版本号失败，请重启游戏');
-                }
-            });
-        }
-        if (msg != 'lx') {
-            self.zhuceLabel.visible = true;
-        }
+                });
+            }
+            if (msg != 'lx') {
+                self.zhuceLabel.visible = true;
+            }
+        });
         return _this;
     }
     login.prototype.initGonggao = function () {

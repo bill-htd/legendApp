@@ -146,8 +146,12 @@ class QHBPanle extends BaseView {
 
 				let arrName = []
 				for (let i = 0; i < QenvelopeData.length; i++) {
-					let str = QenvelopeData[i].name + '抢到了' + QenvelopeData[i].yuanbao + ' 元宝'
-					arrName.push(str)
+					// let str = QenvelopeData[i].name + '抢到了' + QenvelopeData[i].yuanbao + ' 元宝'
+					let obj = {
+						name:QenvelopeData[i].name,
+						yuanbao:QenvelopeData[i].yuanbao
+					}
+					arrName.push(obj)
 				}
 				this.scrollLength = arrName.length;
 				this.list.dataProvider = new eui.ArrayCollection(arrName);

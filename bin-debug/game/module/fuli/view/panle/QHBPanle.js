@@ -119,8 +119,11 @@ var QHBPanle = (function (_super) {
                 TimerManager.ins().doTimer(1000, 0, this.updateNextHongBaoTime, this);
                 var arrName = [];
                 for (var i = 0; i < QenvelopeData_1.length; i++) {
-                    var str = QenvelopeData_1[i].name + '抢到了' + QenvelopeData_1[i].yuanbao + ' 元宝';
-                    arrName.push(str);
+                    var obj = {
+                        name: QenvelopeData_1[i].name,
+                        yuanbao: QenvelopeData_1[i].yuanbao
+                    };
+                    arrName.push(obj);
                 }
                 this.scrollLength = arrName.length;
                 this.list.dataProvider = new eui.ArrayCollection(arrName);

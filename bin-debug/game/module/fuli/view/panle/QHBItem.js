@@ -21,8 +21,9 @@ var QHBItem = (function (_super) {
             this.labelInfo.text = "";
             return;
         }
-        var str = "|C:0x3EADFF&T:" + this.data + "|";
+        var str = "|C:0x05B4C7&T:" + this.data.name + "|" + ' 抢到了 ' + "|C:0xECAA36&T:" + this.data.yuanbao + "|";
         this.labelInfo.textFlow = TextFlowMaker.generateTextFlow1(str);
+        this.yuanbaoImg.x = this.labelInfo.width;
     };
     return QHBItem;
 }(eui.ItemRenderer));
