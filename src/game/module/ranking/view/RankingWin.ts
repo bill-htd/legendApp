@@ -98,7 +98,7 @@ class RankingWin extends BaseEuiView {
 			{ type: 10, skin: 'RankItemLilianSkin', name:'神功排行榜'},
 			{ type: 11, skin: 'RankItemLadderSkin', name:'王者排行榜'},
 			{ type: 12, skin: 'RankItemPowerSkin', name:'铸造总等级榜'},
-			{ type: 13, skin: 'RankItemPowerSkin', name:'战灵排行榜'},
+			// { type: 13, skin: 'RankItemPowerSkin', name:'战灵排行榜'},
 			{ type: 14, skin: 'RankItemPowerSkin', name:'龙魂总等级榜'},
 			// { type: 15, skin: 'RankItemLadderSkin', name:'勋章排行榜'},
 			// { type: -1, name:'消费排行榜'},

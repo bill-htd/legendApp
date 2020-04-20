@@ -117,24 +117,28 @@ var QHBPanle = (function (_super) {
                 }
                 TimerManager.ins().remove(this.updateNextHongBaoTime, this);
                 TimerManager.ins().doTimer(1000, 0, this.updateNextHongBaoTime, this);
-                var arrName = [];
+                var arrName_1 = [];
                 for (var i = 0; i < QenvelopeData_1.length; i++) {
                     var obj = {
                         name: QenvelopeData_1[i].name,
                         yuanbao: QenvelopeData_1[i].yuanbao
                     };
-                    arrName.push(obj);
+                    arrName_1.push(obj);
                 }
-                this.scrollLength = arrName.length;
-                this.list.dataProvider = new eui.ArrayCollection(arrName);
-                this.scroller.touchChildren = false;
-                this.scroller.touchEnabled = false;
-                if (arrName.length * this.listH > 135) {
-                    this.listH = this.list.height;
-                    this.scroller.viewport.scrollV = 0;
-                    var t = egret.Tween.get(this.scroller.viewport);
-                    t.to({ scrollV: this.listH }, arrName.length * this.listH).call(this.loopT, this);
-                }
+                this.scrollLength = arrName_1.length;
+                this.list.dataProvider = new eui.ArrayCollection(arrName_1);
+                this.listH = this.list.height;
+                console.log(arrName_1.length * this.listH);
+                console.log(this.scroller);
+                TimerManager.ins().doTimer(500, 1, function () {
+                    if (arrName_1.length * this.listH > 135) {
+                        this.scroller.viewport.scrollV = 0;
+                        var t = egret.Tween.get(this.scroller.viewport);
+                        console.log(arrName_1.length * this.listH);
+                        var h = (arrName_1.length * this.listH) > 270 ? (arrName_1.length * this.listH) : 270;
+                        t.to({ scrollV: h }, arrName_1.length * 700).call(this.loopT, this);
+                    }
+                }, this);
                 if (MyQenvelope) {
                     this.hasHongbao.visible = true;
                     this.noHongbao.visible = false;
@@ -174,7 +178,9 @@ var QHBPanle = (function (_super) {
     QHBPanle.prototype.loopT = function () {
         this.scroller.viewport.scrollV = 0;
         var t = egret.Tween.get(this.scroller.viewport);
-        t.to({ scrollV: this.listH }, this.scrollLength * this.listH).call(this.loopT, this);
+        var h = (this.scrollLength * this.listH) > 270 ? (this.scrollLength * this.listH) : 270;
+        console.log(this.scroller.viewport.scrollV);
+        t.to({ scrollV: h }, this.scrollLength * 700).call(this.loopT, this);
     };
     QHBPanle.prototype.update = function () {
     };

@@ -148,8 +148,8 @@ class QHBPanle extends BaseView {
 				for (let i = 0; i < QenvelopeData.length; i++) {
 					// let str = QenvelopeData[i].name + '抢到了' + QenvelopeData[i].yuanbao + ' 元宝'
 					let obj = {
-						name:QenvelopeData[i].name,
-						yuanbao:QenvelopeData[i].yuanbao
+						name: QenvelopeData[i].name,
+						yuanbao: QenvelopeData[i].yuanbao
 					}
 					arrName.push(obj)
 				}
@@ -157,12 +157,16 @@ class QHBPanle extends BaseView {
 				this.list.dataProvider = new eui.ArrayCollection(arrName);
 				this.scroller.touchChildren = false;
 				this.scroller.touchEnabled = false;
-				if (arrName.length * this.listH > 135) {
-					this.listH = this.list.height;
-					this.scroller.viewport.scrollV = 0;
-					let t = egret.Tween.get(this.scroller.viewport);
-					t.to({ scrollV: this.listH }, arrName.length * this.listH).call(this.loopT, this);
-				}
+				this.listH = this.list.height;
+				TimerManager.ins().doTimer(500, 1, function () {
+					if (arrName.length * this.listH > 135) {
+						this.scroller.viewport.scrollV = 0;
+						let t = egret.Tween.get(this.scroller.viewport);
+						let h = (arrName.length * this.listH) > 270 ? (arrName.length * this.listH) : 270;
+						t.to({ scrollV: h }, arrName.length * 700).call(this.loopT, this);
+					}
+				}, this);
+
 
 				// 拿出最大红包
 				if (MyQenvelope) {
@@ -207,7 +211,8 @@ class QHBPanle extends BaseView {
 	private loopT() {
 		this.scroller.viewport.scrollV = 0;
 		let t = egret.Tween.get(this.scroller.viewport);
-		t.to({ scrollV: this.listH }, this.scrollLength * this.listH).call(this.loopT, this);
+		let h = (this.scrollLength * this.listH) > 270 ? (this.scrollLength * this.listH) : 270;
+		t.to({ scrollV: h }, this.scrollLength * 700).call(this.loopT, this);
 	}
 	private update(): void {
 

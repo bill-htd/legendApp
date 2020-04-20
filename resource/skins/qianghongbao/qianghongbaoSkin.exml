@@ -48,7 +48,7 @@
 			<e:Button id="btn1" label="额外领取" skinName="Btn16Skin" horizontalCenter="3.5" verticalCenter="33" x="111" y="272" scaleX="1" scaleY="1"/>
 		</e:Group>
 		<e:Scroller id="scroller" width="275" horizontalCenter="10" height="135" anchorOffsetX="0" anchorOffsetY="0" verticalCenter="174.5">
-			<e:List id="list" x="1" y="3" anchorOffsetX="0" width="276" height="20" itemRendererSkinName="QHBItemSkin">
+			<e:List id="list" x="1" y="3" anchorOffsetX="0" width="276" height="35" itemRendererSkinName="QHBItemSkin">
 			<e:layout>
 				<e:VerticalLayout gap="5" paddingTop="2"/>
 			</e:layout>
