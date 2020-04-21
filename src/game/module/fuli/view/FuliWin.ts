@@ -137,6 +137,7 @@ class FuliWin extends BaseEuiView {
 		// if (!isFull && this.iconList.selectedIndex != 0) {
 		// 	--this.iconList.selectedIndex;
 		// }
+		
 		this.arrList.replaceAll(this._datas);
 		if (this.initFunc) {
 			this.initFunc();

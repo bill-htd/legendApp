@@ -51,7 +51,7 @@ var CDKey = (function (_super) {
                 str = "|C:0xf3311e&T:兑换失败|";
                 break;
         }
-        UserTips.ins().showTips(str);
+        WarnWin.show(str, function () { }, this, function () { }, this, 'sure');
     };
     return CDKey;
 }(BaseSystem));

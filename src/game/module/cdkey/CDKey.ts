@@ -44,7 +44,8 @@ class CDKey extends BaseSystem {
 				str = "|C:0xf3311e&T:兑换失败|";
 				break;
 		}
-		UserTips.ins().showTips(str);
+		WarnWin.show(str, function () { }, this,function(){},this,'sure');
+		// UserTips.ins().showTips(str);
 	}
 }
 

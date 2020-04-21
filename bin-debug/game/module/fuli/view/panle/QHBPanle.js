@@ -109,7 +109,7 @@ var QHBPanle = (function (_super) {
                 var QenvelopeData_1 = actData.QenvelopeData;
                 this.qianghongbao.visible = false;
                 this.showhongbao.visible = true;
-                if (actData.shengYuKeLingHongBao < 0) {
+                if (actData.shengYuKeLingHongBao <= 0) {
                     this.hongbaoNum.text = '0';
                 }
                 else {
@@ -117,28 +117,16 @@ var QHBPanle = (function (_super) {
                 }
                 TimerManager.ins().remove(this.updateNextHongBaoTime, this);
                 TimerManager.ins().doTimer(1000, 0, this.updateNextHongBaoTime, this);
-                var arrName_1 = [];
+                var arrName = [];
                 for (var i = 0; i < QenvelopeData_1.length; i++) {
                     var obj = {
                         name: QenvelopeData_1[i].name,
                         yuanbao: QenvelopeData_1[i].yuanbao
                     };
-                    arrName_1.push(obj);
+                    arrName.push(obj);
                 }
-                this.scrollLength = arrName_1.length;
-                this.list.dataProvider = new eui.ArrayCollection(arrName_1);
-                this.listH = this.list.height;
-                console.log(arrName_1.length * this.listH);
-                console.log(this.scroller);
-                TimerManager.ins().doTimer(500, 1, function () {
-                    if (arrName_1.length * this.listH > 135) {
-                        this.scroller.viewport.scrollV = 0;
-                        var t = egret.Tween.get(this.scroller.viewport);
-                        console.log(arrName_1.length * this.listH);
-                        var h = (arrName_1.length * this.listH) > 270 ? (arrName_1.length * this.listH) : 270;
-                        t.to({ scrollV: h }, arrName_1.length * 700).call(this.loopT, this);
-                    }
-                }, this);
+                this.scrollLength = arrName.length;
+                this.list.dataProvider = new eui.ArrayCollection(arrName);
                 if (MyQenvelope) {
                     this.hasHongbao.visible = true;
                     this.noHongbao.visible = false;
@@ -158,7 +146,8 @@ var QHBPanle = (function (_super) {
                 }
             }
             else {
-                alert('领取失败');
+                this.hasHongbao.visible = false;
+                this.noHongbao.visible = true;
             }
         }
     };
@@ -173,13 +162,16 @@ var QHBPanle = (function (_super) {
                 this.initShowHongBao();
             }
         }
+        else {
+            this.hasHongbao.visible = false;
+            this.noHongbao.visible = true;
+        }
         this.list.itemRenderer = QHBItem;
     };
     QHBPanle.prototype.loopT = function () {
         this.scroller.viewport.scrollV = 0;
         var t = egret.Tween.get(this.scroller.viewport);
         var h = (this.scrollLength * this.listH) > 270 ? (this.scrollLength * this.listH) : 270;
-        console.log(this.scroller.viewport.scrollV);
         t.to({ scrollV: h }, this.scrollLength * 700).call(this.loopT, this);
     };
     QHBPanle.prototype.update = function () {

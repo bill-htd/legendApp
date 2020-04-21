@@ -41,7 +41,7 @@
 		</e:Group>
 		<e:Group horizontalCenter="253" bottom="158">
 		</e:Group>
-		<e:Scroller id="menuScroller" scrollPolicyV="off" scrollPolicyH="on" height="82" horizontalCenter="0" bottom="134" width="450">
+		<e:Scroller id="menuScroller" scrollPolicyV="off" scrollPolicyH="on" height="110" horizontalCenter="0" bottom="115" width="450">
 			<e:List id="menuList" y="74" itemRendererSkinName="ActBtnSkin" horizontalCenter="0" scrollEnabled="false">
 			<e:layout>
 				<e:HorizontalLayout gap="10" paddingLeft="0" horizontalAlign="center"/>

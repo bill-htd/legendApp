@@ -133,7 +133,7 @@ class QHBPanle extends BaseView {
 				this.qianghongbao.visible = false;
 				this.showhongbao.visible = true;
 
-				if (actData.shengYuKeLingHongBao < 0) {
+				if (actData.shengYuKeLingHongBao <= 0) {
 					this.hongbaoNum.text = '0';
 				} else {
 					this.hongbaoNum.text = actData.shengYuKeLingHongBao.toString();
@@ -155,17 +155,17 @@ class QHBPanle extends BaseView {
 				}
 				this.scrollLength = arrName.length;
 				this.list.dataProvider = new eui.ArrayCollection(arrName);
-				this.scroller.touchChildren = false;
-				this.scroller.touchEnabled = false;
-				this.listH = this.list.height;
-				TimerManager.ins().doTimer(500, 1, function () {
-					if (arrName.length * this.listH > 135) {
-						this.scroller.viewport.scrollV = 0;
-						let t = egret.Tween.get(this.scroller.viewport);
-						let h = (arrName.length * this.listH) > 270 ? (arrName.length * this.listH) : 270;
-						t.to({ scrollV: h }, arrName.length * 700).call(this.loopT, this);
-					}
-				}, this);
+				// this.scroller.touchChildren = false;
+				// this.scroller.touchEnabled = false;
+				// this.listH = this.list.height;
+				// TimerManager.ins().doTimer(500, 1, function () {
+				// 	if (arrName.length * this.listH > 135) {
+				// 		this.scroller.viewport.scrollV = 0;
+				// 		let t = egret.Tween.get(this.scroller.viewport);
+				// 		let h = (arrName.length * this.listH) > 270 ? (arrName.length * this.listH) : 270;
+				// 		t.to({ scrollV: h }, arrName.length * 700).call(this.loopT, this);
+				// 	}
+				// }, this);
 
 
 				// 拿出最大红包
@@ -187,7 +187,9 @@ class QHBPanle extends BaseView {
 				}
 
 			} else {
-				alert('领取失败')
+				this.hasHongbao.visible = false
+				this.noHongbao.visible = true
+				// alert('领取失败')
 			}
 		}
 	}
@@ -202,6 +204,9 @@ class QHBPanle extends BaseView {
 				//没有红包
 				this.initShowHongBao()
 			}
+		} else {
+			this.hasHongbao.visible = false
+			this.noHongbao.visible = true
 		}
 
 		this.list.itemRenderer = QHBItem;
