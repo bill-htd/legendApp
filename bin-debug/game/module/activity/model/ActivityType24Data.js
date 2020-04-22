@@ -69,6 +69,14 @@ var ActivityType24Data = (function (_super) {
             this.QenvelopeData.push(data[i]);
         }
     };
+    ActivityType24Data.prototype.addQenvelopeData = function (data) {
+        this.QenvelopeData = this.QenvelopeData.concat(data);
+        for (var i = 0; i < this.QenvelopeData.length; i++) {
+            if (this.QenvelopeData[i].recordId > this.maxRecord) {
+                this.maxRecord = this.QenvelopeData[i].recordId;
+            }
+        }
+    };
     ActivityType24Data.prototype.getMax_hongbao = function () {
         var maxid = 0;
         for (var i = 0; i < this.MyQenvelopeData.length; i++) {

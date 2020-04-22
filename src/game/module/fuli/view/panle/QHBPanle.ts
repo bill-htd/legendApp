@@ -91,12 +91,13 @@ class QHBPanle extends BaseView {
 			Qinfo.isEwai = bytes.readByte();
 			Qinfo.yuanbao = bytes.readInt();
 			obj.push(Qinfo)
-			if (Qinfo.recordId > actData.maxRecord) {
-				actData.maxRecord = Qinfo.recordId
-			}
+			// if (Qinfo.recordId > actData.maxRecord) {
+			// 	actData.maxRecord = Qinfo.recordId
+			// }
 		}
 		actData.update_MyQenvelopeData(_MyQenvelopeData)
-		actData.update_QenvelopeData(obj)
+		// actData.addQenvelopeData(obj)
+
 
 	}
 
@@ -123,81 +124,88 @@ class QHBPanle extends BaseView {
 
 	}
 	private initShowHongBao(): void {
-		if (Activity.ins().activityData[2001] as ActivityType24Data) {
-			let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
 
-			if (actData.isSuccess) {
-				let eWaiYuanBao = actData.eWaiYuanBao;
-				let MyQenvelope = actData.getMax_hongbao();
-				let QenvelopeData = actData.QenvelopeData;
-				this.qianghongbao.visible = false;
-				this.showhongbao.visible = true;
+		Activity.ins().sendChangePage(2001)
 
-				if (actData.shengYuKeLingHongBao <= 0) {
-					this.hongbaoNum.text = '0';
-				} else {
-					this.hongbaoNum.text = actData.shengYuKeLingHongBao.toString();
-				}
+		TimerManager.ins().doTimer(500, 1, function () {
+			if (Activity.ins().activityData[2001] as ActivityType24Data) {
+				let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
 
-				// 防止重复定时器
-				TimerManager.ins().remove(this.updateNextHongBaoTime, this);
-				TimerManager.ins().doTimer(1000, 0, this.updateNextHongBaoTime, this);
+				if (actData.isSuccess) {
+					let eWaiYuanBao = actData.eWaiYuanBao;
+					let MyQenvelope = actData.getMax_hongbao();
+					let QenvelopeData = actData.QenvelopeData;
+					this.qianghongbao.visible = false;
+					this.showhongbao.visible = true;
 
-
-				let arrName = []
-				for (let i = 0; i < QenvelopeData.length; i++) {
-					// let str = QenvelopeData[i].name + '抢到了' + QenvelopeData[i].yuanbao + ' 元宝'
-					let obj = {
-						name: QenvelopeData[i].name,
-						yuanbao: QenvelopeData[i].yuanbao
-					}
-					arrName.push(obj)
-				}
-				this.scrollLength = arrName.length;
-				this.list.dataProvider = new eui.ArrayCollection(arrName);
-				// this.scroller.touchChildren = false;
-				// this.scroller.touchEnabled = false;
-				// this.listH = this.list.height;
-				// TimerManager.ins().doTimer(500, 1, function () {
-				// 	if (arrName.length * this.listH > 135) {
-				// 		this.scroller.viewport.scrollV = 0;
-				// 		let t = egret.Tween.get(this.scroller.viewport);
-				// 		let h = (arrName.length * this.listH) > 270 ? (arrName.length * this.listH) : 270;
-				// 		t.to({ scrollV: h }, arrName.length * 700).call(this.loopT, this);
-				// 	}
-				// }, this);
-
-
-				// 拿出最大红包
-				if (MyQenvelope) {
-					this.hasHongbao.visible = true
-					this.noHongbao.visible = false
-
-					this.yuanbao1.text = MyQenvelope.yuanbao.toString()
-					if (eWaiYuanBao) {
-						this.yuanbao2.text = eWaiYuanBao.toString();
-						this.btn1.visible = true;
+					if (actData.shengYuKeLingHongBao <= 0) {
+						this.hongbaoNum.text = '0';
 					} else {
-						this.yuanbao2.text = MyQenvelope.Ewai_yuanbao.toString();
-						this.btn1.visible = false;
+						this.hongbaoNum.text = actData.shengYuKeLingHongBao.toString();
 					}
+
+					// 防止重复定时器
+					TimerManager.ins().remove(this.updateNextHongBaoTime, this);
+					TimerManager.ins().doTimer(1000, 0, this.updateNextHongBaoTime, this);
+
+
+					let arrName = []
+					for (let i = QenvelopeData.length - 1; i > 0; i--) {
+						// let str = QenvelopeData[i].name + '抢到了' + QenvelopeData[i].yuanbao + ' 元宝'
+						let obj = {
+							name: QenvelopeData[i].name,
+							yuanbao: QenvelopeData[i].yuanbao
+						}
+						arrName.push(obj)
+					}
+					this.scrollLength = arrName.length;
+					this.list.dataProvider = new eui.ArrayCollection(arrName);
+					// this.scroller.touchChildren = false;
+					// this.scroller.touchEnabled = false;
+					// this.listH = this.list.height;
+					// TimerManager.ins().doTimer(500, 1, function () {
+					// 	if (arrName.length * this.listH > 135) {
+					// 		this.scroller.viewport.scrollV = 0;
+					// 		let t = egret.Tween.get(this.scroller.viewport);
+					// 		let h = (arrName.length * this.listH) > 270 ? (arrName.length * this.listH) : 270;
+					// 		t.to({ scrollV: h }, arrName.length * 700).call(this.loopT, this);
+					// 	}
+					// }, this);
+
+
+					// 拿出最大红包
+					if (MyQenvelope) {
+						this.hasHongbao.visible = true
+						this.noHongbao.visible = false
+
+						this.yuanbao1.text = MyQenvelope.yuanbao.toString()
+						if (eWaiYuanBao) {
+							this.yuanbao2.text = eWaiYuanBao.toString();
+							this.btn1.visible = true;
+						} else {
+							this.yuanbao2.text = MyQenvelope.Ewai_yuanbao.toString();
+							this.btn1.visible = false;
+						}
+					} else {
+						this.hasHongbao.visible = false
+						this.noHongbao.visible = true
+					}
+
 				} else {
 					this.hasHongbao.visible = false
 					this.noHongbao.visible = true
+					// alert('领取失败')
 				}
-
-			} else {
-				this.hasHongbao.visible = false
-				this.noHongbao.visible = true
-				// alert('领取失败')
 			}
-		}
+		}, this);
+
 	}
 	public init(): void {
-		Activity.ins().sendChangePage(2001)
+
 		// 先判断有没有红包没有领取如果有就
 		if (Activity.ins().activityData[2001] as ActivityType24Data) {
 			let actData: ActivityType24Data = Activity.ins().activityData[2001] as ActivityType24Data;
+			// Activity.ins().sendEnvelopeData(2001, actData.envelopeData[0].id, actData.maxRecord)
 			if (actData.envelopeData.length > 0 && actData.envelopeData[0].canStartTimer()) {
 				Activity.ins().sendEnvelopeData(2001, actData.envelopeData[0].id, actData.maxRecord)
 			} else {

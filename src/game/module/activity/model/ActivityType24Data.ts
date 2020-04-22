@@ -12,6 +12,7 @@ class ActivityType24Data extends ActivityBaseData {
 	public shengYuKeLingHongBao:number;
 	public recordMax:number = 100;
 	public maxRecord:number = 0;
+	
 
 
 	constructor(bytes: GameByteArray, id: number) {
@@ -66,11 +67,20 @@ class ActivityType24Data extends ActivityBaseData {
 			this.MyQenvelopeData.push(data[i])
 		}
 	}
+	
 	// 更新已抢红包数据
 	public update_QenvelopeData(data: any): void {
 		this.QenvelopeData = [];
 		for (let i = 0; i < data.length; i++) {
 			this.QenvelopeData.push(data[i])
+		}
+	}
+	public addQenvelopeData(data: any): void {
+		this.QenvelopeData =  this.QenvelopeData.concat(data);
+		for (let i = 0; i < this.QenvelopeData.length; i++) {
+			if(this.QenvelopeData[i].recordId > this.maxRecord){
+				this.maxRecord = this.QenvelopeData[i].recordId
+			}
 		}
 	}
 

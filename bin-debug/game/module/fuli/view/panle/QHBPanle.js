@@ -72,12 +72,8 @@ var QHBPanle = (function (_super) {
             Qinfo.isEwai = bytes.readByte();
             Qinfo.yuanbao = bytes.readInt();
             obj.push(Qinfo);
-            if (Qinfo.recordId > actData.maxRecord) {
-                actData.maxRecord = Qinfo.recordId;
-            }
         }
         actData.update_MyQenvelopeData(_MyQenvelopeData);
-        actData.update_QenvelopeData(obj);
     };
     QHBPanle.prototype.initQhongbaoInfo = function (eid) {
         this.qianghongbao.visible = true;
@@ -101,43 +97,50 @@ var QHBPanle = (function (_super) {
         }
     };
     QHBPanle.prototype.initShowHongBao = function () {
-        if (Activity.ins().activityData[2001]) {
-            var actData = Activity.ins().activityData[2001];
-            if (actData.isSuccess) {
-                var eWaiYuanBao = actData.eWaiYuanBao;
-                var MyQenvelope = actData.getMax_hongbao();
-                var QenvelopeData_1 = actData.QenvelopeData;
-                this.qianghongbao.visible = false;
-                this.showhongbao.visible = true;
-                if (actData.shengYuKeLingHongBao <= 0) {
-                    this.hongbaoNum.text = '0';
-                }
-                else {
-                    this.hongbaoNum.text = actData.shengYuKeLingHongBao.toString();
-                }
-                TimerManager.ins().remove(this.updateNextHongBaoTime, this);
-                TimerManager.ins().doTimer(1000, 0, this.updateNextHongBaoTime, this);
-                var arrName = [];
-                for (var i = 0; i < QenvelopeData_1.length; i++) {
-                    var obj = {
-                        name: QenvelopeData_1[i].name,
-                        yuanbao: QenvelopeData_1[i].yuanbao
-                    };
-                    arrName.push(obj);
-                }
-                this.scrollLength = arrName.length;
-                this.list.dataProvider = new eui.ArrayCollection(arrName);
-                if (MyQenvelope) {
-                    this.hasHongbao.visible = true;
-                    this.noHongbao.visible = false;
-                    this.yuanbao1.text = MyQenvelope.yuanbao.toString();
-                    if (eWaiYuanBao) {
-                        this.yuanbao2.text = eWaiYuanBao.toString();
-                        this.btn1.visible = true;
+        Activity.ins().sendChangePage(2001);
+        TimerManager.ins().doTimer(500, 1, function () {
+            if (Activity.ins().activityData[2001]) {
+                var actData = Activity.ins().activityData[2001];
+                if (actData.isSuccess) {
+                    var eWaiYuanBao = actData.eWaiYuanBao;
+                    var MyQenvelope = actData.getMax_hongbao();
+                    var QenvelopeData_1 = actData.QenvelopeData;
+                    this.qianghongbao.visible = false;
+                    this.showhongbao.visible = true;
+                    if (actData.shengYuKeLingHongBao <= 0) {
+                        this.hongbaoNum.text = '0';
                     }
                     else {
-                        this.yuanbao2.text = MyQenvelope.Ewai_yuanbao.toString();
-                        this.btn1.visible = false;
+                        this.hongbaoNum.text = actData.shengYuKeLingHongBao.toString();
+                    }
+                    TimerManager.ins().remove(this.updateNextHongBaoTime, this);
+                    TimerManager.ins().doTimer(1000, 0, this.updateNextHongBaoTime, this);
+                    var arrName = [];
+                    for (var i = QenvelopeData_1.length - 1; i > 0; i--) {
+                        var obj = {
+                            name: QenvelopeData_1[i].name,
+                            yuanbao: QenvelopeData_1[i].yuanbao
+                        };
+                        arrName.push(obj);
+                    }
+                    this.scrollLength = arrName.length;
+                    this.list.dataProvider = new eui.ArrayCollection(arrName);
+                    if (MyQenvelope) {
+                        this.hasHongbao.visible = true;
+                        this.noHongbao.visible = false;
+                        this.yuanbao1.text = MyQenvelope.yuanbao.toString();
+                        if (eWaiYuanBao) {
+                            this.yuanbao2.text = eWaiYuanBao.toString();
+                            this.btn1.visible = true;
+                        }
+                        else {
+                            this.yuanbao2.text = MyQenvelope.Ewai_yuanbao.toString();
+                            this.btn1.visible = false;
+                        }
+                    }
+                    else {
+                        this.hasHongbao.visible = false;
+                        this.noHongbao.visible = true;
                     }
                 }
                 else {
@@ -145,14 +148,9 @@ var QHBPanle = (function (_super) {
                     this.noHongbao.visible = true;
                 }
             }
-            else {
-                this.hasHongbao.visible = false;
-                this.noHongbao.visible = true;
-            }
-        }
+        }, this);
     };
     QHBPanle.prototype.init = function () {
-        Activity.ins().sendChangePage(2001);
         if (Activity.ins().activityData[2001]) {
             var actData = Activity.ins().activityData[2001];
             if (actData.envelopeData.length > 0 && actData.envelopeData[0].canStartTimer()) {
