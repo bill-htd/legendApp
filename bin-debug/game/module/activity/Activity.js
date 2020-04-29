@@ -760,11 +760,38 @@ var Activity = (function (_super) {
         var bytes = this.getBytes(6);
         bytes.writeInt(id);
         bytes.writeUnsignedShort(eid);
-        bytes.writeInt(record);
+        if (record) {
+            bytes.writeInt(record);
+        }
         this.sendToServer(bytes);
     };
     Activity.prototype.postEnvelopeData = function (bytes) {
-        return bytes;
+        var id = bytes.readInt();
+        if (id == 2001) {
+            return bytes;
+        }
+        var isSuccess = bytes.readByte();
+        if (isSuccess) {
+            var eId = bytes.readUnsignedShort();
+            var job = bytes.readShort();
+            var sex = bytes.readShort();
+            var index = bytes.readShort();
+            var serverId = bytes.readInt();
+            var name_1 = bytes.readString();
+            var desc = bytes.readString();
+            var eld = new EnvelopeData();
+            eld.id = id;
+            eld.eId = eId;
+            eld.job = job;
+            eld.sex = sex;
+            eld.index = index;
+            eld.serverId = serverId;
+            eld.name = name_1;
+            eld.desc = desc;
+            this.postEnvelopeDataCall(eld);
+            return;
+        }
+        this.postEnvelopeDataCall(null);
     };
     Activity.prototype.postEnvelopeDataCall = function (eld) {
         return eld;
@@ -780,7 +807,7 @@ var Activity = (function (_super) {
             if (reld.id != 0) {
                 actData.envelopeData.push(reld);
                 if (actData.envelopeData.length > 0) {
-                    HBSystem.ins().updateHongBao();
+                    HBSystem2.ins().updateHongBao();
                 }
             }
         }

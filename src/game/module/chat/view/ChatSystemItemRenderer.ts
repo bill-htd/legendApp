@@ -10,6 +10,9 @@ class ChatSystemItemRenderer extends BaseItemRender {
 
 	public dataChanged(): void {
 		// this.type.source = "lt_0"+this.data.type;
+		let str = this.data.str;
+		
+
 		if(this.data.type == 1)
 		{
 			this.str.textFlow = TextFlowMaker.generateTextFlow("|C:0xFD2F2F&T:"+this.data.str+"|");
@@ -18,5 +21,6 @@ class ChatSystemItemRenderer extends BaseItemRender {
 			this.str.textFlow = TextFlowMaker.generateTextFlow(this.data.str);
 			this.type.source = "lt_02";
 		}
+		this.height = Math.ceil( (str.length/26))*20
 	}
 }

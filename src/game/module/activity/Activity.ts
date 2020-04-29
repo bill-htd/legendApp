@@ -1045,7 +1045,9 @@ class Activity extends BaseSystem {
 		let bytes: GameByteArray = this.getBytes(6);
 		bytes.writeInt(id);
 		bytes.writeUnsignedShort(eid);
-		bytes.writeInt(record);
+		if(record){
+			bytes.writeInt(record);
+		}
 		this.sendToServer(bytes);
 	}
 
@@ -1055,10 +1057,36 @@ class Activity extends BaseSystem {
 	 * */
 	public postEnvelopeData(bytes: GameByteArray){
 		// 需要刷新活动
+		let id = bytes.readInt();
+		if(id == 2001){
+			return bytes;
+		}
+		let isSuccess = bytes.readByte();
+		if (isSuccess) {
+			let eId = bytes.readUnsignedShort();
+			let job = bytes.readShort();
+			let sex = bytes.readShort();
+			let index = bytes.readShort();
+			let serverId = bytes.readInt();
+			let name = bytes.readString();
+			let desc = bytes.readString();
+			let eld: EnvelopeData = new EnvelopeData()
+			eld.id = id;
+			eld.eId = eId;
+			eld.job = job;
+			eld.sex = sex;
+			eld.index = index;
+			eld.serverId = serverId;
+			eld.name = name;
+			eld.desc = desc;
 
-		return bytes;
+			this.postEnvelopeDataCall(eld);
+			return;
+		}
+		this.postEnvelopeDataCall(null);
+		
 
-		// let id = bytes.readInt();
+		// 
 		// let isSuccess = bytes.readByte();
 		// if (isSuccess) {
 		// 	let eId = bytes.readUnsignedShort();
@@ -1137,7 +1165,7 @@ class Activity extends BaseSystem {
 			if(reld.id != 0){
 				actData.envelopeData.push(reld);//最新的红包放最后
 				if(actData.envelopeData.length > 0){
-					HBSystem.ins().updateHongBao();
+					HBSystem2.ins().updateHongBao();
 				}
 			}
 		}

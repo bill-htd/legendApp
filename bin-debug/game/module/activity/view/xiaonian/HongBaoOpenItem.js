@@ -26,8 +26,6 @@ var HongBaoOpenItem = (function (_super) {
     };
     HongBaoOpenItem.prototype.init = function () {
         this.hbbtn.addEventListener(egret.TouchEvent.TOUCH_END, this.onClick, this);
-        this.closeBtn0.addEventListener(egret.TouchEvent.TOUCH_END, this.onClick, this);
-        this.closeBtn1.addEventListener(egret.TouchEvent.TOUCH_END, this.onClick, this);
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouch, this);
         this.list.itemRenderer = HongBaoRewardsItem;
         this.closeBtn.visible = false;
@@ -47,12 +45,6 @@ var HongBaoOpenItem = (function (_super) {
                     return;
                 }
                 Activity.ins().sendReward(this.data.actId, this.data.eId, EnvelopeType.GET);
-                break;
-            case this.closeBtn0:
-                Activity.ins().sendReward(this.actid, this.hongbaoid, 2);
-                break;
-            case this.closeBtn1:
-                Activity.ins().sendReward(this.actid, this.hongbaoid, 1);
                 break;
         }
     };

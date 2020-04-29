@@ -36,7 +36,6 @@ var QHBPanle = (function (_super) {
         }
         var actData = Activity.ins().activityData[2001];
         var bytes = param[0];
-        var id = bytes.readInt();
         var isSuccess = bytes.readByte();
         if (isSuccess) {
             var reld = new RedEnvelope();

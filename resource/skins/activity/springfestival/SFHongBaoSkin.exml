@@ -22,7 +22,7 @@
 	<e:Image width="355" source="bantoutiaobg2" scale9Grid="11,2,70,17" anchorOffsetY="0" height="29" anchorOffsetX="0" horizontalCenter="0" top="158"/>
 	<e:Rect fillAlpha="0.4" bottom="-1" width="554" horizontalCenter="0" height="112"/>
 	<e:Label text="每充值100元宝将获得1点红包积分" size="22" bold="true" horizontalCenter="0" textColor="0xf8b141" top="163"/>
-	<e:Scroller id="barList" bounces="false" scrollPolicyV="on" anchorOffsetX="0" anchorOffsetY="0" width="554" height="112" left="3" bottom="-1">
+	<e:Scroller id="barList" bounces="false" scrollPolicyV="on" anchorOffsetX="0" anchorOffsetY="0" width="554" height="112" bottom="-1" horizontalCenter="0">
 		<e:List id="list" x="0" y="-6" itemRendererSkinName="HuntListRendererSkin">
 		<e:layout>
 			<e:VerticalLayout gap="0" horizontalAlign="left"/>
@@ -31,6 +31,6 @@
 	</e:Scroller>
 	<ns1:BaseComponent id="hongbao" horizontalCenter="0.5" skinName="SFHongBaoItem" className="XiaoNianItem" verticalCenter="10.5"/>
 	<e:Image id="redPoint" source="zjmhongdian" touchEnabled="false" horizontalCenter="73" verticalCenter="143"/>
-	<e:Button id="leftBtn" label="" icon="jiantouxuan" skinName="Btn0Skin" scaleX="1" scaleY="1" left="0" verticalCenter="0"/>
-	<e:Button id="rightBtn" label="" icon="jiantouxuan" skinName="Btn0Skin" scaleX="-1" scaleY="1" right="0" verticalCenter="0"/>
+	<e:Button id="leftBtn" label="" icon="jiantouyou" skinName="Btn0Skin" scaleX="-1" scaleY="1" left="0" verticalCenter="0"/>
+	<e:Button id="rightBtn" label="" icon="jiantouyou" skinName="Btn0Skin" scaleX="1" scaleY="1" right="1" verticalCenter="0"/>
 </e:Skin>

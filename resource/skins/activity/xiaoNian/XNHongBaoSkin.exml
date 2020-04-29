@@ -33,7 +33,7 @@
 
 	<ns1:BaseComponent id="hongbao" horizontalCenter="0.5" skinName="XNHongBaoItem" className="XiaoNianItem" verticalCenter="10.5"/>
 	<e:Image id="redPoint" source="zjmhongdian" touchEnabled="false" horizontalCenter="73" verticalCenter="143"/>
-	<e:Button id="leftBtn" label="" icon="jiantouxuan" skinName="Btn0Skin" scaleX="1" scaleY="1" left="0" verticalCenter="0"/>
-	<e:Button id="rightBtn" label="" icon="jiantouxuan" skinName="Btn0Skin" scaleX="-1" scaleY="1" right="0" verticalCenter="0"/>
+	<e:Button id="leftBtn" label="" icon="jiantouyou" skinName="Btn0Skin" scaleX="-1" scaleY="1" left="0" verticalCenter="0"/>
+	<e:Button id="rightBtn" label="" icon="jiantouyou" skinName="Btn0Skin" scaleX="1" scaleY="1" right="0" verticalCenter="0"/>
 
 </e:Skin>

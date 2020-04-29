@@ -74,6 +74,7 @@ var ChatListItemRenderer3 = (function (_super) {
             this.showText.textFlow = TextFlowMaker.generateTextFlow(space);
             this.showText.width = (maxWidth || this.textGroup.width);
         }
+        this.height = this.showText.height + 20;
     };
     return ChatListItemRenderer3;
 }(BaseItemRender));

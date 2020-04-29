@@ -30,12 +30,27 @@ var HongBaoShowItem = (function (_super) {
     HongBaoShowItem.prototype.onClick = function () {
         if (!this.data || !this.data.actId || !this.data.eId)
             return;
-        var activityData = Activity.ins().getActivityDataById(this.data.actId);
-        if (!activityData.isOpenActivity()) {
-            UserTips.ins().showTips("\u6D3B\u52A8\u5DF2\u7ED3\u675F");
-            return;
+        if (this.data.actId == 2001) {
+            HBSystem2.ins().testhongbao();
         }
-        HBSystem.ins().testhongbao();
+        else {
+            var activityData = Activity.ins().getActivityDataById(this.data.actId);
+            if (!activityData.isOpenActivity()) {
+                UserTips.ins().showTips("\u6D3B\u52A8\u5DF2\u7ED3\u675F");
+                return;
+            }
+            for (var i = activityData.envelopeData.length - 1; i >= 0; i--) {
+                if (!activityData.envelopeData[i] || activityData.envelopeData[i].id == this.data.eId) {
+                    if (activityData.envelopeData[i].isOverTimer()) {
+                        UserTips.ins().showTips("|C:0xff0000&T:\u7EA2\u5305\u5DF2\u8FC7\u671F");
+                        Activity.ins().postEnvelopeDataCall(null);
+                        return;
+                    }
+                    break;
+                }
+            }
+            Activity.ins().sendEnvelopeData(this.data.actId, this.data.eId, 0);
+        }
     };
     HongBaoShowItem.prototype.dataChanged = function () {
         if (!this.data)

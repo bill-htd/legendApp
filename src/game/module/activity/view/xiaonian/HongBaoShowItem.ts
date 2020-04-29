@@ -2,9 +2,9 @@
  * 红包展示类
  */
 class HongBaoShowItem extends BaseItemRender {
-	private hongbaoeff:eui.Group;
-	private eff:MovieClip;
-	private hbimg:eui.Image;
+	private hongbaoeff: eui.Group;
+	private eff: MovieClip;
+	private hbimg: eui.Image;
 	constructor() {
 		super();
 		this.skinName = 'hongbaoShowItem';
@@ -21,38 +21,43 @@ class HongBaoShowItem extends BaseItemRender {
 	}
 
 	public onClick() {
-		if( !this.data || !this.data.actId || !this.data.eId )return;
-		let activityData: ActivityType24Data = Activity.ins().getActivityDataById(this.data.actId) as ActivityType24Data;
-		if( !activityData.isOpenActivity() ){
-			UserTips.ins().showTips(`活动已结束`);
-			return;
+		if (!this.data || !this.data.actId || !this.data.eId) return;
+		if (this.data.actId == 2001) {
+			HBSystem2.ins().testhongbao();
+		} else {
+			let activityData: ActivityType12Data = Activity.ins().getActivityDataById(this.data.actId) as ActivityType12Data;
+			if (!activityData.isOpenActivity()) {
+				UserTips.ins().showTips(`活动已结束`);
+				return;
+			}
+			for (let i = activityData.envelopeData.length - 1; i >= 0; i--) {
+				if (!activityData.envelopeData[i] || activityData.envelopeData[i].id == this.data.eId) {
+					if (activityData.envelopeData[i].isOverTimer()) {
+						UserTips.ins().showTips(`|C:0xff0000&T:红包已过期`);
+						Activity.ins().postEnvelopeDataCall(null);
+						return;
+					}
+					break;
+				}
+			}
+			Activity.ins().sendEnvelopeData(this.data.actId, this.data.eId,0);
 		}
-		// for( let i = activityData.envelopeData.length-1;i >= 0 ;i-- ){
-		// 	if( !activityData.envelopeData[i] || activityData.envelopeData[i].id == this.data.eId ){
-		// 		if( activityData.envelopeData[i].isOverTimer() ){
-		// 			UserTips.ins().showTips(`|C:0xff0000&T:红包已过期`);
-		// 			Activity.ins().postEnvelopeDataCall(null);
-		// 			return;
-		// 		}
-		// 		break;
-		// 	}
-		// }
 
-		// Activity.ins().sendEnvelopeData(this.data.actId,this.data.eId);
-		HBSystem.ins().testhongbao();
-		// Activity.ins().sendEnvelopeData(this.data.actId,this.data.eId);
+
+
+
 	}
 
 	protected dataChanged(): void {
-		if( !this.data )return;
-		if( !this.eff )
+		if (!this.data) return;
+		if (!this.eff)
 			this.eff = new MovieClip();
-		if( !this.eff.parent ){
+		if (!this.eff.parent) {
 			this.hbimg.visible = false;
 			this.hongbaoeff.addChild(this.eff);
 			let self = this;
-			this.eff.playFile( RES_DIR_EFF + "hongbaoeff",1,()=>{
-				if( self.hbimg ){
+			this.eff.playFile(RES_DIR_EFF + "hongbaoeff", 1, () => {
+				if (self.hbimg) {
 					self.hbimg.visible = true;
 				}
 			});

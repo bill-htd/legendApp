@@ -52,7 +52,7 @@ class QHBPanle extends BaseView {
 
 
 		let bytes = param[0]
-		let id = bytes.readInt();
+		// let id = bytes.readInt();
 		let isSuccess = bytes.readByte();
 		if (isSuccess) {
 			let reld: RedEnvelope = new RedEnvelope();

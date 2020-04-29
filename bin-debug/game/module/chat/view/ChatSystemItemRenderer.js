@@ -19,6 +19,7 @@ var ChatSystemItemRenderer = (function (_super) {
         return _this;
     }
     ChatSystemItemRenderer.prototype.dataChanged = function () {
+        var str = this.data.str;
         if (this.data.type == 1) {
             this.str.textFlow = TextFlowMaker.generateTextFlow("|C:0xFD2F2F&T:" + this.data.str + "|");
             this.type.source = "lt_01";
@@ -27,6 +28,7 @@ var ChatSystemItemRenderer = (function (_super) {
             this.str.textFlow = TextFlowMaker.generateTextFlow(this.data.str);
             this.type.source = "lt_02";
         }
+        this.height = Math.ceil((str.length / 26)) * 20;
     };
     return ChatSystemItemRenderer;
 }(BaseItemRender));

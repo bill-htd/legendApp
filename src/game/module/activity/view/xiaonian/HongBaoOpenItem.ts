@@ -14,8 +14,7 @@ class HongBaoOpenItem extends BaseItemRender {
 	private title: eui.Image;
 	private closeBtn: eui.Button;
 
-	private closeBtn0: eui.Button;
-	private closeBtn1: eui.Button;
+
 
 	private actid: number = 0;
 	private hongbaoid: number = 0;
@@ -31,10 +30,6 @@ class HongBaoOpenItem extends BaseItemRender {
 	/**触摸事件 */
 	protected init(): void {
 		this.hbbtn.addEventListener(egret.TouchEvent.TOUCH_END, this.onClick, this);
-
-		this.closeBtn0.addEventListener(egret.TouchEvent.TOUCH_END, this.onClick, this);
-		this.closeBtn1.addEventListener(egret.TouchEvent.TOUCH_END, this.onClick, this);
-
 
 		this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouch, this);
 		this.list.itemRenderer = HongBaoRewardsItem;
@@ -55,12 +50,7 @@ class HongBaoOpenItem extends BaseItemRender {
 				}
 				Activity.ins().sendReward(this.data.actId, this.data.eId, EnvelopeType.GET);
 				break;
-			case this.closeBtn0:
-				Activity.ins().sendReward(this.actid, this.hongbaoid, 2);
-				break;
-			case this.closeBtn1:
-				Activity.ins().sendReward(this.actid, this.hongbaoid, 1);
-				break;
+		
 		}
 	}
 	private onTouch() {
@@ -99,6 +89,7 @@ class HongBaoOpenItem extends BaseItemRender {
 	private bt2: boolean;
 	private bt3: boolean;
 	public playAni(arr: { job: number, sex: number, name: string, yb: number, gold: number }[], callFun: Function, obj: any) {
+
 		this.removeChild(this.hbbtn);
 		this.removeChild(this.hhbtnlabel);
 		this.removeChild(this.speaktxt);

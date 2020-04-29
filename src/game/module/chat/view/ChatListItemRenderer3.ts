@@ -89,5 +89,6 @@ class ChatListItemRenderer3 extends BaseItemRender {
             this.showText.textFlow = TextFlowMaker.generateTextFlow(space);
             this.showText.width = (maxWidth || this.textGroup.width);
         }
+        this.height = this.showText.height + 20
     }
 }
