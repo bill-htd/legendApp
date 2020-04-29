@@ -125,7 +125,7 @@ class ActivityType24Data extends ActivityBaseData {
 			this.isSuccess = false
 		}
 
-		HBSystem.ins().removeHongbao();
+		HBSystem2.ins().removeHongbao();
 	}
 
 	public get envelopeData(): RedEnvelope[] {
