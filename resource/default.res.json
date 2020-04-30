@@ -9,7 +9,7 @@
 			"name": "gamePer"
 		},
 		{
-			"keys": "createrole_json,createbg_png,config_json",
+			"keys": "createrole_json,createbg_png,config1_json",
 			"name": "firstLoad"
 		}
 	],
@@ -39834,81 +39834,86 @@
 			"name": "weapon905_1_c_png"
 		},
 		{
-			"name": "new_icon_btn_json",
-			"type": "sheet",
 			"url": "skins/openserveract/new_icon_btn.json",
-			"subkeys": "new_icon_ganendenglu_png,new_icon_hefuxunbao_png,new_icon_jifenduihuan_png,new_icon_jipingduihuan_png,new_icon_kaifulibao_png,new_icon_kuafuxiaofei_png,new_icon_kuangshuazhuangbei_png,new_icon_leijichongzhi_png,new_icon_leijifanli_png,new_icon_leijilibao_png,new_icon_lianchongfanli_png,new_icon_lieyanjingji_png,new_icon_longchengzengba_png,new_icon_longhunbang_png,new_icon_longhunjingji_png,new_icon_lunhuijingji_png,new_icon_meirileichong_png,new_icon_quanmingboss_png,new_icon_sanrilianchong_png,new_icon_sanyingxiong_png,new_icon_shileyuan_png,new_icon_tehuilibao_png,new_icon_tiantianfanli_png,new_icon_tujianbang_png,new_icon_tujianjingji_png,new_icon_xiangoulibao_png,new_icon_xiaofeijingji_png,new_icon_xiaofeisongli_png,new_icon_xingyunxing_png,new_icon_xingyunzhuanpan_png,new_icon_yumaobang_png,new_icon_zhanlingjingji_png,new_icon_zhuangbeibang_png,new_icon_zhuangbeijingji_png,new_icon_zhuanshengbang_png,new_icon_zhuanshengjingji_png,dingshangdiwen_png,new_icon_chibangjingji_png,new_icon_chongzhifanli_png,new_icon_dengjijingji_png,new_icon_denglujiangli_png,new_icon_duanzaobang_png,new_icon_duanzaojingji_png"
-		},
-		{
-			"name": "bg_png",
-			"type": "image",
-			"url": "image/bg/bg.png"
-		},
-		{
-			"name": "loginPic_json",
 			"type": "sheet",
+			"name": "new_icon_btn_json",
+			"subkeys": "dingshangdiwen_png,new_icon_chibangjingji_png,new_icon_chongzhifanli_png,new_icon_dengjijingji_png,new_icon_denglujiangli_png,new_icon_duanzaobang_png,new_icon_duanzaojingji_png,new_icon_ganendenglu_png,new_icon_hefuxunbao_png,new_icon_jifenduihuan_png,new_icon_jipingduihuan_png,new_icon_kaifulibao_png,new_icon_kuafuxiaofei_png,new_icon_kuangshuazhuangbei_png,new_icon_leijichongzhi_png,new_icon_leijifanli_png,new_icon_leijilibao_png,new_icon_lianchongfanli_png,new_icon_lieyanjingji_png,new_icon_longchengzengba_png,new_icon_longhunbang_png,new_icon_longhunjingji_png,new_icon_lunhuijingji_png,new_icon_meirileichong_png,new_icon_quanmingboss_png,new_icon_sanrilianchong_png,new_icon_sanyingxiong_png,new_icon_shileyuan_png,new_icon_tehuilibao_png,new_icon_tiantianfanli_png,new_icon_tujianbang_png,new_icon_tujianjingji_png,new_icon_xiangoulibao_png,new_icon_xiaofeijingji_png,new_icon_xiaofeisongli_png,new_icon_xingyunxing_png,new_icon_xingyunzhuanpan_png,new_icon_yumaobang_png,new_icon_zhanlingjingji_png,new_icon_zhuangbeibang_png,new_icon_zhuangbeijingji_png,new_icon_zhuanshengbang_png,new_icon_zhuanshengjingji_png"
+		},
+		{
+			"url": "image/bg/bg.png",
+			"type": "image",
+			"name": "bg_png"
+		},
+		{
 			"url": "image/bg/loginPic.json",
-			"subkeys": "login_edit_pwd,login_fire,login_forget_pwd,login_group_black,login_group_light,login_history,login_hot_room,login_login,login_maintain,login_maintain_room,login_message_check,login_new,login_new_room,login_next,login_password,login_phone_login,login_quick_register,login_register,login_room_black,login_room_light,login_select,login_start,login_account,login_account_login,login_block_bottom,login_block_center,login_block_top,login_boom,login_boom_room,login_close,login_confirm"
-		},
-		{
-			"name": "login_room_list_png",
-			"type": "image",
-			"url": "image/bg/login_room_list.png"
-		},
-		{
-			"name": "login_room_png",
-			"type": "image",
-			"url": "image/bg/login_room.png"
-		},
-		{
-			"name": "loadingbg_png",
-			"type": "image",
-			"url": "image/bg/loadingbg.png"
-		},
-		{
-			"name": "loading_json",
 			"type": "sheet",
+			"name": "loginPic_json",
+			"subkeys": "login_account,login_account_login,login_block_bottom,login_block_center,login_block_top,login_boom,login_boom_room,login_close,login_confirm,login_edit_pwd,login_fire,login_forget_pwd,login_group_black,login_group_light,login_history,login_hot_room,login_login,login_maintain,login_maintain_room,login_message_check,login_new,login_new_room,login_next,login_password,login_phone_login,login_quick_register,login_register,login_room_black,login_room_light,login_select,login_start"
+		},
+		{
+			"url": "image/bg/login_room_list.png",
+			"type": "image",
+			"name": "login_room_list_png"
+		},
+		{
+			"url": "image/bg/login_room.png",
+			"type": "image",
+			"name": "login_room_png"
+		},
+		{
+			"url": "image/bg/loadingbg.png",
+			"type": "image",
+			"name": "loadingbg_png"
+		},
+		{
 			"url": "image/bg/loading.json",
-			"subkeys": "tiao_png,guang_png,kuang_png"
+			"type": "sheet",
+			"name": "loading_json",
+			"subkeys": "guang_png,kuang_png,tiao_png"
 		},
 		{
-			"name": "new_pay2_json",
-			"type": "sheet",
 			"url": "skins/charge/new_pay.json",
-			"subkeys": "new_paybtnbg2_png,new_pay_price_icon_png,new_paybtnbg_png"
+			"type": "sheet",
+			"name": "new_pay2_json",
+			"subkeys": "new_pay_price_icon_png,new_paybtnbg2_png,new_paybtnbg_png"
 		},
 		{
-			"name": "new_btn_icon3_json",
-			"type": "sheet",
 			"url": "skins/openserveract/new_btn_icon3.json",
-			"subkeys": "new_icon_dengluyouli,active_qiyu_icon,new_qiyushangdian"
+			"type": "sheet",
+			"name": "new_btn_icon3_json",
+			"subkeys": "active_qiyu_icon,new_icon_dengluyouli,new_qiyushangdian"
 		},
 		{
-			"name": "config - 副本_json",
+			"url": "cfg/config - 副本.json",
 			"type": "json",
-			"url": "cfg/config - 副本.json"
+			"name": "config - 副本_json"
 		},
 		{
+			"url": "skins/openserveract/new_icon_btn2.json",
+			"type": "sheet",
 			"name": "new_icon_btn2_json",
-			"type": "sheet",
-			"url": "skins/openserveract/new_icon_btn2.json",
-			"subkeys": "new_icon_haifantian_png,new_icon_hefuboss_png,new_icon_xianshixunbao_png,new_icon_yuanbaozhuanpan_png,notice_png,privilege_icon_png,qianghongbao_img_png,qianghongbaobtn_png"
+			"subkeys": "new_btn_qianghongbao_png,new_btn_qindiandenglu_png,new_btn_xianshidiaoluo_png,new_btn_yinjibaoji_png,new_btn_yuyijinsheng_png,new_icon_haifantian_png,new_icon_hefuboss_png,new_icon_xianshixunbao_png,new_icon_yuanbaozhuanpan_png,notice_png,privilege_icon_png,qianghongbao_img_png,qianghongbaobtn_png"
 		},
 		{
-			"name": "config - 副本2_json",
+			"url": "cfg/config - 副本.json",
 			"type": "json",
-			"url": "cfg/config - 副本.json"
+			"name": "config - 副本2_json"
 		},
 		{
-			"name": "new_icon_btn22_json",
-			"type": "sheet",
 			"url": "skins/openserveract/new_icon_btn2.json",
-			"subkeys": "new_btn_yinjibaoji_png,new_icon_haifantian_png,new_icon_hefuboss_png,new_icon_xianshixunbao_png,new_icon_yuanbaozhuanpan_png,notice_png,privilege_icon_png,qianghongbao_img_png,qianghongbaobtn_png,new_btn_xianshidiaoluo_png"
+			"type": "sheet",
+			"name": "new_icon_btn22_json",
+			"subkeys": "new_btn_qianghongbao_png,new_btn_qindiandenglu_png,new_btn_xianshidiaoluo_png,new_btn_yinjibaoji_png,new_btn_yuyijinsheng_png,new_icon_haifantian_png,new_icon_hefuboss_png,new_icon_xianshixunbao_png,new_icon_yuanbaozhuanpan_png,notice_png,privilege_icon_png,qianghongbao_img_png,qianghongbaobtn_png"
 		},
 		{
-			"name": "XNhongbaoTitle_png",
+			"url": "skins/activity/xiaoNian/XNhongbaoTitle.png",
 			"type": "image",
-			"url": "skins/activity/xiaoNian/XNhongbaoTitle.png"
+			"name": "XNhongbaoTitle_png"
+		},
+		{
+			"url": "cfg/config1.json",
+			"type": "json",
+			"name": "config1_json"
 		}
 	]
 }

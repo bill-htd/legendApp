@@ -6,11 +6,12 @@ class GlobalConfig {
 		let self = this;
 		if (self.config) return;
 
-		let config = self.config = RES.getRes("config_json");
+		let config = self.config = RES.getRes("config1_json");
+		// let config2 = RES.getRes("config1_json");
+		// console.log(config2)
 		if (!config) {
 			return;
 		}
-
 		let parseKeys = function (obj: any, proto: any, key: number) {
 			if (key == 0) {
 				obj.__proto__ = proto;
@@ -64,7 +65,7 @@ class GlobalConfig {
 			self[key] = value;
 		}
 
-		RES.destroyRes("config_json");
+		RES.destroyRes("config1_json");
 	}
 
 	static PlayFunConfig: PlayFunConfig[];

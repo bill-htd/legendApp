@@ -115,7 +115,7 @@ var ActivityType24Data = (function (_super) {
             console.log('领取失败');
             this.isSuccess = false;
         }
-        HBSystem.ins().removeHongbao();
+        HBSystem2.ins().removeHongbao();
     };
     Object.defineProperty(ActivityType24Data.prototype, "envelopeData", {
         get: function () {

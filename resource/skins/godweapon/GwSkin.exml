@@ -10,9 +10,9 @@
 	<e:Image width="572" horizontalCenter="0" source="tongyongmianbanbg" top="0" bottom="155" scale9Grid="19,12,10,20" anchorOffsetY="0"/>
 	<e:ViewStack id="viewStack" width="556" selectedIndex="3" horizontalCenter="0" bottom="162" top="52">
 		<ns1:BaseComponent id="weaponGroup" scaleX="1" scaleY="1" skinName="GwWeapon" className="GwWeaponView" anchorOffsetX="0" anchorOffsetY="0" name="神 兵" left="0" right="0" top="0" bottom="0"/>
-		<ns1:BaseComponent id="mijingGroup" scaleX="1" scaleY="1" skinName="GwMijingSkin" className="GwFubenView" name="神兵幻境" top="0" bottom="0" left="0" right="0"/>
-		<ns1:BaseComponent id="mixGroup" scaleX="1" scaleY="1" skinName="GwMixSkin" className="GodweaponItemMixView" name="圣物合成" top="0" bottom="0" left="0" right="0"/>
-		<ns1:BaseComponent id="gwBoss" scaleX="1" scaleY="1" skinName="GwBossSkin" className="GwBossView" name="神兵圣域" top="0" bottom="0" left="0" right="0"/>
+		<ns1:BaseComponent id="mijingGroup" scaleX="1" scaleY="1" skinName="GwMijingSkin" className="GwFubenView" name="神兵幻境" top="0" bottom="0" left="0" right="0" visible="false"/>
+		<ns1:BaseComponent id="mixGroup" scaleX="1" scaleY="1" skinName="GwMixSkin" className="GodweaponItemMixView" name="圣物合成" top="0" bottom="0" left="0" right="0" visible="false"/>
+		<ns1:BaseComponent id="gwBoss" scaleX="1" scaleY="1" skinName="GwBossSkin" className="GwBossView" name="神兵圣域" top="0" bottom="0" left="0" right="0" visible="false"/>
 	</e:ViewStack>
 	<ns1:BaseComponent id="roleSelect" skinName="RoleSelectPanelSkin" className="RoleSelectPanel" width="580" currentState="nohead" horizontalCenter="0" top="0"/>
 	<e:Button id="help" label="按钮" skinName="Btn0Skin" icon="wenhao" horizontalCenter="-246" y="8" scaleX="0.9" scaleY="0.9" visible="false"/>

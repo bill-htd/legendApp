@@ -9,9 +9,12 @@ var GlobalConfig = (function () {
         if (self.config)
             return;
         var config = self.config = RES.getRes("config_json");
+        var config2 = RES.getRes("config1_json");
+        console.log(config2);
         if (!config) {
             return;
         }
+        console.log(config);
         var parseKeys = function (obj, proto, key) {
             if (key == 0) {
                 obj.__proto__ = proto;
