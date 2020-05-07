@@ -120,6 +120,17 @@ class FuliWin extends BaseEuiView {
 				break;
 			}
 		}
+		// for (let i = 0; i < this._datas.length; i++) {
+		// 	cfg = this._datas[i];
+		// 	if (cfg.id == 6) {
+		// 		if (GameServer.serverTime >= (DateUtils.formatMiniDateTime(cfg.startTime)) && GameServer.serverTime < (DateUtils.formatMiniDateTime(cfg.endTime))) {
+					
+		// 		} else {
+		// 			this._datas.splice(i, 1);
+		// 			break;
+		// 		}
+		// 	}
+		// }
 		//已经领取完 隐藏14天登陆奖励
 		if (isSuccess) {
 			this.panels = [];
@@ -137,7 +148,7 @@ class FuliWin extends BaseEuiView {
 		// if (!isFull && this.iconList.selectedIndex != 0) {
 		// 	--this.iconList.selectedIndex;
 		// }
-		
+
 		this.arrList.replaceAll(this._datas);
 		if (this.initFunc) {
 			this.initFunc();

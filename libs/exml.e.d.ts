@@ -1398,6 +1398,8 @@ declare class OSABoss extends eui.Skin{
 }
 declare class OSAComp extends eui.Skin{
 }
+declare class OSADailyDoubleRechargeSkin extends eui.Skin{
+}
 declare class OSADailyGiftItemSkin extends eui.Skin{
 }
 declare class OSADailyGiftSkin extends eui.Skin{

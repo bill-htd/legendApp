@@ -6,8 +6,8 @@ class GlobalConfig {
 		let self = this;
 		if (self.config) return;
 
-		let config = self.config = RES.getRes("config1_json");
-		// let config2 = RES.getRes("config1_json");
+		let config = self.config = RES.getRes("config2_json");
+		// let config2 = RES.getRes("config2_json");
 		// console.log(config2)
 		if (!config) {
 			return;
@@ -65,7 +65,7 @@ class GlobalConfig {
 			self[key] = value;
 		}
 
-		RES.destroyRes("config1_json");
+		RES.destroyRes("config2_json");
 	}
 
 	static PlayFunConfig: PlayFunConfig[];
