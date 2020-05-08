@@ -28,6 +28,16 @@ var OSATarget5Panel4 = (function (_super) {
         var config = GlobalConfig.ActivityType5Config[this.activityID];
         console.log(config);
         this.reward.dataProvider = new eui.ArrayCollection(config.rewards);
+        this.updateData();
+    };
+    OSATarget5Panel4.prototype.onTouch = function (e) {
+        switch (e.currentTarget) {
+            case this.getBtn:
+                Activity.ins().sendReward(this.activityID, this.day);
+                break;
+        }
+    };
+    OSATarget5Panel4.prototype.updateData = function () {
         this._activityData = Activity.ins().getActivityDataById(this.activityID);
         var conf = GlobalConfig['ActivityType5Config'][this.activityID];
         this.day = conf.day;
@@ -42,13 +52,6 @@ var OSATarget5Panel4 = (function (_super) {
         else {
             this.getBtn.visible = true;
             console.log('还没领取');
-        }
-    };
-    OSATarget5Panel4.prototype.onTouch = function (e) {
-        switch (e.currentTarget) {
-            case this.getBtn:
-                Activity.ins().sendReward(this.activityID, this.day);
-                break;
         }
     };
     OSATarget5Panel4.prototype.close = function () {
