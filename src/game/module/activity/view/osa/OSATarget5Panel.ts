@@ -8,6 +8,7 @@ class OSATarget5Panel extends ActivityPanel {
 	public static targetIndex = {
 		157 : "OSATarget5Panel1", //合服7天签到
 		210 : "OSATarget5Panel2", //感恩节3天签到
+		2005: "OSATarget5Panel4"  //每日双倍领取
 	}
 	constructor() {
 		super();

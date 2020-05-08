@@ -261,6 +261,7 @@ class UserFb extends BaseSystem {
 		this.regNetMsg(3, this.doBossResult);
 		this.regNetMsg(5, this.doGuanqiaReward);
 		this.regNetMsg(6, this.doGuanqiaWroldReward);
+		this.regNetMsg(7, this.doGuanqiaUpdate);
 		this.regNetMsg(12, this.doOfflineReward);
 
 		this.regNetMsg(24, this.postGuardLeftTime);
@@ -1160,7 +1161,18 @@ class UserFb extends BaseSystem {
 		bytes.writeInt(pass);
 		this.sendToServer(bytes);
 	}
-
+	/**
+	 * 刷新双倍经验
+	 * 1-7
+	 */
+	public doGuanqiaUpdate(bytes: GameByteArray): void {
+		let jingyan: number = bytes.readInt();
+		let time: number = bytes.readInt();
+		let expEff: number = bytes.readInt();
+		console.log('刷新双倍经验')
+		console.log(jingyan,time,expEff)
+	}
+	
 	/**
 	 * 地区奖励记录
 	 * 1-6

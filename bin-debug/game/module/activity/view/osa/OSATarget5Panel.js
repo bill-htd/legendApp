@@ -68,6 +68,7 @@ var OSATarget5Panel = (function (_super) {
     OSATarget5Panel.targetIndex = {
         157: "OSATarget5Panel1",
         210: "OSATarget5Panel2",
+        2005: "OSATarget5Panel4"
     };
     return OSATarget5Panel;
 }(ActivityPanel));

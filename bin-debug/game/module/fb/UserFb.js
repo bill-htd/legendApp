@@ -67,6 +67,7 @@ var UserFb = (function (_super) {
         _this.regNetMsg(3, _this.doBossResult);
         _this.regNetMsg(5, _this.doGuanqiaReward);
         _this.regNetMsg(6, _this.doGuanqiaWroldReward);
+        _this.regNetMsg(7, _this.doGuanqiaUpdate);
         _this.regNetMsg(12, _this.doOfflineReward);
         _this.regNetMsg(24, _this.postGuardLeftTime);
         _this.regNetMsg(25, _this.postGuardInfo);
@@ -780,6 +781,13 @@ var UserFb = (function (_super) {
         var bytes = this.getBytes(6);
         bytes.writeInt(pass);
         this.sendToServer(bytes);
+    };
+    UserFb.prototype.doGuanqiaUpdate = function (bytes) {
+        var jingyan = bytes.readInt();
+        var time = bytes.readInt();
+        var expEff = bytes.readInt();
+        console.log('刷新双倍经验');
+        console.log(jingyan, time, expEff);
     };
     UserFb.prototype.doGuanqiaWroldReward = function (bytes) {
         var len = bytes.readInt();
