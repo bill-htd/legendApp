@@ -23,7 +23,7 @@ var Pay = (function (_super) {
     Pay.ins = function () {
         return _super.ins.call(this);
     };
-    Pay.prototype.sendPayStyte = function (money, type, yuanbao, activityid) {
+    Pay.prototype.sendPayStyte = function (money, type, yuanbao, activityid, _url) {
         var self = this;
         if (!activityid) {
             activityid = 0;
@@ -45,7 +45,7 @@ var Pay = (function (_super) {
                 }, this);
             }
         }
-        var url = window['getChargeUrl']();
+        var url = _url;
         if (!url) {
             WarnWin.show("请求地址出错，请重新点击购买按钮", function () { }, this);
             return;

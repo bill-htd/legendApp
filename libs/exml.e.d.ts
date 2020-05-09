@@ -166,6 +166,8 @@ declare class loginList extends eui.Skin{
 }
 declare class loginWin extends eui.Skin{
 }
+declare class payItem extends eui.Skin{
+}
 declare class paySkin extends eui.Skin{
 }
 declare class WarSpiritBarSkin extends eui.Skin{

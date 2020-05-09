@@ -173,6 +173,7 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 		getChatControl_address: localAddress + '/gm/index.php?m=Chat&a=chat_controls&',
 		getKeFu_address: 'https://temp-chat.mstatik.com/widget/standalone.html?eid=184645',
 		get_chargePrice: localAddress + '/gm/index.php?m=MoneyConfig&a=money_list',
+		get_dianquan_Address:localAddress+'/gm/index.php?m=Payment&a=payment_point'
 	}
 
 	// http://back.dangxuexi.com/gm/index.php?m=MoneyConfig&a=money_list&type=0
@@ -257,6 +258,9 @@ data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
 	}
 	function get_gonggao_address() {
 		return info.get_gonggao_address
+	}
+	function get_dianquan_Address(){
+		return info.get_dianquan_Address
 	}
 	function get_roomList_address() {
 		return info.get_roomList_address

@@ -18,6 +18,9 @@ class EffectivenessTip extends BaseEuiView {
 	private nextInfoExp: eui.Label;
 	private descTxt: eui.Label;
 	private mainGroup: eui.Group;
+	private doubleTime: eui.Group;
+	private endTime: eui.Label;
+
 	constructor() {
 		super();
 
@@ -61,6 +64,9 @@ class EffectivenessTip extends BaseEuiView {
 	}
 
 	private update() {
+
+
+
 		let curId: number = UserFb.ins().guanqiaID;
 		let lastID: number = curId - 1;
 
@@ -91,6 +97,34 @@ class EffectivenessTip extends BaseEuiView {
 			this.groupInfoGold.visible = this.groupInfoExp.visible = false;
 			this.descTxt.text = "关卡效率提升";
 		}
+
+		if (UserFb.ins().doubleTime > 0) {
+			this.doubleTime.visible = true
+			// 防止重复定时器
+			// this.nextInfoExp.textColor = '20C020'
+
+			this.nextInfoExp.textColor = 0xF40909;
+			TimerManager.ins().remove(this.updateNextHongBaoTime, this);
+			TimerManager.ins().doTimer(1000, 0, this.updateNextHongBaoTime, this);
+		} else {
+			// this.nextInfoExp.textColor = 'F40909'
+			this.nextInfoExp.textColor = 0x20C020;
+			this.doubleTime.visible = false
+		}
+
+	}
+	public updateNextHongBaoTime() {
+
+		if (UserFb.ins().doubleTime > 0) {
+			this.doubleTime.visible = true
+			UserFb.ins().doubleTime -= 1000
+			let str = DateUtils.getFormatBySecond(UserFb.ins().doubleTime / 1000, 9)
+			this.endTime.text = str
+		} else {
+			this.doubleTime.visible = false
+			TimerManager.ins().remove(this.updateNextHongBaoTime, this);
+		}
+
 	}
 }
 ViewManager.ins().reg(EffectivenessTip, LayerManager.UI_Main);

@@ -16,7 +16,7 @@ class Pay extends BaseClass {
         return super.ins() as Pay;
     }
 
-    public sendPayStyte(money: number, type: number, yuanbao: number,activityid:number) {
+    public sendPayStyte(money: number, type: number, yuanbao: number,activityid:number,_url:string) {
         let self = this
         if(!activityid){
             activityid = 0
@@ -37,7 +37,7 @@ class Pay extends BaseClass {
             }
         }
         // let url = 'http://ezz25.com/gm/index.php?m=Payment&a=Placeorder'
-        let url = window['getChargeUrl']()
+        let url = _url
         if (!url) {
             WarnWin.show("请求地址出错，请重新点击购买按钮", function () { }, this);
             return

@@ -48,11 +48,11 @@ class OSATarget5Panel4 extends BaseView {
         console.log(this._activityData.recrod)
         console.log(this.day)
         if (!flag) {
-            this.getBtn.visible = false
-            console.log('领取过了')
-        } else {
             this.getBtn.visible = true
             console.log('还没领取')
+        } else {
+            this.getBtn.visible = false
+            console.log('领取过了')
         }
     }
     public close(...param: any[]): void {

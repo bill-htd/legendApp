@@ -113,8 +113,9 @@ class PlayFunView extends BaseEuiView {
 	constructor() {
 		super();
 		this.touchEnabled = false;
+		
 	}
-
+	
 	@callLater
 	public initData(): void {
 		CommonUtils.labelIsOverLenght(this.goldTxt, Actor.gold);
@@ -129,6 +130,8 @@ class PlayFunView extends BaseEuiView {
 		this.vipNum.x = UserVip.ins().lv >= 10 ? this.vipImg0.x + this.vipImg0.width + 5 : this.vipNum.x = this.vipImg0.x + this.vipImg0.width + 10;
 		BitmapNumber.ins().changeNum(this.vipNum, UserVip.ins().lv, "zv0", 8);
 		this.upDataVipBtnRedPoint()
+
+		// UserFb.ins().doGuanqiaUpdate
 	}
 
 	public initUI(): void {

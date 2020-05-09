@@ -92,6 +92,28 @@ var EffectivenessTip = (function (_super) {
             this.groupInfoGold.visible = this.groupInfoExp.visible = false;
             this.descTxt.text = "关卡效率提升";
         }
+        if (UserFb.ins().doubleTime > 0) {
+            this.doubleTime.visible = true;
+            this.nextInfoExp.textColor = 0xF40909;
+            TimerManager.ins().remove(this.updateNextHongBaoTime, this);
+            TimerManager.ins().doTimer(1000, 0, this.updateNextHongBaoTime, this);
+        }
+        else {
+            this.nextInfoExp.textColor = 0x20C020;
+            this.doubleTime.visible = false;
+        }
+    };
+    EffectivenessTip.prototype.updateNextHongBaoTime = function () {
+        if (UserFb.ins().doubleTime > 0) {
+            this.doubleTime.visible = true;
+            UserFb.ins().doubleTime -= 1000;
+            var str = DateUtils.getFormatBySecond(UserFb.ins().doubleTime / 1000, 9);
+            this.endTime.text = str;
+        }
+        else {
+            this.doubleTime.visible = false;
+            TimerManager.ins().remove(this.updateNextHongBaoTime, this);
+        }
     };
     return EffectivenessTip;
 }(BaseEuiView));

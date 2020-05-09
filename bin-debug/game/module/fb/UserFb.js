@@ -41,6 +41,7 @@ var UserFb = (function (_super) {
         _this.tfPassID = 0;
         _this._tfInviteTime = 0;
         _this.showTfRed = true;
+        _this.doubleTime = 0;
         _this.fbRings = {
             buyTime: 0, challengeTime: 0, canTakeAward: false
         };
@@ -784,10 +785,10 @@ var UserFb = (function (_super) {
     };
     UserFb.prototype.doGuanqiaUpdate = function (bytes) {
         var jingyan = bytes.readInt();
-        var time = bytes.readInt();
-        var expEff = bytes.readInt();
+        this.doubleTime = bytes.readInt();
+        this.fbConfig.expEff = bytes.readInt();
         console.log('刷新双倍经验');
-        console.log(jingyan, time, expEff);
+        console.log(jingyan, this.doubleTime, this.fbConfig.expEff);
     };
     UserFb.prototype.doGuanqiaWroldReward = function (bytes) {
         var len = bytes.readInt();
