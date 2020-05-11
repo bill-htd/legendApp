@@ -113,6 +113,7 @@ class PlayFunView extends BaseEuiView {
 	constructor() {
 		super();
 		this.touchEnabled = false;
+		// doGuanqiaUpdate
 		
 	}
 	
@@ -274,6 +275,7 @@ class PlayFunView extends BaseEuiView {
 		this.addTouchEvent(this.mapName0, this.onTap);
 		this.observe(GameLogic.ins().postEnterMap, this.upDataGuanqia);
 		this.observe(UserFb.ins().postGuanqiaInfo, this.upDataGuanQiaInfo);
+		this.observe(UserFb.ins().doGuanqiaUpdate, this.updateExp);//下发新红包
 		this.observe(UserTask.ins().postUpdteTaskTrace, this.changeTaskTrace);
 		this.observe(UserTask.ins().postUpdteTaskTrace, this.updateTaskState);
 		this.observe(UserFb.ins().postGuanKaIdChange, this.guanqiaChange);
@@ -704,6 +706,11 @@ class PlayFunView extends BaseEuiView {
 
 	public lastEnergy: number = -1;
 
+	public updateExp(){
+		this.expTxt.textFlow = TextFlowMaker.generateTextFlow(`|C:0xF40909&T:${UserFb.ins().expEff}|/小时`);
+		this.mapName0.textFlow = TextFlowMaker.generateTextFlow(`第|C:0x35e62d&T:${UserFb.ins().guanqiaID}|关`);
+		this.upDataGuanqia();
+	}
 	private upDataGuanQiaInfo(): void {
 		// this.expTxt.text = `${UserFb.ins().expEff}/小时`;
 		this.expTxt.textFlow = TextFlowMaker.generateTextFlow(`|C:0x35e62d&T:${UserFb.ins().expEff}|/小时`);

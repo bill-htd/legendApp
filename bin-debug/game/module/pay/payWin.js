@@ -41,6 +41,7 @@ var payWin = (function (_super) {
         this.addTouchEvent(this.jihuoBtn, this.onTap);
         this.addTouchEvent(this.payBtn, this.sendPay);
         this.addTouchEvent(this.bgClose, this.onTap);
+        this.addTouchEvent(this.closeBtn, this.onTap);
         this.getPayInfo();
     };
     payWin.prototype.getPayInfo = function () {
@@ -67,6 +68,7 @@ var payWin = (function (_super) {
         this.removeTouchEvent(this.bgClose, this.onTap);
         this.removeTouchEvent(this.jihuoBtn, this.onTap);
         this.removeTouchEvent(this.tab, this.onTap);
+        this.removeTouchEvent(this.closeBtn, this.onTap);
         egret.Tween.removeTweens(this);
         WatcherUtil.removeFromArrayCollection(this.tab.dataProvider);
         this.removeObserve();
@@ -86,9 +88,9 @@ var payWin = (function (_super) {
     payWin.prototype.onTap = function (e) {
         switch (e.currentTarget) {
             case this.tab:
-                console.log(this.tab.selectedIndex);
                 this.selectType = this.tab.selectedIndex;
                 break;
+            case this.closeBtn:
             case this.bgClose:
                 ViewManager.ins().close(payWin);
                 break;

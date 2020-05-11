@@ -15,12 +15,13 @@
 		</e:Group>
 		<e:Image y="86" width="480" height="480" horizontalCenter="0" source="tongyongtip1" scale9Grid="5,6,12,11"/>
 		<e:Image y="86" width="480" height="479" horizontalCenter="0" scale9Grid="19,19,2,4" source="tongyongtip2"/>
-		<e:Label text="熔炼装备" y="10" size="24" bold="true" horizontalCenter="0" textColor="0xA67D44"/>
-		<e:Image source="gantanhao" x="146" y="58"/>
-		<e:Label text="熔炼功能只回收无用装备" size="18" horizontalCenter="15" y="59" textColor="0x9F946D"/>
+		<e:Label text="回收装备" y="10" size="24" bold="true" horizontalCenter="0" textColor="0xA67D44"/>
+		<e:Image source="gantanhao" x="121" y="58"/>
+		<e:Label text="回收装备可获得大量元宝" size="18" y="59" textColor="0x9F946D" x="149"/>
 		<e:Group y="44" width="330" horizontalCenter="0">
 			<e:Image source="tielian" y="0" right="0"/>
 			<e:Image source="tielian" x="0" y="0"/>
+			<e:Image source="xn_yuanbao1_png" x="250" y="-7" anchorOffsetX="0" width="69" anchorOffsetY="0" height="56"/>
 		</e:Group>
 
 		<ns1:BaseComponent name="123" id="equip" skinName="SmeltMainSkin" className="SmeltEquipNormalPanel" horizontalCenter="0" bottom="0"/>

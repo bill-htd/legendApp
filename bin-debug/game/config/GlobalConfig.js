@@ -8,7 +8,7 @@ var GlobalConfig = (function () {
         var self = this;
         if (self.config)
             return;
-        var config = self.config = RES.getRes("config2_json");
+        var config = self.config = RES.getRes("config3_json");
         if (!config) {
             return;
         }
@@ -52,7 +52,7 @@ var GlobalConfig = (function () {
         for (var key in config) {
             _loop_1(key);
         }
-        RES.destroyRes("config2_json");
+        RES.destroyRes("config3_json");
     };
     GlobalConfig.keys = {
         "InstanceBaseConfig": 0,

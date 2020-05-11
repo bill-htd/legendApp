@@ -1172,12 +1172,7 @@ class UserFb extends BaseSystem {
 	public doGuanqiaUpdate(bytes: GameByteArray) {
 		let jingyan: number = bytes.readInt();
 		this.doubleTime = bytes.readInt();
-
 		this.fbConfig.expEff = bytes.readInt();
-		console.log('刷新双倍经验')
-		console.log(jingyan,this.doubleTime,this.fbConfig.expEff)
-		
-		
 	}
 	
 	/**

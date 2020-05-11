@@ -99,7 +99,7 @@ var SmeltEquipNormalPanel = (function (_super) {
     SmeltEquipNormalPanel.prototype.setItemData = function () {
         this.smeltEquips = UserBag.ins().getOutEquips();
         this.dataInfo.replaceAll(this.smeltEquips);
-        if (this.oneKeySmeltBtn.label != "取消熔炼") {
+        if (this.oneKeySmeltBtn.label != "取消回收") {
             this.setBtnLabel();
         }
     };
@@ -117,19 +117,19 @@ var SmeltEquipNormalPanel = (function (_super) {
         switch (e.currentTarget) {
             case this.oneKeySmeltBtn:
                 if (Recharge.ins().franchise) {
-                    if (this.oneKeySmeltBtn.label == "取消熔炼") {
+                    if (this.oneKeySmeltBtn.label == "取消回收") {
                         this.setBtnLabel();
                         TimerManager.ins().remove(this.AutoSmeltEquip, this);
                     }
                     else {
                         if (!TimerManager.ins().isExists(this.AutoSmeltEquip, this)) {
-                            this.oneKeySmeltBtn.label = "取消熔炼";
+                            this.oneKeySmeltBtn.label = "取消回收";
                             TimerManager.ins().doTimer(200, 0, this.AutoSmeltEquip, this);
                         }
                     }
                 }
                 else {
-                    WarnWin.show("开通特权月卡立即享受一键熔炼功能，是否前往查看", function () {
+                    WarnWin.show("开通特权月卡立即享受一键回收功能，是否前往查看", function () {
                         ViewManager.ins().close(SmeltEquipTotalWin);
                         ViewManager.ins().open(FuliWin, 4);
                     }, this);
@@ -171,7 +171,7 @@ var SmeltEquipNormalPanel = (function (_super) {
         }
     };
     SmeltEquipNormalPanel.prototype.setBtnLabel = function () {
-        this.oneKeySmeltBtn.label = "一键熔炼";
+        this.oneKeySmeltBtn.label = "一键回收";
     };
     return SmeltEquipNormalPanel;
 }(BaseComponent));

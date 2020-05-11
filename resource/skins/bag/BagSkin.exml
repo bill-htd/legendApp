@@ -24,7 +24,7 @@
 				<e:Image scaleX="-1" top="0" bottom="0" source="bantoumingkuang3" right="0" />
 			</e:Group>
 
-			<e:Button id="smeltBtn" label="熔  炼" icon="bag_99" right="50" skinName="Btn1Skin" bottom="16" width="156" height="60"/>
+			<e:Button id="smeltBtn" label="回  收" icon="bag_99" right="50" skinName="Btn1Skin" bottom="16" width="156" height="60"/>
 			<e:Image id="redPoint" touchEnabled="false" source="zjmhongdian" right="42" bottom="57" visible="false"/>
 			<e:Image width="150" height="35" scale9Grid="6,6,3,3" bottom="28" x="97" source="new_juese_beibao_ditiao_png"/>
 			<e:Button id="addBtn" icon="new_juese_beibao_btnjia_png" skinName="Btn0Skin" x="256" bottom="24"/>

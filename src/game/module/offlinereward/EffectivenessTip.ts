@@ -23,7 +23,6 @@ class EffectivenessTip extends BaseEuiView {
 
 	constructor() {
 		super();
-
 		this.skinName = "CheckEfficienSkin";
 	}
 

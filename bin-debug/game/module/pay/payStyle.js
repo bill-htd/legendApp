@@ -58,7 +58,7 @@ var Pay = (function (_super) {
         url += '&gold=' + yuanbao;
         url += '&serverid=' + LocationProperty.serverID;
         url += '&activityid=' + activityid;
-        Http.ins().send(url, true, false, function (event) {
+        Http.ins().send(url, true, true, function (event) {
             self.sendNum++;
             var request = event.currentTarget;
             var data = JSON.parse(request.response);

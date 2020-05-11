@@ -787,8 +787,6 @@ var UserFb = (function (_super) {
         var jingyan = bytes.readInt();
         this.doubleTime = bytes.readInt();
         this.fbConfig.expEff = bytes.readInt();
-        console.log('刷新双倍经验');
-        console.log(jingyan, this.doubleTime, this.fbConfig.expEff);
     };
     UserFb.prototype.doGuanqiaWroldReward = function (bytes) {
         var len = bytes.readInt();

@@ -3,7 +3,7 @@
 	<w:Config id="16ea0914746" ></w:Config>
 
 	<e:Rect id="bgClose0" fillAlpha="1" fillColor="0xF0EFF4" strokeColor="0xFFFFFF" horizontalCenter="0" verticalCenter="0" width="580" top="0" bottom="0"/>
-	<e:Group horizontalCenter="4.5" verticalCenter="18" width="527" height="780">
+	<e:Group horizontalCenter="4.5" verticalCenter="-4" width="527" height="780">
 		<e:Image source="payPanel_json.Rounded Rectangle_1_png" anchorOffsetX="0" width="522" anchorOffsetY="0" height="172" horizontalCenter="-2.5" verticalCenter="-304"/>
 		<e:Image source="payPanel_json.Rounded Rectangle_1_png" anchorOffsetX="0" width="519" anchorOffsetY="0" height="54" verticalCenter="363" horizontalCenter="1"/>
 		<e:Image source="payPanel_json.Rounded Rectangle_2_png" anchorOffsetX="0" width="525" anchorOffsetY="0" height="303" verticalCenter="-18.5" horizontalCenter="-1"/>
@@ -61,5 +61,6 @@
 		</e:Group>
 	</e:Group>
 	<e:Label text="付款成功后我们这边都会有记录可查。 \n如果遇到问题，可以点击左下角联系客服与我们联系。" horizontalCenter="4" size="20" anchorOffsetY="0" height="70" width="560" textAlign="center" verticalCenter="214" visible="false"/>
-	<e:Image id="bgClose" source="tongyong2_json.fanhui" anchorOffsetX="0" width="50" anchorOffsetY="0" height="53" horizontalCenter="-237" verticalCenter="-424.5"/>
+	<e:Image id="bgClose" anchorOffsetX="0" width="18" anchorOffsetY="0" height="33" horizontalCenter="-253" verticalCenter="-424.5" source="return_icon_png"/>
+	<e:Button id="closeBtn" label="关闭" skinName="Btn3Skin" horizontalCenter="0" verticalCenter="423"/>
 </e:Skin>
