@@ -28,7 +28,7 @@ var ChatSystemItemRenderer = (function (_super) {
             this.str.textFlow = TextFlowMaker.generateTextFlow(this.data.str);
             this.type.source = "lt_02";
         }
-        this.height = Math.ceil((str.length / 26)) * 20;
+        this.height = Math.ceil((this.str.text.length / 26)) * 20 > 44 ? Math.ceil((this.str.text.length / 26)) * 20 : 44;
     };
     return ChatSystemItemRenderer;
 }(BaseItemRender));

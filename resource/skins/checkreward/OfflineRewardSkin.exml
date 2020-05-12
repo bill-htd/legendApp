@@ -3,7 +3,7 @@
         xmlns:w="http://ns.egret.com/wing" xmlns:euiextension="euiextension.*" xmlns:ns1="*" height="601">
 	<w:Config id="159bf027b06"/>
 	<e:Rect left="0" right="0" top="0" bottom="0" fillAlpha="0.8"/>
-	<e:Image source="xn_yuanbao32_png" anchorOffsetX="0" width="220" anchorOffsetY="0" height="159" horizontalCenter="-91" verticalCenter="-238"/>
+	<e:Image source="xn_yuanbao32_png" anchorOffsetX="0" width="220" anchorOffsetY="0" height="159" horizontalCenter="-91" verticalCenter="-238" visible="false"/>
 	<e:Group width="400" height="470" horizontalCenter="0" verticalCenter="62.5">
 		<e:Image top="0" bottom="0" source="offline2" width="200" x="0" scale9Grid="16,35,10,9"/>
 		<e:Image top="0" bottom="0" source="offline2" scale9Grid="16,35,10,9" width="200" scaleX="-1" right="0"/>
@@ -58,8 +58,8 @@
 	</e:Group>
 	<e:Button id="okBtn" bottom="0" skinName="Btn0Skin" left="0" right="0" top="0"/>
 	<e:Label id="getmc" text="激活月卡" size="22" horizontalCenter="98" textColor="0x20CB30" verticalCenter="100" visible="false"/>
-	<e:Image source="wj_gradient_panel_png" anchorOffsetX="0" width="231" anchorOffsetY="0" height="128" horizontalCenter="82.5" verticalCenter="-236.5"/>
-	<e:Label text="终于上线啦！挂机回收大量装备，赶紧找我回收装备拿元宝吧！" size="17" textAlign="left" textColor="0xbc9043" bold="true" anchorOffsetY="0" height="74" anchorOffsetX="0" width="212" horizontalCenter="92" verticalCenter="-244.5"/>
+	<e:Image source="wj_gradient_panel_png" anchorOffsetX="0" width="231" anchorOffsetY="0" height="128" horizontalCenter="82.5" verticalCenter="-236.5" visible="false"/>
+	<e:Label text="终于上线啦！挂机回收大量装备，赶紧找我回收装备拿元宝吧！" size="17" textAlign="left" textColor="0xbc9043" bold="true" anchorOffsetY="0" height="74" anchorOffsetX="0" width="212" horizontalCenter="92" verticalCenter="-244.5" visible="false"/>
 
 	
 	

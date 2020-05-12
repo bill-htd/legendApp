@@ -16,6 +16,18 @@ var payItemRenderer = (function (_super) {
     function payItemRenderer() {
         var _this = _super.call(this) || this;
         _this.skinName = "payItem";
+        _this.zfbBtn.addEventListener(egret.TouchEvent.TOUCH_END, function () {
+            payDate.ins().payType = this.data.type;
+            payDate.ins()._url = this.data.url;
+        }, _this);
+        _this.dqBtn.addEventListener(egret.TouchEvent.TOUCH_END, function () {
+            payDate.ins().payType = this.data.type;
+            payDate.ins()._url = this.data.url;
+        }, _this);
+        _this.wxBtn.addEventListener(egret.TouchEvent.TOUCH_END, function () {
+            payDate.ins().payType = this.data.type;
+            payDate.ins()._url = this.data.url;
+        }, _this);
         return _this;
     }
     payItemRenderer.prototype.dataChanged = function () {

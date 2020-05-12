@@ -1,7 +1,8 @@
 
 
 class payDate extends BaseSystem {
-    public payType :1;
+    public payType : string = '1';
+		public _url:string = ''
     public constructor() {
 		super();
 	}
