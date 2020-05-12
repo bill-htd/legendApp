@@ -67,7 +67,7 @@ class payWin extends BaseEuiView {
 				self.serverInfo = data.data;
 				self.tab.dataProvider = new eui.ArrayCollection(data.data);
 				payDate.ins().payType =  self.serverInfo[0].type
-				payDate.ins()._url = this.serverInfo[0].url
+				payDate.ins()._url = self.serverInfo[0].url
 				// self.tab.selectedIndex = 0;
 			} else {
 				alert(data.info)
