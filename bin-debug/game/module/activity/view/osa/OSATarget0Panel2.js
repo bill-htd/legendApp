@@ -56,13 +56,13 @@ var OSATarget0Panel2 = (function (_super) {
             ybAward.id = conf.awardList[0].id;
             ybAward.type = conf.awardList[0].type;
             ybAward.count += conf.awardList[0].count;
-            if (conf.awardList.length > 1) {
-                bigArr.push(conf);
-            }
         }
         this.arrAll.sort(this.sort);
         for (var i = 0; i < 15; i++) {
             arr.push(this.arrAll[i]);
+            if (this.arrAll[i].awardList.length > 1) {
+                bigArr.push(this.arrAll[i]);
+            }
         }
         bigArr.sort(this.sort2);
         this.content.dataProvider = new eui.ArrayCollection(arr.splice(0, 4));
@@ -97,16 +97,18 @@ var OSATarget0Panel2 = (function (_super) {
     };
     OSATarget0Panel2.prototype.updateData = function () {
         var arr = [];
+        var bigArr = [];
         this.arrAll.sort(this.sort);
         for (var i = 0; i < 15; i++) {
             arr.push(this.arrAll[i]);
+            if (this.arrAll[i].awardList.length > 1) {
+                bigArr.push(this.arrAll[i]);
+            }
         }
         this.content.dataProvider = new eui.ArrayCollection(arr.splice(0, 4));
         this.delayUpdate(arr);
-        var datas = this.bigReward.dataProvider;
-        for (var i = 0; i < datas.length; i++) {
-            datas.itemUpdated(datas.getItemAt(i));
-        }
+        bigArr.sort(this.sort2);
+        this.bigReward.dataProvider = new eui.ArrayCollection(bigArr);
     };
     __decorate([
         callLater

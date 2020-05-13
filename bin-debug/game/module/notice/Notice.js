@@ -56,7 +56,9 @@ var Notice = (function (_super) {
             ViewManager.ins().open(NoticeView).showNotice(str);
         }
         if (type == 4) {
-            ViewManager.ins().open(YBguangboWin, str);
+            if (isNew == 0) {
+                ViewManager.ins().open(YBguangboWin, str);
+            }
         }
         else {
             Chat.ins().postSysChatMsg(new ChatSystemData(type, str));

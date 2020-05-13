@@ -55,14 +55,18 @@ class OSATarget0Panel2 extends BaseView {
 			ybAward.type = conf.awardList[0].type;
 			ybAward.count += conf.awardList[0].count;
 
-			if (conf.awardList.length > 1) {
-				bigArr.push(conf);
-			}
+			// if (conf.awardList.length > 1) {
+			// 	bigArr.push(conf);
+			// }
 		}
+
 
 		this.arrAll.sort(this.sort);
 		for(let i = 0; i< 15;i++){
 			arr.push(this.arrAll[i])
+			if (this.arrAll[i].awardList.length > 1) {
+				bigArr.push(this.arrAll[i]);
+			}
 		}
 
 		bigArr.sort(this.sort2);
@@ -108,21 +112,27 @@ class OSATarget0Panel2 extends BaseView {
 
 	updateData() {
 		let arr = []
+		let bigArr = []
 		this.arrAll.sort(this.sort);
 		for(let i = 0; i< 15;i++){
 			arr.push(this.arrAll[i])
+			if (this.arrAll[i].awardList.length > 1) {
+				bigArr.push(this.arrAll[i]);
+			}
 		}
 		this.content.dataProvider = new eui.ArrayCollection(arr.splice(0, 4));
 		this.delayUpdate(arr);
+		bigArr.sort(this.sort2);
+		this.bigReward.dataProvider = new eui.ArrayCollection(bigArr);
 		// let datas = this.content.dataProvider as eui.ArrayCollection;
 		// datas.source.sort(this.sort);
 		// for (let i = 0; i < datas.length; i++) {
 		// 	datas.itemUpdated(datas.getItemAt(i));
 		// }
 
-		let datas = this.bigReward.dataProvider as eui.ArrayCollection;
-		for (let i = 0; i < datas.length; i++) {
-			datas.itemUpdated(datas.getItemAt(i));
-		}
+		// let datas = this.bigReward.dataProvider as eui.ArrayCollection;
+		// for (let i = 0; i < datas.length; i++) {
+		// 	datas.itemUpdated(datas.getItemAt(i));
+		// }
 	}
 }
