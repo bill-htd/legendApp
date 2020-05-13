@@ -54,6 +54,7 @@ var payWin = (function (_super) {
                 self.serverInfo = data.data;
                 self.tab.dataProvider = new eui.ArrayCollection(data.data);
                 payDate.ins().payType = self.serverInfo[0].type;
+                payDate.ins()._url = self.serverInfo[0].url;
             }
             else {
                 alert(data.info);

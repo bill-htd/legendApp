@@ -57,7 +57,14 @@ class Notice extends BaseSystem {
 			(<NoticeView>ViewManager.ins().open(NoticeView)).showNotice(str);
 			// Chat.ins().insertChatMsg(new ChatSystemData(3, str));
 		}
-		Chat.ins().postSysChatMsg(new ChatSystemData(type, str));
+		if(type == 4){
+			if(isNew == 0){
+				ViewManager.ins().open(YBguangboWin,str)
+			}
+		}else{
+			Chat.ins().postSysChatMsg(new ChatSystemData(type, str));
+		}
+		
 	}
 
 	private doNoticeOpen(bytes: GameByteArray): void {
