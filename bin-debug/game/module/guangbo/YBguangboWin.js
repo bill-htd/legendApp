@@ -29,7 +29,6 @@ var YBguangboWin = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
-        console.log(param);
         if (this.arr.length >= 2) {
             this.arr[0] = param[0];
         }
@@ -44,13 +43,13 @@ var YBguangboWin = (function (_super) {
             this.groupList[i].visible = true;
             this.groupList[i].$children[1].textFlow = TextFlowMaker.generateTextFlow(this.arr[i]);
         }
-        TimerManager.ins().doTimer(2000, 1, this.updateLabel, this);
+        TimerManager.ins().doTimer(3000, 1, this.updateLabel, this);
     };
     YBguangboWin.prototype.updateLabel = function () {
         for (var i = this.arr.length - 1; i >= 0; i--) {
             this.arr.splice(i, 1);
             this.groupList[i].visible = false;
-            TimerManager.ins().doTimer(2000, 1, this.updateLabel, this);
+            TimerManager.ins().doTimer(3000, 1, this.updateLabel, this);
             break;
         }
     };

@@ -158,7 +158,7 @@ var PlayFunView = (function (_super) {
         this.addTouchEvent(this.mapName0, this.onTap);
         this.observe(GameLogic.ins().postEnterMap, this.upDataGuanqia);
         this.observe(UserFb.ins().postGuanqiaInfo, this.upDataGuanQiaInfo);
-        this.observe(UserFb.ins().doGuanqiaUpdate, this.updateExp);
+        this.observe(UserFb.ins().postGuanKaIdChange2, this.updateExp);
         this.observe(UserTask.ins().postUpdteTaskTrace, this.changeTaskTrace);
         this.observe(UserTask.ins().postUpdteTaskTrace, this.updateTaskState);
         this.observe(UserFb.ins().postGuanKaIdChange, this.guanqiaChange);
@@ -542,12 +542,21 @@ var PlayFunView = (function (_super) {
         }
     };
     PlayFunView.prototype.updateExp = function () {
-        this.expTxt.textFlow = TextFlowMaker.generateTextFlow("|C:0xF40909&T:" + UserFb.ins().expEff + "|/\u5C0F\u65F6");
-        this.mapName0.textFlow = TextFlowMaker.generateTextFlow("\u7B2C|C:0x35e62d&T:" + UserFb.ins().guanqiaID + "|\u5173");
-        this.upDataGuanqia();
+        console.log('1111');
+        if (UserFb.ins().doubleTime > 0) {
+            this.expTxt.textFlow = TextFlowMaker.generateTextFlow("|C:0xF40909&T:" + UserFb.ins().doubleExp + "|/\u5C0F\u65F6");
+        }
+        else {
+            this.expTxt.textFlow = TextFlowMaker.generateTextFlow("|C:0x35e62d&T:" + UserFb.ins().expEff + "|/\u5C0F\u65F6");
+        }
     };
     PlayFunView.prototype.upDataGuanQiaInfo = function () {
-        this.expTxt.textFlow = TextFlowMaker.generateTextFlow("|C:0x35e62d&T:" + UserFb.ins().expEff + "|/\u5C0F\u65F6");
+        if (UserFb.ins().doubleTime > 0) {
+            this.expTxt.textFlow = TextFlowMaker.generateTextFlow("|C:0xF40909&T:" + UserFb.ins().doubleExp + "|/\u5C0F\u65F6");
+        }
+        else {
+            this.expTxt.textFlow = TextFlowMaker.generateTextFlow("|C:0x35e62d&T:" + UserFb.ins().expEff + "|/\u5C0F\u65F6");
+        }
         this.mapName0.textFlow = TextFlowMaker.generateTextFlow("\u7B2C|C:0x35e62d&T:" + UserFb.ins().guanqiaID + "|\u5173");
         this.upDataGuanqia();
     };

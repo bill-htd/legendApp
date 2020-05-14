@@ -21,7 +21,6 @@ class YBguangboWin extends BaseEuiView {
 	}
 
 	public open(...param: any[]) {
-		console.log(param)
 		if (this.arr.length >= 2) {
 			this.arr[0] = param[0]
 		} else {
@@ -36,13 +35,13 @@ class YBguangboWin extends BaseEuiView {
 			this.groupList[i].visible = true
 			this.groupList[i].$children[1].textFlow = TextFlowMaker.generateTextFlow(this.arr[i]); 
 		}
-		TimerManager.ins().doTimer(2000, 1, this.updateLabel,this)
+		TimerManager.ins().doTimer(3000, 1, this.updateLabel,this)
 	}
 	private updateLabel(){
 		for(let i = this.arr.length -1; i>=0;i--){
 			this.arr.splice(i,1)
 			this.groupList[i].visible = false
-			TimerManager.ins().doTimer(2000, 1, this.updateLabel,this)
+			TimerManager.ins().doTimer(3000, 1, this.updateLabel,this)
 			break;
 		}
 	}
