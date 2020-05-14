@@ -24,7 +24,7 @@
 	<e:Group id="groupBagTips" touchEnabled="false" touchChildren="false" bottom="86" horizontalCenter="164"
 	         height="30" width="130">
 		<e:Image  source="zjmqipao" scale9Grid="9,7,4,8" left="0" right="0" top="0" bottom="0"/>
-		<e:Label id="tipsText" text="有装备可以熔炼" size="16" textAlign="center"  verticalCenter="1" horizontalCenter="0" textColor="0xf8b141"/>
+		<e:Label id="tipsText" text="有装备可以回收" size="16" textAlign="center"  verticalCenter="1" horizontalCenter="0" textColor="0xf8b141"/>
 	</e:Group>
 
 	<e:Group id="powerGroup" width="81" height="81" bottom="10" horizontalCenter="250">

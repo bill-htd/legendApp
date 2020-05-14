@@ -28,7 +28,6 @@ class BagFullTipsWin extends BaseEuiView{
 			ViewManager.ins().close(this);
 			ViewManager.ins().open(SmeltEquipTotalWin);
 			break;
-
 		}
 	}
 

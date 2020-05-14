@@ -6,7 +6,7 @@ class SmeltEquipNormalPanel extends BaseComponent {
 	private smeltBtn: eui.Button;
 	private oneKeySmeltBtn: eui.Button;
 	private tequanimg: eui.Image;
-	/** 可熔炼装备列表 */
+	/** 可回收装备列表 */
 	private smeltEquips: ItemData[];
 	private dataInfo: eui.ArrayCollection;
 	// public tab: eui.TabBar;
@@ -106,7 +106,7 @@ class SmeltEquipNormalPanel extends BaseComponent {
 	private setItemData(): void {
 		this.smeltEquips = UserBag.ins().getOutEquips();
 		this.dataInfo.replaceAll(this.smeltEquips);
-		if (this.oneKeySmeltBtn.label != "取消熔炼") {
+		if (this.oneKeySmeltBtn.label != "取消回收") {
 			this.setBtnLabel();
 		}
 	}
@@ -126,17 +126,17 @@ class SmeltEquipNormalPanel extends BaseComponent {
 		switch (e.currentTarget) {
 			case this.oneKeySmeltBtn:
 				if (Recharge.ins().franchise) {
-					if (this.oneKeySmeltBtn.label == "取消熔炼") {
+					if (this.oneKeySmeltBtn.label == "取消回收") {
 						this.setBtnLabel();
 						TimerManager.ins().remove(this.AutoSmeltEquip, this);
 					} else {
 						if (!TimerManager.ins().isExists(this.AutoSmeltEquip, this)) {
-							this.oneKeySmeltBtn.label = "取消熔炼";
+							this.oneKeySmeltBtn.label = "取消回收";
 							TimerManager.ins().doTimer(200, 0, this.AutoSmeltEquip, this);
 						}
 					}
 				}else{
-					WarnWin.show("开通特权月卡立即享受一键熔炼功能，是否前往查看", function () { 
+					WarnWin.show("开通特权月卡立即享受一键回收功能，是否前往查看", function () { 
 						// ViewManager.ins().close(SmeltEquipNormalPanel)
 						ViewManager.ins().close(SmeltEquipTotalWin)
 						ViewManager.ins().open(FuliWin, 4);
@@ -167,7 +167,7 @@ class SmeltEquipNormalPanel extends BaseComponent {
 
 				// 	}
 				// 	else {
-				// 		UserTips.ins().showTips("|C:0xf3311e&T:当前没有可熔炼的装备|");
+				// 		UserTips.ins().showTips("|C:0xf3311e&T:当前没有可回收的装备|");
 				// 	}
 				// }
 				break;
@@ -179,7 +179,7 @@ class SmeltEquipNormalPanel extends BaseComponent {
 				break;
 		}
 	}
-	/**特权 自动熔炼*/
+	/**特权 自动回收*/
 	private AutoSmeltEquip() {
 		DisplayUtils.removeFromParent(this.eff);
 		let b = UserEquip.ins().sendSmeltEquip(this.viewIndex, this.smeltEquips);
@@ -192,6 +192,6 @@ class SmeltEquipNormalPanel extends BaseComponent {
 	}
 
 	private setBtnLabel() {
-		this.oneKeySmeltBtn.label = "一键熔炼";
+		this.oneKeySmeltBtn.label = "一键回收";
 	}
 }

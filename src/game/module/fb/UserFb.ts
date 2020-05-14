@@ -177,7 +177,8 @@ class UserFb extends BaseSystem {
 
 
 	public doubleTime:number = 0;
-	public 
+	public doubleEndTime:number =0;
+	public doubleExp:number = 0;
 
 	/**
 	 * 烈焰副本
@@ -827,7 +828,6 @@ class UserFb extends BaseSystem {
 	 * @param bytes
 	 */
 	public postGuanqiaInfo(bytes: GameByteArray): void {
-		
 		let lastID: number = this.guanqiaID;
 
 		this.parser(bytes);
@@ -884,6 +884,8 @@ class UserFb extends BaseSystem {
 
 	public postGuanKaIdChange(): void {
 
+	}
+	public postGuanKaIdChange2(): void {
 	}
 
 	/**
@@ -1169,15 +1171,23 @@ class UserFb extends BaseSystem {
 	 * 刷新双倍经验
 	 * 1-7
 	 */
-	public doGuanqiaUpdate(bytes: GameByteArray) {
+	public doGuanqiaUpdate(bytes: GameByteArray) :void{
 		let jingyan: number = bytes.readInt();
-		this.doubleTime = bytes.readInt();
+		this.doubleEndTime = bytes.readInt();
 
-		this.fbConfig.expEff = bytes.readInt();
-		console.log('刷新双倍经验')
-		console.log(jingyan,this.doubleTime,this.fbConfig.expEff)
+		this.doubleTime = Math.floor((DateUtils.formatMiniDateTime(this.doubleEndTime) - GameServer.serverTime));
+		this.doubleExp = bytes.readInt();
+		this.handleDoubleTime()
+		TimerManager.ins().doTimer(1000, 0, this.handleDoubleTime, this);
 		
-		
+	}
+	public handleDoubleTime():void{
+		this.postGuanKaIdChange2()
+		if (this.doubleTime > 0) {
+			this.doubleTime = Math.floor((DateUtils.formatMiniDateTime(this.doubleEndTime) - GameServer.serverTime));
+		} else {
+			TimerManager.ins().remove(this.handleDoubleTime, this);
+		}
 	}
 	
 	/**

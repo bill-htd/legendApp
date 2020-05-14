@@ -26,7 +26,6 @@ var OSATarget5Panel4 = (function (_super) {
             param[_i] = arguments[_i];
         }
         var config = GlobalConfig.ActivityType5Config[this.activityID];
-        console.log(config);
         this.reward.dataProvider = new eui.ArrayCollection(config.rewards);
         this.updateData();
     };
@@ -42,16 +41,12 @@ var OSATarget5Panel4 = (function (_super) {
         var conf = GlobalConfig['ActivityType5Config'][this.activityID];
         this.day = conf.day;
         var flag = ((this._activityData.recrod >> this.day & 1) == 1);
-        console.log('是否已经领取过了');
-        console.log(this._activityData.recrod);
-        console.log(this.day);
         if (!flag) {
             this.getBtn.visible = true;
-            console.log('还没领取');
         }
         else {
-            this.getBtn.visible = false;
-            console.log('领取过了');
+            this.getBtn.enabled = false;
+            this.getBtn.label = "已领取";
         }
     };
     OSATarget5Panel4.prototype.close = function () {

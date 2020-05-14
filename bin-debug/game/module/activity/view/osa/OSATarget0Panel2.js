@@ -21,6 +21,7 @@ var OSATarget0Panel2 = (function (_super) {
     __extends(OSATarget0Panel2, _super);
     function OSATarget0Panel2() {
         var _this = _super.call(this) || this;
+        _this.arrAll = [];
         _this.skinName = "Days42Recharge";
         return _this;
     }
@@ -51,15 +52,18 @@ var OSATarget0Panel2 = (function (_super) {
         var list = Recharge.ins().getRechargeList();
         for (var id in list) {
             var conf = list[id];
-            arr.push(conf);
+            this.arrAll.push(conf);
             ybAward.id = conf.awardList[0].id;
             ybAward.type = conf.awardList[0].type;
             ybAward.count += conf.awardList[0].count;
-            if (conf.awardList.length > 1) {
-                bigArr.push(conf);
+        }
+        this.arrAll.sort(this.sort);
+        for (var i = 0; i < 15; i++) {
+            arr.push(this.arrAll[i]);
+            if (this.arrAll[i].awardList.length > 1) {
+                bigArr.push(this.arrAll[i]);
             }
         }
-        arr.sort(this.sort);
         bigArr.sort(this.sort2);
         this.content.dataProvider = new eui.ArrayCollection(arr.splice(0, 4));
         this.delayUpdate(arr);
@@ -92,15 +96,19 @@ var OSATarget0Panel2 = (function (_super) {
         this.removeObserve();
     };
     OSATarget0Panel2.prototype.updateData = function () {
-        var datas = this.content.dataProvider;
-        datas.source.sort(this.sort);
-        for (var i = 0; i < datas.length; i++) {
-            datas.itemUpdated(datas.getItemAt(i));
+        var arr = [];
+        var bigArr = [];
+        this.arrAll.sort(this.sort);
+        for (var i = 0; i < 15; i++) {
+            arr.push(this.arrAll[i]);
+            if (this.arrAll[i].awardList.length > 1) {
+                bigArr.push(this.arrAll[i]);
+            }
         }
-        datas = this.bigReward.dataProvider;
-        for (var i = 0; i < datas.length; i++) {
-            datas.itemUpdated(datas.getItemAt(i));
-        }
+        this.content.dataProvider = new eui.ArrayCollection(arr.splice(0, 4));
+        this.delayUpdate(arr);
+        bigArr.sort(this.sort2);
+        this.bigReward.dataProvider = new eui.ArrayCollection(bigArr);
     };
     __decorate([
         callLater

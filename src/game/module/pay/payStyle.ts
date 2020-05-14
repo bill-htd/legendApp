@@ -52,7 +52,7 @@ class Pay extends BaseClass {
         url += '&serverid=' + LocationProperty.serverID;
         url += '&activityid=' + activityid;
 
-        Http.ins().send(url, true, false, function (event: egret.Event) {
+        Http.ins().send(url, true, true, function (event: egret.Event) {
             self.sendNum++
             var request = <egret.HttpRequest>event.currentTarget;
             let data = JSON.parse(request.response)

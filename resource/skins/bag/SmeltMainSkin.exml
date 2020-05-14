@@ -11,8 +11,8 @@
 	<e:Label id="forevet" text="贵族特权:获得金币增加30%" textColor="0x20CB30" size="20" horizontalCenter="0" verticalCenter="135" visible="false"/>
 	
 	<e:Group id="btnGroup" horizontalCenter="14.5" bottom="20">
-		<e:Button id="smeltBtn" skinName="Btn1Skin" label="熔  炼" height="60" x="81" y="10" width="156"/>
-		<e:Button id="oneKeySmeltBtn" skinName="Btn1Skin" label="一键熔炼" height="60" x="-105" y="10" width="156"/>
+		<e:Button id="smeltBtn" skinName="Btn1Skin" label="回  收" height="60" x="81" y="10" width="156"/>
+		<e:Button id="oneKeySmeltBtn" skinName="Btn1Skin" label="一键回收" height="60" x="-105" y="10" width="156"/>
 		<e:Image id="tequanimg" source="new_icon_btn2_json.privilege_icon_png" x="-112" y="2"/>
 	</e:Group>
 	<e:Button id="backbtn" label="Button" skinName="Btn0Skin" icon="fanhui" right="10" bottom="10"/>

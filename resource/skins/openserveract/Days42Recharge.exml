@@ -12,8 +12,8 @@
 			<e:Image source="shuxingbg" scale9Grid="77,5,15,34" left="0" right="0" top="0" bottom="0" anchorOffsetY="0"
 			         scaleX="1" scaleY="1" />
 			<e:Label text="活动说明：" x="3" size="18" textColor="0xFF9900" scaleX="1" scaleY="1" top="5" />
-			<e:Label id="actDesc" text="即日起每日充值任意金额，即可领取豪礼，每隔6天还可以领取海量元宝。" size="18" textColor="0xDFD1B5" scaleX="1" scaleY="1"
-			         anchorOffsetX="0" height="36" y="5" right="0" left="90" />
+			<e:Label id="actDesc" text="即日起每日充值任意金额，即可领取豪礼，每隔6天还可获取海量元宝最高可达10万元宝，每42天一循环，福利无限领！" size="18" textColor="0xDFD1B5" scaleX="1" scaleY="1"
+			         anchorOffsetX="0" height="70" y="5" right="0" left="90"  anchorOffsetY="0"/>
 		</e:Group>
 		<e:Image width="440" verticalCenter="12" horizontalCenter="0" source="jingyantiao5" scale9Grid="8,5,1,3"  visible="false"/>
 

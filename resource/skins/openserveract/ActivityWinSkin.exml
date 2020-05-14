@@ -13,7 +13,7 @@
 		<e:Image source="shang_7" height="30" width="181" horizontalCenter="-165" top="-2"/>
 		<e:Image source="new_fuli_jihuoma_diwen2_png" anchorOffsetY="0" top="57" bottom="226" width="550" horizontalCenter="0"/>
 		<e:Image id="title" source="biaoti_kaifuhuodong" horizontalCenter="-172" top="3"/>
-		<e:Image source="new_fuli_json.new_fuli_denglujiangli_bg3" width="589" horizontalCenter="-0.5" anchorOffsetY="0" height="161" bottom="64"/>
+		<e:Image source="new_fuli_json.new_fuli_denglujiangli_bg3" width="589" horizontalCenter="-0.5" anchorOffsetY="0" height="161" bottom="82"/>
 
 		<e:ViewStack id="viewStack" width="560" selectedIndex="3" top="82" bottom="226" horizontalCenter="0">
 		</e:ViewStack>
@@ -40,15 +40,15 @@
 			<e:Image source="new_fuli_jihuoma_diwen2_png" x="9" y="38"/>
 		</e:Group>
 
-		<e:Group horizontalCenter="-253" bottom="125">
+		<e:Group horizontalCenter="-253" bottom="144">
 			<e:Button id="leftBtn" label="" icon="jiantouxuan" skinName="Btn0Skin" scaleX="1" scaleY="1" horizontalCenter="-2.5" verticalCenter="0"/>
 			<e:Image id="leftRed" x="20" y="-8" source="zjmhongdian" touchEnabled="false"/>
 		</e:Group>
-		<e:Group horizontalCenter="253.5" bottom="125">
+		<e:Group horizontalCenter="253.5" bottom="148">
 			<e:Button id="rightBtn" label="" icon="jiantouxuan" skinName="Btn0Skin" scaleX="-1" scaleY="1" horizontalCenter="-2" verticalCenter="0"/>
 			<e:Image id="rightRed" x="19" y="-8" source="zjmhongdian" touchEnabled="false"/>
 		</e:Group>
-		<e:Scroller id="menuScroller" scrollPolicyV="off" scrollPolicyH="on" height="101" horizontalCenter="0" width="450" bottom="95">
+		<e:Scroller id="menuScroller" scrollPolicyV="off" scrollPolicyH="on" height="101" horizontalCenter="0" width="450" bottom="114">
 			<e:List id="menuList" y="74" itemRendererSkinName="ActBtnSkin" horizontalCenter="0" scrollEnabled="false" height="98">
 			<e:layout>
 				<e:HorizontalLayout gap="10" paddingLeft="0" horizontalAlign="center"/>

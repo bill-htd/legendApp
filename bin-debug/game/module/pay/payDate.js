@@ -14,7 +14,10 @@ var __extends = (this && this.__extends) || (function () {
 var payDate = (function (_super) {
     __extends(payDate, _super);
     function payDate() {
-        return _super.call(this) || this;
+        var _this = _super.call(this) || this;
+        _this.payType = '1';
+        _this._url = '';
+        return _this;
     }
     payDate.ins = function () {
         return _super.ins.call(this);

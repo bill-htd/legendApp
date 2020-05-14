@@ -3,19 +3,19 @@
 	<e:Group id="zfb" anchorOffsetX="0" width="430" x="0" y="0">
 		<e:Label text="支付宝" textColor="0x000040" size="25" bold="true" verticalCenter="0" left="50"/>
 		<e:Image source="payPanel_json.Alipay_icon_png" left="0" verticalCenter="0"/>
-		<e:Image verticalCenter="0" source="payPanel_json.unSelected_icon_png" y="10" id="unselected1" right="0" visible.down="false"/>
-		<e:Image verticalCenter="0" source="payPanel_json.Selected_icon_png" y="20" id="selected1" right="0" visible.up="false"/>
+		<e:Image id="zfbBtn" verticalCenter="0" source="payPanel_json.Selected_icon_png" y="20" right="0" visible.up="false"/>
+		<e:Image verticalCenter="0" source="payPanel_json.unSelected_icon_png" y="10" right="0" visible.down="false"/>
 	</e:Group>
 	<e:Group id="dq" anchorOffsetX="0" width="430" x="0" y="0">
 		<e:Label text="点券购买" textColor="0x000040" size="25" bold="true" verticalCenter="0" left="50"/>
 		<e:Image left="0" verticalCenter="0" source="payPanel_json.Buy point card_icon_png"/>
-		<e:Image verticalCenter="0" source="payPanel_json.unSelected_icon_png" y="10" id="unselected0" right="0" visible.down="false"/>
-		<e:Image verticalCenter="0" source="payPanel_json.Selected_icon_png" y="20" id="selected0" right="0" visible.up="false"/>
+		<e:Image id="dqBtn" verticalCenter="0" source="payPanel_json.Selected_icon_png" y="20" right="0" visible.up="false"/>
+		<e:Image verticalCenter="0" source="payPanel_json.unSelected_icon_png" y="10" right="0" visible.down="false"/>
 	</e:Group>
 	<e:Group id="wx" anchorOffsetX="0" width="430" x="0" y="0">
 		<e:Label text="微信支付" textColor="0x000040" size="25" bold="true" verticalCenter="0" left="50"/>
 		<e:Image left="0" verticalCenter="0" source="payPanel_json.WeChat Pay_icon_png"/>
-		<e:Image id="unselected" verticalCenter="0" y="10" source="payPanel_json.unSelected_icon_png" right="0" visible.down="false"/>
-		<e:Image id="selected" verticalCenter="0" y="20" source="payPanel_json.Selected_icon_png" right="0" visible.up="false"/>
+		<e:Image id="wxBtn" verticalCenter="0" y="20" source="payPanel_json.Selected_icon_png" right="0" visible.up="false"/>
+		<e:Image verticalCenter="0" y="10" source="payPanel_json.unSelected_icon_png" right="0" visible.down="false"/>
 	</e:Group>
 </e:Skin>

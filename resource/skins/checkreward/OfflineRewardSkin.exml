@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <e:Skin class="OfflineRewardSkin" xmlns:e="http://ns.egret.com/eui"
-        xmlns:w="http://ns.egret.com/wing" xmlns:euiextension="euiextension.*" xmlns:ns1="*">
+        xmlns:w="http://ns.egret.com/wing" xmlns:euiextension="euiextension.*" xmlns:ns1="*" height="663">
 	<w:Config id="159bf027b06"/>
 	<e:Rect left="0" right="0" top="0" bottom="0" fillAlpha="0.8"/>
-	<e:Group width="400" height="470" horizontalCenter="0" verticalCenter="0">
+	<e:Image anchorOffsetX="0" width="220" anchorOffsetY="0" height="277" horizontalCenter="-91" verticalCenter="-185" source="big man_pic_png"/>
+	<e:Group width="400" height="470" horizontalCenter="0" verticalCenter="95.5">
 		<e:Image top="0" bottom="0" source="offline2" width="200" x="0" scale9Grid="16,35,10,9"/>
 		<e:Image top="0" bottom="0" source="offline2" scale9Grid="16,35,10,9" width="200" scaleX="-1" right="0"/>
 		<e:Image y="3" source="offline1" x="85"/>
@@ -48,7 +49,7 @@
 			<e:Label text="100000" y="80" size="18" x="90" id="label5" textAlign="center" textColor="0x20cb30"/>
 		</e:Group>
 
-		<e:Label id="bagFull" text="背包已满，自动熔炼      件装备" size="20" horizontalCenter="0" bottom="0" textColor="0xf8b141"/>
+		<e:Label id="bagFull" text="背包已满，自动回收      件装备" size="20" horizontalCenter="0" bottom="0" textColor="0xf8b141"/>
 		<e:Label text="最多累计24小时离线收益" size="16" textAlign="left" y="47" horizontalCenter="0" textColor="0x7e6437"/>
 		<e:Label text="离线超过8小时后，只能获得80%离线收益" size="16" textAlign="left" y="66" horizontalCenter="0" textColor="0x7e6437"/>
 		</e:Group>
@@ -57,6 +58,8 @@
 	</e:Group>
 	<e:Button id="okBtn" bottom="0" skinName="Btn0Skin" left="0" right="0" top="0"/>
 	<e:Label id="getmc" text="激活月卡" size="22" horizontalCenter="98" textColor="0x20CB30" verticalCenter="100" visible="false"/>
+	<e:Image anchorOffsetX="0" width="231" anchorOffsetY="0" height="128" horizontalCenter="82.5" verticalCenter="-236.5" source="Transparent_icon_png"/>
+	<e:Label text="终于上线啦！挂机回收大量装备，赶紧找我回收装备拿元宝吧！" size="17" textAlign="left" textColor="0xbc9043" bold="true" anchorOffsetY="0" height="74" anchorOffsetX="0" width="185" horizontalCenter="80.5" verticalCenter="-236.5"/>
 
 	
 	

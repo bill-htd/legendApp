@@ -996,6 +996,8 @@ declare class GwWeapon extends eui.Skin{
 }
 declare class GwAttrDescSkin extends eui.Skin{
 }
+declare class YBguangbo extends eui.Skin{
+}
 declare class UIshowDropNoticeSkin extends eui.Skin{
 }
 declare class guardGodWeaponBossTips extends eui.Skin{

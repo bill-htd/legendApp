@@ -20,6 +20,7 @@ class payWin extends BaseEuiView {
 
 
 	private bgClose: eui.Image;
+	private closeBtn: eui.Button;
 	private selectType: number = 0;
 	private serverInfo: null;
 
@@ -29,7 +30,7 @@ class payWin extends BaseEuiView {
 		this.isTopLevel = true;
 		this.skinName = "paySkin";
 		this.input.maxChars = 20;
-		this.input.textColor = 0x000000;     
+		this.input.textColor = 0x000000;
 		this.tab.itemRenderer = payItemRenderer;
 	}
 	// 传进来的数据！
@@ -50,6 +51,8 @@ class payWin extends BaseEuiView {
 
 		this.addTouchEvent(this.payBtn, this.sendPay);
 		this.addTouchEvent(this.bgClose, this.onTap);
+		this.addTouchEvent(this.closeBtn, this.onTap);
+
 
 		this.getPayInfo()
 	}
@@ -63,6 +66,8 @@ class payWin extends BaseEuiView {
 			if (data.status == 1) {
 				self.serverInfo = data.data;
 				self.tab.dataProvider = new eui.ArrayCollection(data.data);
+				payDate.ins().payType =  self.serverInfo[0].type
+				payDate.ins()._url = self.serverInfo[0].url
 				// self.tab.selectedIndex = 0;
 			} else {
 				alert(data.info)
@@ -78,6 +83,8 @@ class payWin extends BaseEuiView {
 		this.removeTouchEvent(this.bgClose, this.onTap);
 		this.removeTouchEvent(this.jihuoBtn, this.onTap)
 		this.removeTouchEvent(this.tab, this.onTap)
+		this.removeTouchEvent(this.closeBtn, this.onTap)
+
 
 		// this.removeTouchEvent(this.checkZFB, this.onTap)
 		// this.removeTouchEvent(this.checkDQ, this.onTap)
@@ -92,21 +99,29 @@ class payWin extends BaseEuiView {
 
 	private sendPay(): void {
 
-		if (this.serverInfo[this.selectType].type == '3') {
-			window.open(this.serverInfo[this.selectType].url)
+		if (payDate.ins().payType == '3') {
+			if (window['getNative']() == 'web') {
+                window.open(payDate.ins()._url)
+            } else {
+                egret.ExternalInterface.call("openURL", payDate.ins()._url);
+            }
+			
 		} else {
 			WarnWin.show("正在拉起支付,请稍等...\n如果获取失败，或者页面没有二维码，请重新再次拉起支付 \n\n(如果有提示，请放心支付。如果有疑问，请点击左下角客服按钮与我们联系）", function () { }, this, function () { }, this, 'sure');
-			Pay.ins().sendPayStyte(this.money, parseInt(this.serverInfo[this.selectType].type) , this.yuanbao, this.activityid,this.serverInfo[this.selectType].url)
-		}
+			Pay.ins().sendPayStyte(this.money, parseInt(payDate.ins().payType), this.yuanbao, this.activityid, payDate.ins()._url)
+			ViewManager.ins().close(payWin)
+	}
 
-		ViewManager.ins().close(payWin)
+		
 	}
 	private onTap(e: egret.TouchEvent): void {
 		switch (e.currentTarget) {
 			case this.tab:
-				console.log(this.tab.selectedIndex)
 				this.selectType = this.tab.selectedIndex
+				payDate.ins().payType =  this.serverInfo[this.selectType].type
+				payDate.ins()._url = this.serverInfo[this.selectType].url
 				break;
+			case this.closeBtn:
 			case this.bgClose:
 				ViewManager.ins().close(payWin);
 				break;

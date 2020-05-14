@@ -10,6 +10,7 @@ class OSATarget0Panel2 extends BaseView {
 	private bigReward: eui.List;
 	public activityID: number;
 	private actDesc: eui.Label;
+	public arrAll: Array<any> = [];
 
 	constructor() {
 		super();
@@ -25,7 +26,7 @@ class OSATarget0Panel2 extends BaseView {
 	}
 
 	open() {
-		if(this.content.dataProvider){
+		if (this.content.dataProvider) {
 			this.updateData();
 		} else {
 			this.updateList();
@@ -37,30 +38,37 @@ class OSATarget0Panel2 extends BaseView {
 		// let configs = GlobalConfig.RechargeDaysAwardsConfig;
 		let arr = [];
 		let bigArr = [];
-
 		let ybAward = new RewardData();
 		ybAward.count = 0;
 		ybAward.id = 2;
 		ybAward.type = 0;
 
-		let byConfig = {id:100, awardList:[ybAward]}
+		let byConfig = { id: 100, awardList: [ybAward] }
 		bigArr.push(byConfig);
 
 		let list = Recharge.ins().getRechargeList();
 		for (let id in list) {
 			let conf = list[id];
-			arr.push(conf);
-
+			// arr.push(conf);
+			this.arrAll.push(conf)
 			ybAward.id = conf.awardList[0].id;
 			ybAward.type = conf.awardList[0].type;
 			ybAward.count += conf.awardList[0].count;
 
-			if (conf.awardList.length>1) {
-				bigArr.push(conf);
+			// if (conf.awardList.length > 1) {
+			// 	bigArr.push(conf);
+			// }
+		}
+
+
+		this.arrAll.sort(this.sort);
+		for(let i = 0; i< 15;i++){
+			arr.push(this.arrAll[i])
+			if (this.arrAll[i].awardList.length > 1) {
+				bigArr.push(this.arrAll[i]);
 			}
 		}
 
-		arr.sort(this.sort);
 		bigArr.sort(this.sort2);
 
 
@@ -103,15 +111,28 @@ class OSATarget0Panel2 extends BaseView {
 	}
 
 	updateData() {
-		let datas = this.content.dataProvider as eui.ArrayCollection;
-		datas.source.sort(this.sort);
-		for (let i = 0; i < datas.length; i++) {
-			datas.itemUpdated(datas.getItemAt(i));
+		let arr = []
+		let bigArr = []
+		this.arrAll.sort(this.sort);
+		for(let i = 0; i< 15;i++){
+			arr.push(this.arrAll[i])
+			if (this.arrAll[i].awardList.length > 1) {
+				bigArr.push(this.arrAll[i]);
+			}
 		}
+		this.content.dataProvider = new eui.ArrayCollection(arr.splice(0, 4));
+		this.delayUpdate(arr);
+		bigArr.sort(this.sort2);
+		this.bigReward.dataProvider = new eui.ArrayCollection(bigArr);
+		// let datas = this.content.dataProvider as eui.ArrayCollection;
+		// datas.source.sort(this.sort);
+		// for (let i = 0; i < datas.length; i++) {
+		// 	datas.itemUpdated(datas.getItemAt(i));
+		// }
 
-		datas = this.bigReward.dataProvider as eui.ArrayCollection;
-		for (let i = 0; i < datas.length; i++) {
-			datas.itemUpdated(datas.getItemAt(i));
-		}
+		// let datas = this.bigReward.dataProvider as eui.ArrayCollection;
+		// for (let i = 0; i < datas.length; i++) {
+		// 	datas.itemUpdated(datas.getItemAt(i));
+		// }
 	}
 }
