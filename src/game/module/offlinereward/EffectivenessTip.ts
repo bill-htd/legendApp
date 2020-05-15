@@ -103,6 +103,13 @@ class EffectivenessTip extends BaseEuiView {
 			// this.nextInfoExp.textColor = '20C020'
 			this.nextInfoExp.text = UserFb.ins().doubleExp + "";
 			this.nextInfoExp.textColor = 0xF40909;
+			let str = ''
+			if (UserFb.ins().doubleTime >= 60 * 60 * 1000) {
+				str = DateUtils.getFormatBySecond(UserFb.ins().doubleTime / 1000, 9)
+			} else {
+				str = DateUtils.getFormatBySecond(UserFb.ins().doubleTime / 1000, 3)
+			} 
+			this.endTime.text = str
 			TimerManager.ins().remove(this.updateNextHongBaoTime, this);
 			TimerManager.ins().doTimer(1000, 0, this.updateNextHongBaoTime, this);
 		} else {

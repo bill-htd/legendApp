@@ -575,7 +575,6 @@ var UserFb = (function (_super) {
     UserFb.prototype.postGuanKaIdChange = function () {
     };
     UserFb.prototype.postGuanKaIdChange2 = function () {
-        console.log('postGuanKaIdChange2');
     };
     UserFb.prototype.sendGetReward = function (isElite) {
         var bytes = this.getBytes(1);
@@ -798,7 +797,6 @@ var UserFb = (function (_super) {
     };
     UserFb.prototype.handleDoubleTime = function () {
         this.postGuanKaIdChange2();
-        console.log('handleDoubleTime');
         if (this.doubleTime > 0) {
             this.doubleTime = Math.floor((DateUtils.formatMiniDateTime(this.doubleEndTime) - GameServer.serverTime));
         }

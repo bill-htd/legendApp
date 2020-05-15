@@ -542,7 +542,6 @@ var PlayFunView = (function (_super) {
         }
     };
     PlayFunView.prototype.updateExp = function () {
-        console.log('1111');
         if (UserFb.ins().doubleTime > 0) {
             this.expTxt.textFlow = TextFlowMaker.generateTextFlow("|C:0xF40909&T:" + UserFb.ins().doubleExp + "|/\u5C0F\u65F6");
         }
