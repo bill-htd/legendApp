@@ -20,7 +20,7 @@ class OSATarget5Panel4 extends BaseView {
         let config: ActivityType5Config[] = GlobalConfig.ActivityType5Config[this.activityID];
         for(let i in config){
             if(config[i].rewards){
-                this.reward.dataProvider = new eui.ArrayCollection(config[0].rewards);
+                this.reward.dataProvider = new eui.ArrayCollection(config[i].rewards);
             }
         }
         

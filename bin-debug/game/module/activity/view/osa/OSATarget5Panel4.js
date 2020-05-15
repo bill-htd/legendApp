@@ -26,7 +26,11 @@ var OSATarget5Panel4 = (function (_super) {
             param[_i] = arguments[_i];
         }
         var config = GlobalConfig.ActivityType5Config[this.activityID];
-        this.reward.dataProvider = new eui.ArrayCollection(config.rewards);
+        for (var i in config) {
+            if (config[i].rewards) {
+                this.reward.dataProvider = new eui.ArrayCollection(config[0].rewards);
+            }
+        }
         this.updateData();
     };
     OSATarget5Panel4.prototype.onTouch = function (e) {
