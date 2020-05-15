@@ -124,8 +124,6 @@ var ActivityWin = (function (_super) {
             if (!Activity.ins().activityData[k] ||
                 Activity.ins().activityData[k].pageStyle ||
                 Activity.ins().activityData[k].timeType == ActivityDataFactory.TimeType_Total) {
-                console.log(Activity.ins().activityData[k]);
-                console.log(ActivityDataFactory.TimeType_Total);
                 continue;
             }
             if (Activity.ins().getActivityDataById(+k).isOpenActivity()) {

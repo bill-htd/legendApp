@@ -423,7 +423,7 @@ var ItemBase = (function (_super) {
         this.EquipEffect = this.EquipEffect || new MovieClip();
         this.EquipEffect.touchEnabled = false;
         if (this.data.id == MoneyConst.yuanbao) {
-            effectName = "quaeff6";
+            effectName = "quaeff7";
             this.EquipEffect.x = 44;
             this.EquipEffect.y = 32;
             this.EquipEffect.scaleX = this.EquipEffect.scaleY = 1;

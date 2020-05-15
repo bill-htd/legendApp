@@ -37,7 +37,7 @@ var HeirloomItemIcon = (function (_super) {
                     this.effect.y = this.imgBg.y + this.imgBg.height / 2 - 10;
                     this.addChildAt(this.effect, this.getChildIndex(this.imgIcon) + 1);
                 }
-                this.effect.playFile(RES_DIR_EFF + 'quaeff6', -1);
+                this.effect.playFile(RES_DIR_EFF + 'quaeff7', -1);
                 return;
             }
         }

@@ -30,7 +30,7 @@ class HeirloomItemIcon extends BaseComponent {
 					this.addChildAt(this.effect, this.getChildIndex(this.imgIcon)+1);
 					// this.effect.addEventListener(egret.Event.ADDED_TO_STAGE, this.resumePlay, this);
 				}
-				this.effect.playFile(RES_DIR_EFF + 'quaeff6',-1);
+				this.effect.playFile(RES_DIR_EFF + 'quaeff7',-1);
 
 				// if( uplevel )
 				// 	this.setUpEff();

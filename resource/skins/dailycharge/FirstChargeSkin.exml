@@ -30,7 +30,7 @@
 		<e:Image source="new_chongzhi_json.new_shouchong2_label4" horizontalCenter="-13" verticalCenter="-141.5"/>
 		<e:Image source="new_chongzhi_json.new_shouchong2_label8" horizontalCenter="30.5" verticalCenter="-107"/>
 		<e:Image source="new_chongzhi_json.new_shouchong2_label7" horizontalCenter="64" verticalCenter="-69.5"/>
-		<e:Image source="new_chongzhi_json.！" horizontalCenter="-228" verticalCenter="386.5"/>
+		<e:Image source="new_chongzhi_json.！" horizontalCenter="-191" verticalCenter="426"/>
 		<e:BitmapLabel font="num_8_fnt" text="30000" horizontalCenter="184" letterSpacing="-4" verticalCenter="-70"/>
 
 		<e:Group width="480" height="100" horizontalCenter="0" verticalCenter="46">
@@ -62,12 +62,18 @@
 		<e:Button id="chong2" label="Button" x="0" skinName="Btn8Skin" y="120"/>
 		<e:Button id="chong3" label="Button" skinName="Btn8Skin" right="0" y="120"/>
 			<e:Image y="130" touchEnabled="false" horizontalCenter="206" source="new_shouchong2_bg1"/>
-			<e:Image source="new_chongzhi_json.new_shouchong2_label5" horizontalCenter="-10.5" verticalCenter="166.5"/>
+			<e:Label text="机会只有一次，以上仅选择一个可获得4倍元宝" size="18" textColor="0xfcc905" horizontalCenter="15.5" verticalCenter="207" bold="true"/>
+			<e:Label text="麻痹神戒" size="18" horizontalCenter="75" verticalCenter="136" textColor="0xfc23d4" bold="true"/>
+			<e:Label text="激活三英雄" size="18" horizontalCenter="221" verticalCenter="136" bold="true" textColor="0xff5700"/>
+			<e:Image source="new_chongzhi_json.new_shouchong2_label5" horizontalCenter="-10.5" verticalCenter="166.5" visible="false"/>
 			<e:Group id="warn" y="245" horizontalCenter="0" width="550" height="32" visible="false">
 				<e:Image source="bantoutiaobg" left="0" right="0" top="0" bottom="0" scale9Grid="70,5,90,35"/>
 				<e:Image y="2" source="shouchongt4_png" horizontalCenter="20"/>
 				<e:Image y="6" source="gantanhao" x="42"/>
 			</e:Group>
+			<e:Image source="zjm_json.zjmmabi" anchorOffsetX="0" width="30" anchorOffsetY="0" height="30" horizontalCenter="20" verticalCenter="134"/>
+			<e:Image source="num_3_json.+" verticalCenter="132" horizontalCenter="126"/>
+			<e:Image anchorOffsetX="0" width="32" anchorOffsetY="0" height="40" verticalCenter="139" horizontalCenter="157" source="new_icon_btn_json.new_icon_sanyingxiong_png"/>
 		</e:Group>
 		<e:Button id="buyed" label="领取首充礼包" skinName="Btn1Skin" width="160" height="60" scaleX="1" scaleY="1" verticalCenter="230" horizontalCenter="0"/>
 		<e:Button id="kefuBtn" label="联系客服" width="121" height="47" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="473" skinName="Btn3Skin" anchorOffsetX="0" anchorOffsetY="0"/>

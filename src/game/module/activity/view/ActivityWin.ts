@@ -148,8 +148,6 @@ class ActivityWin extends BaseEuiView {
 				Activity.ins().activityData[k].pageStyle ||
 				Activity.ins().activityData[k].timeType == ActivityDataFactory.TimeType_Total
 			) {
-				console.log(Activity.ins().activityData[k])
-				console.log(ActivityDataFactory.TimeType_Total)
 				continue;//此界面不处理合服活动数据
 			}
 			if (Activity.ins().getActivityDataById(+k).isOpenActivity()) {
