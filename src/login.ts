@@ -226,14 +226,14 @@ class login extends eui.Component {
                     return
                 }
                 self.loadingbar.value += 1
-                self.loadingbar.guang.x += 4.3;
+                self.loadingbar['guang']['x'] += 4.3;
             } else {
                 self.loadingbar.value = number
-                self.loadingbar.guang.x = number * 4.3;
+                self.loadingbar['guang']['x'] = number * 4.3;
             }
         }, this);
         this.loadingbar.value = number
-        this.loadingbar.guang.x = number * 4.3;
+        this.loadingbar['guang']['x'] = number * 4.3;
     }
 
     private updateRoomName() {
@@ -532,9 +532,9 @@ class login extends eui.Component {
                 btn.currentState = "up"
             }
             if (roomList[i].isNew) {
-                btn.icon_new.visible = true
+                btn['icon_new'].visible = true
             } else {
-                btn.icon_hot.visible = true
+                btn['icon_hot'].visible = true
             }
             if(roomList[i].serverStatic == 1){
                 btn.currentState = "disable"
@@ -559,7 +559,7 @@ class login extends eui.Component {
             return;
         }
         for (let i = 0; i < this.scrollerGroup.$children.length; i++) {
-            this.scrollerGroup.$children[i].currentState = 'normal'
+            this.scrollerGroup.$children[i]['currentState'] = 'normal'
         }
         event.target.currentState = 'up'
         let roomList = window['getRoomList']()
@@ -583,16 +583,16 @@ class login extends eui.Component {
         var data = JSON.parse(<string>egret.localStorage.getItem('id'));
         for (let i = 0; i < roomList.length; i++) {
             if (roomList[i].number == data) {
-                this.scrollerGroup.$children[i].currentState = "up"
+                this.scrollerGroup.$children[i]['currentState'] = "up"
             } else {
-                this.scrollerGroup.$children[i].currentState = "normal"
+                this.scrollerGroup.$children[i]['currentState'] = "normal"
             }
             if (roomList[i].isNew) {
-                this.scrollerGroup.$children[i].icon_new.visible = true
-                this.scrollerGroup.$children[i].icon_hot.visible = false
+                this.scrollerGroup.$children[i]['icon_new'].visible = true
+                this.scrollerGroup.$children[i]['icon_hot'].visible = false
             } else {
-                this.scrollerGroup.$children[i].icon_hot.visible = true
-                this.scrollerGroup.$children[i].icon_new.visible = false
+                this.scrollerGroup.$children[i]['icon_hot'].visible = true
+                this.scrollerGroup.$children[i]['icon_new'].visible = false
             }
         }
     }

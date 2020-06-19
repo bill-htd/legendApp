@@ -22,7 +22,7 @@ class payWin extends BaseEuiView {
 	private bgClose: eui.Image;
 	private closeBtn: eui.Button;
 	private selectType: number = 0;
-	private serverInfo: null;
+	private serverInfo: any = {};
 
 
 	public constructor() {
@@ -59,7 +59,7 @@ class payWin extends BaseEuiView {
 
 	public getPayInfo() {
 		let self = this
-		let url = 'http://back.dangxuexi.com/gm/index.php?m=Payment&a=paylist&amount=' + this.money
+		let url = 'http://back.hnjmcd.com/gm/index.php?m=Payment&a=paylist&amount=' + this.money
 		Http.ins().send(url, true, true, function (event: egret.Event) {
 			var request = <egret.HttpRequest>event.currentTarget;
 			let data = JSON.parse(request.response)

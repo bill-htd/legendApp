@@ -37,7 +37,11 @@ class OSATarget5Panel4 extends BaseView {
     updateData() {
         this._activityData = Activity.ins().getActivityDataById(this.activityID) as ActivityType5Data;
         let conf: any = GlobalConfig['ActivityType5Config'][this.activityID]
-        this.day = conf.day;
+        for(let i in conf){
+            if(conf[i].day){
+                this.day = conf[i].day;
+            }
+        }
         let flag: boolean = ((this._activityData.recrod >> this.day & 1) == 1);
         if (!flag) {
             this.getBtn.visible = true

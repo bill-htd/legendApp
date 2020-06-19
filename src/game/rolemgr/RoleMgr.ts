@@ -113,7 +113,8 @@ class RoleMgr extends BaseSystem {
 		if (window['getNative']() != 'web') {
 			//  资源加载完成，删除加载界面
 			if (StageUtils.ins().getStage().$children[2]) {
-				StageUtils.ins().getStage().$children[2].setProgress(100, '加载完成，进入游戏')
+				let aa = StageUtils.ins().getStage().$children[2]
+				StageUtils.ins().getStage().$children[2]['setProgress'](100, '加载完成，进入游戏')
 			}
 		} else {
 			LocationProperty.setLoadProgress(100, "(加载完成，进入游戏)");
@@ -195,7 +196,7 @@ class RoleMgr extends BaseSystem {
 				if (window['getNative']() != 'web') {
 					//  资源加载完成，删除加载界面
 					if (StageUtils.ins().getStage().$children[2]) {
-						StageUtils.ins().getStage().$children[2].setProgress(100, '加载完成，进入游戏')
+						StageUtils.ins().getStage().$children[2]['setProgress'](100, '加载完成，进入游戏')
 					}
 				} else {
 					LocationProperty.setLoadProgress(100, "(加载完成，进入游戏)");
